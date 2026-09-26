@@ -3,405 +3,600 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#2563eb">
 
-<title>Interest Calculator</title>
+<meta name="theme-color" content="#172554">
+<meta name="description" content="Simple Monthly Interest Calculator">
+
+<title>Monthly Interest Calculator</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-    background:#f3f6fb;
-    color:#172033;
-    padding:18px;
-}
-
-.container{
-    max-width:950px;
-    margin:auto;
-}
-
-/* HEADER */
-
-.header{
-    text-align:center;
-    margin-bottom:20px;
-}
-
-.header h1{
-    font-size:30px;
-    margin-bottom:6px;
-}
-
-.header p{
-    color:#6b7280;
-}
-
-/* CARD */
-
-.card{
-    background:white;
-    border-radius:18px;
-    padding:20px;
-    margin-bottom:18px;
-    box-shadow:0 5px 20px rgba(0,0,0,.07);
-}
-
-/* INPUT */
-
-.input-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-}
-
-label{
-    display:block;
-    font-weight:bold;
-    margin-bottom:7px;
-}
-
-input{
-    width:100%;
-    padding:14px;
-    border:1px solid #d1d5db;
-    border-radius:11px;
-    font-size:16px;
-    outline:none;
-}
-
-input:focus{
-    border-color:#2563eb;
-}
-
-/* BUTTON */
-
-.buttons{
-    display:flex;
-    gap:12px;
-    margin-top:18px;
-}
-
-button{
-    flex:1;
-    border:0;
-    border-radius:11px;
-    padding:14px;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.calculate{
-    background:#2563eb;
-    color:white;
-}
-
-.reset{
-    background:#e5e7eb;
-    color:#111827;
-}
-
-button:active{
-    transform:scale(.98);
-}
-
-/* SUMMARY */
-
-.summary-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-}
-
-.summary-box{
-    background:#f8fafc;
-    border-radius:13px;
-    padding:16px;
-}
-
-.summary-box span{
-    display:block;
-    color:#6b7280;
-    font-size:14px;
-    margin-bottom:6px;
-}
-
-.summary-box strong{
-    font-size:21px;
-}
-
-.final{
-    background:#eff6ff;
-}
-
-/* TABLE */
-
-.table-title{
-    font-size:20px;
-    margin-bottom:12px;
-}
-
-.table-wrap{
-    overflow-x:auto;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:750px;
-}
-
-th,td{
-    padding:12px 10px;
-    border-bottom:1px solid #e5e7eb;
-    text-align:right;
-    white-space:nowrap;
-}
-
-th{
-    background:#f8fafc;
-    font-size:13px;
-}
-
-td:first-child,
-th:first-child{
-    text-align:center;
-}
-
-/* NOTE */
-
-.note{
-    background:#fff7ed;
-    border-radius:12px;
-    padding:13px;
-    margin-top:15px;
-    color:#9a3412;
-    font-size:14px;
-    line-height:1.5;
-}
-
-/* ERROR POPUP */
-
-.error-popup{
-    position:fixed;
-    top:20px;
-    left:50%;
-    transform:translateX(-50%);
-    width:calc(100% - 30px);
-    max-width:420px;
-    background:#dc2626;
-    color:white;
-    padding:15px 18px;
-    border-radius:12px;
-    box-shadow:0 8px 25px rgba(0,0,0,.2);
-    display:none;
-    z-index:9999;
-}
-
-.error-popup.show{
-    display:block;
-}
-
-.error-popup strong{
-    display:block;
-    margin-bottom:3px;
-}
-
-/* HIDDEN */
-
-.hidden{
-    display:none;
-}
-
-/* MOBILE */
-
-@media(max-width:700px){
-
-    body{
-        padding:12px;
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
     }
 
-    .header h1{
-        font-size:25px;
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background:
+            linear-gradient(135deg, #eef2ff, #f8fafc 50%, #e0f2fe);
+        color: #172033;
+        min-height: 100vh;
+        padding: 20px 12px 40px;
     }
 
-    .input-grid{
-        grid-template-columns:1fr;
+    .container {
+        width: 100%;
+        max-width: 900px;
+        margin: auto;
     }
 
-    .summary-grid{
-        grid-template-columns:1fr;
+    /* HEADER */
+    .header {
+        background: linear-gradient(135deg, #172554, #1e3a8a);
+        color: white;
+        padding: 25px 20px;
+        border-radius: 20px;
+        text-align: center;
+        margin-bottom: 18px;
+        box-shadow: 0 12px 30px rgba(23, 37, 84, 0.20);
     }
 
-    .buttons{
-        flex-direction:column;
+    .header h1 {
+        font-size: 27px;
+        margin-bottom: 7px;
+        letter-spacing: 0.3px;
     }
 
-    .card{
-        padding:16px;
+    .header p {
+        font-size: 14px;
+        opacity: 0.88;
     }
-}
+
+    /* CARD */
+    .card {
+        background: rgba(255,255,255,0.95);
+        border-radius: 18px;
+        padding: 20px;
+        margin-bottom: 18px;
+        box-shadow: 0 8px 25px rgba(15,23,42,0.08);
+        border: 1px solid #e5e7eb;
+    }
+
+    .section-title {
+        font-size: 19px;
+        font-weight: 700;
+        color: #172554;
+        margin-bottom: 17px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* INPUTS */
+    .input-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+
+    .field label {
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 7px;
+        color: #475569;
+    }
+
+    .input-wrap {
+        position: relative;
+    }
+
+    .input-wrap span {
+        position: absolute;
+        left: 13px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-weight: bold;
+        color: #64748b;
+    }
+
+    .input-wrap input {
+        width: 100%;
+        padding: 13px 13px 13px 35px;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 11px;
+        outline: none;
+        font-size: 16px;
+        background: #f8fafc;
+        transition: 0.2s;
+    }
+
+    .input-wrap input.no-prefix {
+        padding-left: 13px;
+    }
+
+    .input-wrap input:focus {
+        border-color: #2563eb;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(37,99,235,0.10);
+    }
+
+    /* BUTTONS */
+    .buttons {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    button {
+        flex: 1;
+        border: none;
+        padding: 14px;
+        border-radius: 11px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .calculate-btn {
+        background: #172554;
+        color: white;
+    }
+
+    .calculate-btn:hover {
+        background: #1e3a8a;
+        transform: translateY(-1px);
+    }
+
+    .reset-btn {
+        background: #e2e8f0;
+        color: #334155;
+    }
+
+    .reset-btn:hover {
+        background: #cbd5e1;
+    }
+
+    /* SUMMARY */
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .summary-box {
+        padding: 16px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 13px;
+    }
+
+    .summary-box .label {
+        font-size: 12px;
+        color: #64748b;
+        margin-bottom: 5px;
+    }
+
+    .summary-box .value {
+        font-size: 19px;
+        font-weight: 800;
+        color: #172554;
+    }
+
+    .final-box {
+        background: linear-gradient(135deg, #172554, #1e40af);
+        color: white;
+        border: none;
+    }
+
+    .final-box .label,
+    .final-box .value {
+        color: white;
+    }
+
+    .final-box .value {
+        font-size: 23px;
+    }
+
+    /* TABLE */
+    .table-wrapper {
+        overflow-x: auto;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+    }
+
+    table {
+        width: 100%;
+        min-width: 850px;
+        border-collapse: collapse;
+        background: white;
+    }
+
+    th {
+        background: #172554;
+        color: white;
+        padding: 12px 10px;
+        font-size: 12px;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    td {
+        padding: 12px 10px;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: center;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    tr:nth-child(even) {
+        background: #f8fafc;
+    }
+
+    .period-number {
+        font-weight: 800;
+        color: #1e3a8a;
+    }
+
+    .new-principal {
+        font-weight: 800;
+        color: #166534;
+    }
+
+    /* RULE */
+    .rule-box {
+        background: #f8fafc;
+        border-left: 4px solid #172554;
+        padding: 14px;
+        border-radius: 8px;
+        font-size: 13px;
+        line-height: 1.6;
+        color: #475569;
+    }
+
+    /* EMPTY STATE */
+    .empty-message {
+        text-align: center;
+        color: #94a3b8;
+        padding: 25px 10px;
+        font-size: 14px;
+    }
+
+    /* POPUP */
+    .popup-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(15,23,42,0.55);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        z-index: 999;
+    }
+
+    .popup {
+        background: white;
+        width: 100%;
+        max-width: 360px;
+        border-radius: 18px;
+        padding: 25px;
+        text-align: center;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.20);
+        animation: popupIn 0.2s ease;
+    }
+
+    @keyframes popupIn {
+        from {
+            transform: scale(0.92);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    .popup-icon {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 12px;
+        border-radius: 50%;
+        background: #fee2e2;
+        color: #dc2626;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .popup h3 {
+        margin-bottom: 7px;
+        color: #172033;
+    }
+
+    .popup p {
+        color: #64748b;
+        font-size: 14px;
+        margin-bottom: 18px;
+    }
+
+    .popup button {
+        width: 100%;
+        background: #172554;
+        color: white;
+    }
+
+    /* FOOTER */
+    .footer {
+        text-align: center;
+        color: #64748b;
+        font-size: 12px;
+        margin-top: 20px;
+    }
+
+    /* MOBILE */
+    @media (max-width: 700px) {
+
+        body {
+            padding: 12px 9px 30px;
+        }
+
+        .header {
+            padding: 22px 15px;
+            border-radius: 16px;
+        }
+
+        .header h1 {
+            font-size: 23px;
+        }
+
+        .card {
+            padding: 16px;
+            border-radius: 15px;
+        }
+
+        .input-grid {
+            grid-template-columns: 1fr;
+            gap: 13px;
+        }
+
+        .summary-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 9px;
+        }
+
+        .summary-box {
+            padding: 13px 11px;
+        }
+
+        .summary-box .value {
+            font-size: 16px;
+        }
+
+        .final-box .value {
+            font-size: 19px;
+        }
+
+        .buttons {
+            flex-direction: column;
+        }
+
+        .section-title {
+            font-size: 17px;
+        }
+    }
+
+    @media (max-width: 380px) {
+        .summary-grid {
+            grid-template-columns: 1fr;
+        }
+    }
 </style>
 </head>
 
 <body>
 
-<!-- ERROR POPUP -->
-
-<div id="errorPopup" class="error-popup">
-    <strong>⚠️ Please check your input</strong>
-    <span id="errorText"></span>
-</div>
-
-
 <div class="container">
 
+    <!-- HEADER -->
     <div class="header">
-        <h1>💰 Interest Calculator</h1>
-        <p>Calculate interest with yearly principal growth</p>
+        <h1>Monthly Interest Calculator</h1>
+        <p>Calculate interest with 12-month principal growth</p>
     </div>
 
-
-    <!-- INPUT CARD -->
-
+    <!-- INPUT SECTION -->
     <div class="card">
+
+        <div class="section-title">
+            💰 Enter Details
+        </div>
 
         <div class="input-grid">
 
-            <div>
-                <label>Principal Amount (₹)</label>
-                <input
-                    type="number"
-                    id="principal"
-                    placeholder="e.g. 50000"
-                    min="0"
-                >
+            <div class="field">
+                <label>Principal Amount</label>
+
+                <div class="input-wrap">
+                    <span>₹</span>
+                    <input
+                        type="number"
+                        id="principal"
+                        placeholder="10000"
+                        min="0"
+                    >
+                </div>
             </div>
 
-            <div>
-                <label>Annual Interest Rate (%)</label>
-                <input
-                    type="number"
-                    id="rate"
-                    placeholder="e.g. 12"
-                    min="0"
-                    step="0.01"
-                >
+            <div class="field">
+                <label>Monthly Interest Rate</label>
+
+                <div class="input-wrap">
+                    <input
+                        type="number"
+                        id="rate"
+                        class="no-prefix"
+                        placeholder="3"
+                        min="0"
+                        step="0.01"
+                    >
+                </div>
             </div>
 
-            <div>
+            <div class="field">
                 <label>Total Months</label>
-                <input
-                    type="number"
-                    id="months"
-                    placeholder="e.g. 26"
-                    min="1"
-                    step="1"
-                >
+
+                <div class="input-wrap">
+                    <input
+                        type="number"
+                        id="months"
+                        class="no-prefix"
+                        placeholder="25"
+                        min="1"
+                        step="1"
+                    >
+                </div>
             </div>
 
         </div>
 
-
         <div class="buttons">
-
-            <button
-                class="calculate"
-                onclick="calculateInterest()">
-                🧮 Calculate
+            <button class="calculate-btn" onclick="calculateInterest()">
+                Calculate
             </button>
 
-            <button
-                class="reset"
-                onclick="resetCalculator()">
-                🔄 Reset
+            <button class="reset-btn" onclick="resetCalculator()">
+                Reset
             </button>
+        </div>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+    <div class="card" id="summaryCard">
+
+        <div class="section-title">
+            📊 Calculation Summary
+        </div>
+
+        <div class="summary-grid">
+
+            <div class="summary-box">
+                <div class="label">Principal Amount</div>
+                <div class="value" id="summaryPrincipal">₹0</div>
+            </div>
+
+            <div class="summary-box">
+                <div class="label">1 Month Interest</div>
+                <div class="value" id="summaryMonthly">₹0</div>
+            </div>
+
+            <div class="summary-box">
+                <div class="label">Total Months</div>
+                <div class="value" id="summaryMonths">0</div>
+            </div>
+
+            <div class="summary-box">
+                <div class="label">Total Interest</div>
+                <div class="value" id="summaryInterest">₹0</div>
+            </div>
+
+            <div class="summary-box final-box" style="grid-column: 1 / -1;">
+                <div class="label">Final Amount</div>
+                <div class="value" id="summaryFinal">₹0</div>
+            </div>
 
         </div>
 
     </div>
 
 
-    <!-- RESULT -->
+    <!-- PERIOD BREAKDOWN -->
+    <div class="card">
 
-    <div id="results" class="hidden">
+        <div class="section-title">
+            📋 Period-wise Interest Breakdown
+        </div>
 
-        <div class="card">
+        <div class="table-wrapper">
 
-            <div class="summary-grid">
+            <table>
 
-                <div class="summary-box">
-                    <span>Principal Amount</span>
-                    <strong id="principalResult">₹0</strong>
-                </div>
+                <thead>
+                    <tr>
+                        <th>Period</th>
+                        <th>Principal Amount</th>
+                        <th>Using Amount</th>
+                        <th>1 Month Interest</th>
+                        <th>Months</th>
+                        <th>Period Interest</th>
+                        <th>Total Interest</th>
+                        <th>New Principal</th>
+                    </tr>
+                </thead>
 
-                <div class="summary-box">
-                    <span>1 Month Interest</span>
-                    <strong id="monthlyInterest">₹0</strong>
-                </div>
+                <tbody id="resultTable">
 
-                <div class="summary-box">
-                    <span>Total Interest</span>
-                    <strong id="totalInterest">₹0</strong>
-                </div>
+                    <tr>
+                        <td colspan="8" class="empty-message">
+                            Enter details and press Calculate
+                        </td>
+                    </tr>
 
-                <div class="summary-box final">
-                    <span>Final Amount</span>
-                    <strong id="finalAmount">₹0</strong>
-                </div>
+                </tbody>
 
-            </div>
+            </table>
 
         </div>
 
-
-        <!-- PERIOD TABLE -->
-
-        <div class="card">
-
-            <div class="table-title">
-                📊 Interest Breakdown
-            </div>
-
-            <div class="table-wrap">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-                            <th>Period</th>
-                            <th>Principal Amount</th>
-                            <th>Using Amount</th>
-                            <th>Months</th>
-                            <th>Interest</th>
-                            <th>Total Interest</th>
-                            <th>New Principal</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody id="breakdownTable"></tbody>
-
-                </table>
-
-            </div>
+    </div>
 
 
-            <div class="note">
-                💡 For the first 12 months, interest is calculated on the
-                original principal. After every completed 12 months,
-                the accumulated interest is added to the amount and it
-                becomes the new principal for the next period.
-            </div>
+    <!-- RULE -->
+    <div class="card">
 
+        <div class="section-title">
+            ℹ️ Calculation Rule
         </div>
+
+        <div class="rule-box">
+            Interest rate is calculated <strong>monthly</strong>.
+            Every 12 completed months, that period's interest is added
+            to the principal and becomes the new principal for the next period.
+            Any remaining months are calculated using the latest principal.
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+        Monthly Interest Calculator
+    </div>
+
+</div>
+
+
+<!-- ERROR POPUP -->
+<div class="popup-overlay" id="popupOverlay">
+
+    <div class="popup">
+
+        <div class="popup-icon">!</div>
+
+        <h3>Invalid Input</h3>
+
+        <p id="popupMessage">
+            Please enter all required details.
+        </p>
+
+        <button onclick="closePopup()">OK</button>
 
     </div>
 
@@ -410,38 +605,33 @@ th:first-child{
 
 <script>
 
-function formatMoney(value){
+function formatMoney(number) {
 
-    return "₹" + value.toLocaleString("en-IN",{
-        minimumFractionDigits:2,
-        maximumFractionDigits:2
+    return "₹" + number.toLocaleString("en-IN", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
     });
 
 }
 
 
-/* ERROR */
+function showPopup(message) {
 
-function showError(message){
+    document.getElementById("popupMessage").innerText = message;
 
-    const popup = document.getElementById("errorPopup");
-
-    document.getElementById("errorText").innerText = message;
-
-    popup.classList.add("show");
-
-    setTimeout(function(){
-
-        popup.classList.remove("show");
-
-    },3000);
+    document.getElementById("popupOverlay").style.display = "flex";
 
 }
 
 
-/* CALCULATE */
+function closePopup() {
 
-function calculateInterest(){
+    document.getElementById("popupOverlay").style.display = "none";
+
+}
+
+
+function calculateInterest() {
 
     const principalInput =
         document.getElementById("principal").value.trim();
@@ -453,28 +643,20 @@ function calculateInterest(){
         document.getElementById("months").value.trim();
 
 
-    /* BLANK CHECK */
+    /* VALIDATION */
 
-    if(principalInput === ""){
-
-        showError("Please enter Principal Amount.");
-
+    if (principalInput === "") {
+        showPopup("Please enter Principal Amount.");
         return;
     }
 
-
-    if(rateInput === ""){
-
-        showError("Please enter Interest Rate.");
-
+    if (rateInput === "") {
+        showPopup("Please enter Monthly Interest Rate.");
         return;
     }
 
-
-    if(monthsInput === ""){
-
-        showError("Please enter Total Months.");
-
+    if (monthsInput === "") {
+        showPopup("Please enter Total Months.");
         return;
     }
 
@@ -484,114 +666,75 @@ function calculateInterest(){
     const totalMonths = Number(monthsInput);
 
 
-    /* INVALID CHECK */
+    if (!Number.isFinite(principal) || principal <= 0) {
+        showPopup("Principal Amount must be greater than 0.");
+        return;
+    }
 
-    if(principal <= 0){
+    if (!Number.isFinite(rate) || rate < 0) {
+        showPopup("Monthly Interest Rate cannot be negative.");
+        return;
+    }
 
-        showError("Principal Amount must be greater than 0.");
+    if (!Number.isFinite(totalMonths) ||
+        totalMonths <= 0 ||
+        !Number.isInteger(totalMonths)) {
 
+        showPopup("Total Months must be a whole number greater than 0.");
         return;
     }
 
 
-    if(rate < 0){
+    /* CALCULATION */
 
-        showError("Interest Rate cannot be negative.");
-
-        return;
-    }
-
-
-    if(totalMonths <= 0 || !Number.isInteger(totalMonths)){
-
-        showError("Total Months must be a whole number greater than 0.");
-
-        return;
-    }
-
-
-    /*
-        MONTHLY RATE
-
-        Annual rate / 12
-    */
-
-    const monthlyRate = rate / 100 / 12;
-
-
-    /*
-        IMPORTANT LOGIC
-
-        First 12 months:
-        Original principal is used.
-
-        After 12 months:
-        New principal = previous using amount + 12 months interest.
-
-        This repeats every 12 months.
-    */
-
-
-    let currentPrincipal = principal;
-
-    let remainingMonths = totalMonths;
+    let usingAmount = principal;
 
     let totalInterest = 0;
 
-    let periodNumber = 1;
+    let remainingMonths = totalMonths;
+
+    let period = 1;
 
     let tableHTML = "";
 
 
-    /*
-        1 MONTH INTEREST
-
-        Always based on current/original principal
-        for the first period.
-    */
+    /* First month's interest on current principal */
 
     const firstMonthInterest =
-        principal * monthlyRate;
+        usingAmount * rate / 100;
 
 
-    while(remainingMonths > 0){
+    /*
+        Each period can contain maximum 12 months.
+        After every complete 12-month period,
+        period interest is added to usingAmount.
+    */
 
-        /*
-            Maximum 12 months in one period
-        */
+    while (remainingMonths > 0) {
 
         const periodMonths =
             Math.min(12, remainingMonths);
 
 
-        /*
-            Interest for this period
+        const monthInterest =
+            usingAmount * rate / 100;
 
-            Because interest is NOT compounded monthly,
-            interest is simply:
-
-            Using Amount × monthly rate × months
-        */
-
-        const usingAmount = currentPrincipal;
 
         const periodInterest =
-            usingAmount * monthlyRate * periodMonths;
+            monthInterest * periodMonths;
 
 
         totalInterest += periodInterest;
 
 
-        /*
-            New principal only after a FULL 12-month period.
+        const isCompleteYear =
+            periodMonths === 12;
 
-            If remaining period is less than 12 months,
-            there is no new principal.
-        */
 
         let newPrincipal = null;
 
-        if(periodMonths === 12){
+
+        if (isCompleteYear) {
 
             newPrincipal =
                 usingAmount + periodInterest;
@@ -599,20 +742,11 @@ function calculateInterest(){
         }
 
 
-        /*
-            Display total interest
-        */
-
-        const cumulativeInterest =
-            totalInterest;
-
-
         tableHTML += `
-
             <tr>
 
-                <td>
-                    ${periodNumber}
+                <td class="period-number">
+                    ${period}
                 </td>
 
                 <td>
@@ -624,6 +758,10 @@ function calculateInterest(){
                 </td>
 
                 <td>
+                    ${formatMoney(monthInterest)}
+                </td>
+
+                <td>
                     ${periodMonths}
                 </td>
 
@@ -632,10 +770,10 @@ function calculateInterest(){
                 </td>
 
                 <td>
-                    ${formatMoney(cumulativeInterest)}
+                    ${formatMoney(totalInterest)}
                 </td>
 
-                <td>
+                <td class="new-principal">
                     ${
                         newPrincipal !== null
                         ? formatMoney(newPrincipal)
@@ -644,73 +782,54 @@ function calculateInterest(){
                 </td>
 
             </tr>
-
         `;
 
 
-        /*
-            Move to next period
-        */
+        if (isCompleteYear) {
 
-        if(newPrincipal !== null){
-
-            currentPrincipal = newPrincipal;
+            usingAmount = newPrincipal;
 
         }
 
 
         remainingMonths -= periodMonths;
 
-        periodNumber++;
+        period++;
 
     }
 
-
-    /*
-        FINAL AMOUNT
-    */
 
     const finalAmount =
         principal + totalInterest;
 
 
-    /*
-        SHOW RESULTS
-    */
+    /* UPDATE SUMMARY */
 
-    document.getElementById("principalResult").innerText =
+    document.getElementById("summaryPrincipal").innerText =
         formatMoney(principal);
 
-    document.getElementById("monthlyInterest").innerText =
+    document.getElementById("summaryMonthly").innerText =
         formatMoney(firstMonthInterest);
 
-    document.getElementById("totalInterest").innerText =
+    document.getElementById("summaryMonths").innerText =
+        totalMonths + " Months";
+
+    document.getElementById("summaryInterest").innerText =
         formatMoney(totalInterest);
 
-    document.getElementById("finalAmount").innerText =
+    document.getElementById("summaryFinal").innerText =
         formatMoney(finalAmount);
 
-    document.getElementById("breakdownTable").innerHTML =
+
+    /* UPDATE TABLE */
+
+    document.getElementById("resultTable").innerHTML =
         tableHTML;
-
-
-    document.getElementById("results").classList.remove("hidden");
-
-
-    /*
-        Scroll to result
-    */
-
-    document.getElementById("results").scrollIntoView({
-        behavior:"smooth"
-    });
 
 }
 
 
-/* RESET */
-
-function resetCalculator(){
+function resetCalculator() {
 
     document.getElementById("principal").value = "";
 
@@ -718,19 +837,44 @@ function resetCalculator(){
 
     document.getElementById("months").value = "";
 
-    document.getElementById("results").classList.add("hidden");
 
-    document.getElementById("breakdownTable").innerHTML = "";
+    document.getElementById("summaryPrincipal").innerText =
+        "₹0";
 
-    document.getElementById("principalResult").innerText = "₹0";
+    document.getElementById("summaryMonthly").innerText =
+        "₹0";
 
-    document.getElementById("monthlyInterest").innerText = "₹0";
+    document.getElementById("summaryMonths").innerText =
+        "0";
 
-    document.getElementById("totalInterest").innerText = "₹0";
+    document.getElementById("summaryInterest").innerText =
+        "₹0";
 
-    document.getElementById("finalAmount").innerText = "₹0";
+    document.getElementById("summaryFinal").innerText =
+        "₹0";
+
+
+    document.getElementById("resultTable").innerHTML = `
+        <tr>
+            <td colspan="8" class="empty-message">
+                Enter details and press Calculate
+            </td>
+        </tr>
+    `;
 
 }
+
+
+document.getElementById("popupOverlay").addEventListener(
+    "click",
+    function(event) {
+
+        if (event.target === this) {
+            closePopup();
+        }
+
+    }
+);
 
 </script>
 
