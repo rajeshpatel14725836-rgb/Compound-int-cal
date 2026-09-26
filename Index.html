@@ -5,400 +5,342 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <meta name="theme-color" content="#172554">
-<meta name="description" content="Simple Monthly Interest Calculator">
+<meta name="description" content="Monthly Interest Calculator">
+
+<link rel="manifest" href="./manifest.json">
 
 <title>Monthly Interest Calculator</title>
-   <link rel="manifest" href="manifest.json">
 
 <style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #eef2ff, #f8fafc 50%, #e0f2fe);
+    color: #172033;
+    min-height: 100vh;
+    padding: 20px 12px 40px;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+}
+
+.header {
+    background: linear-gradient(135deg, #172554, #1e3a8a);
+    color: white;
+    padding: 25px 20px;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 18px;
+    box-shadow: 0 12px 30px rgba(23,37,84,.20);
+}
+
+.header h1 {
+    font-size: 27px;
+    margin-bottom: 7px;
+}
+
+.header p {
+    font-size: 14px;
+    opacity: .88;
+}
+
+.card {
+    background: rgba(255,255,255,.96);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 8px 25px rgba(15,23,42,.08);
+    border: 1px solid #e5e7eb;
+}
+
+.section-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: #172554;
+    margin-bottom: 17px;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 7px;
+    color: #475569;
+}
+
+.input-wrap {
+    position: relative;
+}
+
+.input-wrap span {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    color: #64748b;
+}
+
+.input-wrap input {
+    width: 100%;
+    padding: 13px 13px 13px 35px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 11px;
+    outline: none;
+    font-size: 16px;
+    background: #f8fafc;
+}
+
+.input-wrap input.no-prefix {
+    padding-left: 13px;
+}
+
+.input-wrap input:focus {
+    border-color: #2563eb;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(37,99,235,.10);
+}
+
+.buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+button {
+    flex: 1;
+    border: none;
+    padding: 14px;
+    border-radius: 11px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.calculate-btn {
+    background: #172554;
+    color: white;
+}
+
+.reset-btn {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.summary-box {
+    padding: 16px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 13px;
+}
+
+.summary-box .label {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 5px;
+}
+
+.summary-box .value {
+    font-size: 19px;
+    font-weight: 800;
+    color: #172554;
+}
+
+.final-box {
+    background: linear-gradient(135deg, #172554, #1e40af);
+    color: white;
+    border: none;
+}
+
+.final-box .label,
+.final-box .value {
+    color: white;
+}
+
+.final-box .value {
+    font-size: 23px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+table {
+    width: 100%;
+    min-width: 850px;
+    border-collapse: collapse;
+    background: white;
+}
+
+th {
+    background: #172554;
+    color: white;
+    padding: 12px 10px;
+    font-size: 12px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: center;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+.period-number {
+    font-weight: 800;
+    color: #1e3a8a;
+}
+
+.new-principal {
+    font-weight: 800;
+    color: #166534;
+}
+
+.empty-message {
+    text-align: center;
+    color: #94a3b8;
+    padding: 25px 10px;
+}
+
+.rule-box {
+    background: #f8fafc;
+    border-left: 4px solid #172554;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #475569;
+}
+
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 999;
+}
+
+.popup {
+    background: white;
+    width: 100%;
+    max-width: 360px;
+    border-radius: 18px;
+    padding: 25px;
+    text-align: center;
+}
+
+.popup-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: #fee2e2;
+    color: #dc2626;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.popup h3 {
+    margin-bottom: 7px;
+}
+
+.popup p {
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+.popup button {
+    width: 100%;
+    background: #172554;
+    color: white;
+}
+
+.footer {
+    text-align: center;
+    color: #64748b;
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+@media (max-width: 700px) {
     body {
-        font-family: Arial, Helvetica, sans-serif;
-        background:
-            linear-gradient(135deg, #eef2ff, #f8fafc 50%, #e0f2fe);
-        color: #172033;
-        min-height: 100vh;
-        padding: 20px 12px 40px;
+        padding: 12px 9px 30px;
     }
 
-    .container {
-        width: 100%;
-        max-width: 900px;
-        margin: auto;
-    }
-
-    /* HEADER */
     .header {
-        background: linear-gradient(135deg, #172554, #1e3a8a);
-        color: white;
-        padding: 25px 20px;
-        border-radius: 20px;
-        text-align: center;
-        margin-bottom: 18px;
-        box-shadow: 0 12px 30px rgba(23, 37, 84, 0.20);
+        padding: 22px 15px;
     }
 
     .header h1 {
-        font-size: 27px;
-        margin-bottom: 7px;
-        letter-spacing: 0.3px;
-    }
-
-    .header p {
-        font-size: 14px;
-        opacity: 0.88;
-    }
-
-    /* CARD */
-    .card {
-        background: rgba(255,255,255,0.95);
-        border-radius: 18px;
-        padding: 20px;
-        margin-bottom: 18px;
-        box-shadow: 0 8px 25px rgba(15,23,42,0.08);
-        border: 1px solid #e5e7eb;
-    }
-
-    .section-title {
-        font-size: 19px;
-        font-weight: 700;
-        color: #172554;
-        margin-bottom: 17px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    /* INPUTS */
-    .input-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 15px;
-    }
-
-    .field label {
-        display: block;
-        font-size: 13px;
-        font-weight: 700;
-        margin-bottom: 7px;
-        color: #475569;
-    }
-
-    .input-wrap {
-        position: relative;
-    }
-
-    .input-wrap span {
-        position: absolute;
-        left: 13px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-weight: bold;
-        color: #64748b;
-    }
-
-    .input-wrap input {
-        width: 100%;
-        padding: 13px 13px 13px 35px;
-        border: 1.5px solid #cbd5e1;
-        border-radius: 11px;
-        outline: none;
-        font-size: 16px;
-        background: #f8fafc;
-        transition: 0.2s;
-    }
-
-    .input-wrap input.no-prefix {
-        padding-left: 13px;
-    }
-
-    .input-wrap input:focus {
-        border-color: #2563eb;
-        background: white;
-        box-shadow: 0 0 0 3px rgba(37,99,235,0.10);
-    }
-
-    /* BUTTONS */
-    .buttons {
-        display: flex;
-        gap: 12px;
-        margin-top: 20px;
-    }
-
-    button {
-        flex: 1;
-        border: none;
-        padding: 14px;
-        border-radius: 11px;
-        font-size: 15px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: 0.2s;
-    }
-
-    .calculate-btn {
-        background: #172554;
-        color: white;
-    }
-
-    .calculate-btn:hover {
-        background: #1e3a8a;
-        transform: translateY(-1px);
-    }
-
-    .reset-btn {
-        background: #e2e8f0;
-        color: #334155;
-    }
-
-    .reset-btn:hover {
-        background: #cbd5e1;
-    }
-
-    /* SUMMARY */
-    .summary-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-    }
-
-    .summary-box {
-        padding: 16px;
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
-        border-radius: 13px;
-    }
-
-    .summary-box .label {
-        font-size: 12px;
-        color: #64748b;
-        margin-bottom: 5px;
-    }
-
-    .summary-box .value {
-        font-size: 19px;
-        font-weight: 800;
-        color: #172554;
-    }
-
-    .final-box {
-        background: linear-gradient(135deg, #172554, #1e40af);
-        color: white;
-        border: none;
-    }
-
-    .final-box .label,
-    .final-box .value {
-        color: white;
-    }
-
-    .final-box .value {
         font-size: 23px;
     }
 
-    /* TABLE */
-    .table-wrapper {
-        overflow-x: auto;
-        border-radius: 12px;
-        border: 1px solid #e2e8f0;
+    .card {
+        padding: 16px;
     }
 
-    table {
-        width: 100%;
-        min-width: 850px;
-        border-collapse: collapse;
-        background: white;
+    .input-grid {
+        grid-template-columns: 1fr;
+        gap: 13px;
     }
 
-    th {
-        background: #172554;
-        color: white;
-        padding: 12px 10px;
-        font-size: 12px;
-        text-align: center;
-        white-space: nowrap;
+    .summary-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
     }
 
-    td {
-        padding: 12px 10px;
-        border-bottom: 1px solid #e5e7eb;
-        text-align: center;
-        font-size: 13px;
-        white-space: nowrap;
+    .summary-box {
+        padding: 13px 11px;
     }
 
-    tr:last-child td {
-        border-bottom: none;
+    .summary-box .value {
+        font-size: 16px;
     }
 
-    tr:nth-child(even) {
-        background: #f8fafc;
+    .final-box .value {
+        font-size: 19px;
     }
 
-    .period-number {
-        font-weight: 800;
-        color: #1e3a8a;
+    .buttons {
+        flex-direction: column;
     }
-
-    .new-principal {
-        font-weight: 800;
-        color: #166534;
-    }
-
-    /* RULE */
-    .rule-box {
-        background: #f8fafc;
-        border-left: 4px solid #172554;
-        padding: 14px;
-        border-radius: 8px;
-        font-size: 13px;
-        line-height: 1.6;
-        color: #475569;
-    }
-
-    /* EMPTY STATE */
-    .empty-message {
-        text-align: center;
-        color: #94a3b8;
-        padding: 25px 10px;
-        font-size: 14px;
-    }
-
-    /* POPUP */
-    .popup-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(15,23,42,0.55);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        z-index: 999;
-    }
-
-    .popup {
-        background: white;
-        width: 100%;
-        max-width: 360px;
-        border-radius: 18px;
-        padding: 25px;
-        text-align: center;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.20);
-        animation: popupIn 0.2s ease;
-    }
-
-    @keyframes popupIn {
-        from {
-            transform: scale(0.92);
-            opacity: 0;
-        }
-        to {
-            transform: scale(1);
-            opacity: 1;
-        }
-    }
-
-    .popup-icon {
-        width: 48px;
-        height: 48px;
-        margin: 0 auto 12px;
-        border-radius: 50%;
-        background: #fee2e2;
-        color: #dc2626;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 24px;
-        font-weight: bold;
-    }
-
-    .popup h3 {
-        margin-bottom: 7px;
-        color: #172033;
-    }
-
-    .popup p {
-        color: #64748b;
-        font-size: 14px;
-        margin-bottom: 18px;
-    }
-
-    .popup button {
-        width: 100%;
-        background: #172554;
-        color: white;
-    }
-
-    /* FOOTER */
-    .footer {
-        text-align: center;
-        color: #64748b;
-        font-size: 12px;
-        margin-top: 20px;
-    }
-
-    /* MOBILE */
-    @media (max-width: 700px) {
-
-        body {
-            padding: 12px 9px 30px;
-        }
-
-        .header {
-            padding: 22px 15px;
-            border-radius: 16px;
-        }
-
-        .header h1 {
-            font-size: 23px;
-        }
-
-        .card {
-            padding: 16px;
-            border-radius: 15px;
-        }
-
-        .input-grid {
-            grid-template-columns: 1fr;
-            gap: 13px;
-        }
-
-        .summary-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 9px;
-        }
-
-        .summary-box {
-            padding: 13px 11px;
-        }
-
-        .summary-box .value {
-            font-size: 16px;
-        }
-
-        .final-box .value {
-            font-size: 19px;
-        }
-
-        .buttons {
-            flex-direction: column;
-        }
-
-        .section-title {
-            font-size: 17px;
-        }
-    }
-
-    @media (max-width: 380px) {
-        .summary-grid {
-            grid-template-columns: 1fr;
-        }
-    }
+}
 </style>
 </head>
 
@@ -406,185 +348,146 @@
 
 <div class="container">
 
-    <!-- HEADER -->
-    <div class="header">
-        <h1>Monthly Interest Calculator</h1>
-        <p>Calculate interest with 12-month principal growth</p>
-    </div>
+<div class="header">
+    <h1>Monthly Interest Calculator</h1>
+    <p>Calculate interest with 12-month principal growth</p>
+</div>
 
-    <!-- INPUT SECTION -->
-    <div class="card">
+<div class="card">
 
-        <div class="section-title">
-            💰 Enter Details
+    <div class="section-title">💰 Enter Details</div>
+
+    <div class="input-grid">
+
+        <div class="field">
+            <label>Principal Amount</label>
+            <div class="input-wrap">
+                <span>₹</span>
+                <input type="number" id="principal" placeholder="10000" min="0">
+            </div>
         </div>
 
-        <div class="input-grid">
-
-            <div class="field">
-                <label>Principal Amount</label>
-
-                <div class="input-wrap">
-                    <span>₹</span>
-                    <input
-                        type="number"
-                        id="principal"
-                        placeholder="10000"
-                        min="0"
-                    >
-                </div>
+        <div class="field">
+            <label>Monthly Interest Rate</label>
+            <div class="input-wrap">
+                <input type="number" id="rate" class="no-prefix"
+                       placeholder="3" min="0" step="0.01">
             </div>
-
-            <div class="field">
-                <label>Monthly Interest Rate</label>
-
-                <div class="input-wrap">
-                    <input
-                        type="number"
-                        id="rate"
-                        class="no-prefix"
-                        placeholder="3"
-                        min="0"
-                        step="0.01"
-                    >
-                </div>
-            </div>
-
-            <div class="field">
-                <label>Total Months</label>
-
-                <div class="input-wrap">
-                    <input
-                        type="number"
-                        id="months"
-                        class="no-prefix"
-                        placeholder="25"
-                        min="1"
-                        step="1"
-                    >
-                </div>
-            </div>
-
         </div>
 
-        <div class="buttons">
-            <button class="calculate-btn" onclick="calculateInterest()">
-                Calculate
-            </button>
-
-            <button class="reset-btn" onclick="resetCalculator()">
-                Reset
-            </button>
+        <div class="field">
+            <label>Total Months</label>
+            <div class="input-wrap">
+                <input type="number" id="months" class="no-prefix"
+                       placeholder="25" min="1" step="1">
+            </div>
         </div>
 
     </div>
 
+    <div class="buttons">
+        <button class="calculate-btn" onclick="calculateInterest()">
+            Calculate
+        </button>
 
-    <!-- SUMMARY -->
-    <div class="card" id="summaryCard">
-
-        <div class="section-title">
-            📊 Calculation Summary
-        </div>
-
-        <div class="summary-grid">
-
-            <div class="summary-box">
-                <div class="label">Principal Amount</div>
-                <div class="value" id="summaryPrincipal">₹0</div>
-            </div>
-
-            <div class="summary-box">
-                <div class="label">1 Month Interest</div>
-                <div class="value" id="summaryMonthly">₹0</div>
-            </div>
-
-            <div class="summary-box">
-                <div class="label">Total Months</div>
-                <div class="value" id="summaryMonths">0</div>
-            </div>
-
-            <div class="summary-box">
-                <div class="label">Total Interest</div>
-                <div class="value" id="summaryInterest">₹0</div>
-            </div>
-
-            <div class="summary-box final-box" style="grid-column: 1 / -1;">
-                <div class="label">Final Amount</div>
-                <div class="value" id="summaryFinal">₹0</div>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- PERIOD BREAKDOWN -->
-    <div class="card">
-
-        <div class="section-title">
-            📋 Period-wise Interest Breakdown
-        </div>
-
-        <div class="table-wrapper">
-
-            <table>
-
-                <thead>
-                    <tr>
-                        <th>Period</th>
-                        <th>Principal Amount</th>
-                        <th>Using Amount</th>
-                        <th>1 Month Interest</th>
-                        <th>Months</th>
-                        <th>Period Interest</th>
-                        <th>Total Interest</th>
-                        <th>New Principal</th>
-                    </tr>
-                </thead>
-
-                <tbody id="resultTable">
-
-                    <tr>
-                        <td colspan="8" class="empty-message">
-                            Enter details and press Calculate
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </div>
-
-
-    <!-- RULE -->
-    <div class="card">
-
-        <div class="section-title">
-            ℹ️ Calculation Rule
-        </div>
-
-        <div class="rule-box">
-            Interest rate is calculated <strong>monthly</strong>.
-            Every 12 completed months, that period's interest is added
-            to the principal and becomes the new principal for the next period.
-            Any remaining months are calculated using the latest principal.
-        </div>
-
-    </div>
-
-
-    <div class="footer">
-        Monthly Interest Calculator
+        <button class="reset-btn" onclick="resetCalculator()">
+            Reset
+        </button>
     </div>
 
 </div>
 
+<div class="card">
 
-<!-- ERROR POPUP -->
+    <div class="section-title">📊 Calculation Summary</div>
+
+    <div class="summary-grid">
+
+        <div class="summary-box">
+            <div class="label">Principal Amount</div>
+            <div class="value" id="summaryPrincipal">₹0</div>
+        </div>
+
+        <div class="summary-box">
+            <div class="label">1 Month Interest</div>
+            <div class="value" id="summaryMonthly">₹0</div>
+        </div>
+
+        <div class="summary-box">
+            <div class="label">Total Months</div>
+            <div class="value" id="summaryMonths">0</div>
+        </div>
+
+        <div class="summary-box">
+            <div class="label">Total Interest</div>
+            <div class="value" id="summaryInterest">₹0</div>
+        </div>
+
+        <div class="summary-box final-box" style="grid-column:1/-1">
+            <div class="label">Final Amount</div>
+            <div class="value" id="summaryFinal">₹0</div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card">
+
+    <div class="section-title">📋 Period-wise Interest Breakdown</div>
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Period</th>
+                    <th>Principal Amount</th>
+                    <th>Using Amount</th>
+                    <th>1 Month Interest</th>
+                    <th>Months</th>
+                    <th>Period Interest</th>
+                    <th>Total Interest</th>
+                    <th>New Principal</th>
+                </tr>
+            </thead>
+
+            <tbody id="resultTable">
+
+                <tr>
+                    <td colspan="8" class="empty-message">
+                        Enter details and press Calculate
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<div class="card">
+
+    <div class="section-title">ℹ️ Calculation Rule</div>
+
+    <div class="rule-box">
+        Interest rate is calculated <strong>monthly</strong>.
+        Every 12 completed months, that period's interest is added
+        to the principal and becomes the new principal for the next period.
+        Any remaining months are calculated using the latest principal.
+    </div>
+
+</div>
+
+<div class="footer">
+    Monthly Interest Calculator
+</div>
+
+</div>
+
 <div class="popup-overlay" id="popupOverlay">
 
     <div class="popup">
@@ -593,9 +496,7 @@
 
         <h3>Invalid Input</h3>
 
-        <p id="popupMessage">
-            Please enter all required details.
-        </p>
+        <p id="popupMessage">Please enter all required details.</p>
 
         <button onclick="closePopup()">OK</button>
 
@@ -603,34 +504,23 @@
 
 </div>
 
-
 <script>
 
 function formatMoney(number) {
-
     return "₹" + number.toLocaleString("en-IN", {
         minimumFractionDigits: 0,
         maximumFractionDigits: 2
     });
-
 }
-
 
 function showPopup(message) {
-
     document.getElementById("popupMessage").innerText = message;
-
     document.getElementById("popupOverlay").style.display = "flex";
-
 }
-
 
 function closePopup() {
-
     document.getElementById("popupOverlay").style.display = "none";
-
 }
-
 
 function calculateInterest() {
 
@@ -642,9 +532,6 @@ function calculateInterest() {
 
     const monthsInput =
         document.getElementById("months").value.trim();
-
-
-    /* VALIDATION */
 
     if (principalInput === "") {
         showPopup("Please enter Principal Amount.");
@@ -661,11 +548,9 @@ function calculateInterest() {
         return;
     }
 
-
     const principal = Number(principalInput);
     const rate = Number(rateInput);
     const totalMonths = Number(monthsInput);
-
 
     if (!Number.isFinite(principal) || principal <= 0) {
         showPopup("Principal Amount must be greater than 0.");
@@ -685,126 +570,58 @@ function calculateInterest() {
         return;
     }
 
-
-    /* CALCULATION */
-
     let usingAmount = principal;
-
     let totalInterest = 0;
-
     let remainingMonths = totalMonths;
-
     let period = 1;
-
     let tableHTML = "";
 
-
-    /* First month's interest on current principal */
-
-    const firstMonthInterest =
-        usingAmount * rate / 100;
-
-
-    /*
-        Each period can contain maximum 12 months.
-        After every complete 12-month period,
-        period interest is added to usingAmount.
-    */
+    const firstMonthInterest = usingAmount * rate / 100;
 
     while (remainingMonths > 0) {
 
-        const periodMonths =
-            Math.min(12, remainingMonths);
+        const periodMonths = Math.min(12, remainingMonths);
 
+        const monthInterest = usingAmount * rate / 100;
 
-        const monthInterest =
-            usingAmount * rate / 100;
-
-
-        const periodInterest =
-            monthInterest * periodMonths;
-
+        const periodInterest = monthInterest * periodMonths;
 
         totalInterest += periodInterest;
 
-
-        const isCompleteYear =
-            periodMonths === 12;
-
+        const isCompleteYear = periodMonths === 12;
 
         let newPrincipal = null;
 
-
         if (isCompleteYear) {
-
-            newPrincipal =
-                usingAmount + periodInterest;
-
+            newPrincipal = usingAmount + periodInterest;
         }
-
 
         tableHTML += `
             <tr>
-
-                <td class="period-number">
-                    ${period}
-                </td>
-
-                <td>
-                    ${formatMoney(principal)}
-                </td>
-
-                <td>
-                    ${formatMoney(usingAmount)}
-                </td>
-
-                <td>
-                    ${formatMoney(monthInterest)}
-                </td>
-
-                <td>
-                    ${periodMonths}
-                </td>
-
-                <td>
-                    ${formatMoney(periodInterest)}
-                </td>
-
-                <td>
-                    ${formatMoney(totalInterest)}
-                </td>
-
+                <td class="period-number">${period}</td>
+                <td>${formatMoney(principal)}</td>
+                <td>${formatMoney(usingAmount)}</td>
+                <td>${formatMoney(monthInterest)}</td>
+                <td>${periodMonths}</td>
+                <td>${formatMoney(periodInterest)}</td>
+                <td>${formatMoney(totalInterest)}</td>
                 <td class="new-principal">
-                    ${
-                        newPrincipal !== null
+                    ${newPrincipal !== null
                         ? formatMoney(newPrincipal)
-                        : "—"
-                    }
+                        : "—"}
                 </td>
-
             </tr>
         `;
 
-
         if (isCompleteYear) {
-
             usingAmount = newPrincipal;
-
         }
 
-
         remainingMonths -= periodMonths;
-
         period++;
-
     }
 
-
-    const finalAmount =
-        principal + totalInterest;
-
-
-    /* UPDATE SUMMARY */
+    const finalAmount = principal + totalInterest;
 
     document.getElementById("summaryPrincipal").innerText =
         formatMoney(principal);
@@ -821,39 +638,21 @@ function calculateInterest() {
     document.getElementById("summaryFinal").innerText =
         formatMoney(finalAmount);
 
-
-    /* UPDATE TABLE */
-
     document.getElementById("resultTable").innerHTML =
         tableHTML;
-
 }
-
 
 function resetCalculator() {
 
     document.getElementById("principal").value = "";
-
     document.getElementById("rate").value = "";
-
     document.getElementById("months").value = "";
 
-
-    document.getElementById("summaryPrincipal").innerText =
-        "₹0";
-
-    document.getElementById("summaryMonthly").innerText =
-        "₹0";
-
-    document.getElementById("summaryMonths").innerText =
-        "0";
-
-    document.getElementById("summaryInterest").innerText =
-        "₹0";
-
-    document.getElementById("summaryFinal").innerText =
-        "₹0";
-
+    document.getElementById("summaryPrincipal").innerText = "₹0";
+    document.getElementById("summaryMonthly").innerText = "₹0";
+    document.getElementById("summaryMonths").innerText = "0";
+    document.getElementById("summaryInterest").innerText = "₹0";
+    document.getElementById("summaryFinal").innerText = "₹0";
 
     document.getElementById("resultTable").innerHTML = `
         <tr>
@@ -862,29 +661,39 @@ function resetCalculator() {
             </td>
         </tr>
     `;
-
 }
 
+/* PWA SERVICE WORKER */
 
-document.getElementById("popupOverlay").addEventListener(
-    "click",
-    function(event) {
-
-        if (event.target === this) {
-            closePopup();
-        }
-
-    }
-);
-
-</script>
-
-<script>
 if ("serviceWorker" in navigator) {
+
     window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./service-worker.js");
+
+        navigator.serviceWorker.register("./service-worker.js")
+            .then(() => {
+                console.log("Service Worker registered");
+            })
+            .catch(error => {
+                console.log("Service Worker error:", error);
+            });
+
     });
+
 }
+
 </script>
+
 </body>
 </html>
+
+Ab 4 files final honi chahiye:
+
+- "index.html"
+- "manifest.json"
+- "service-worker.js"
+- "icon-192.png"
+- "icon-512.png"
+
+Actually 5 files hain, kyunki dono icons alag files hain.
+
+Ab "index.html" commit karne ke baad Netlify mein new deploy/update hone do. Uske baad PWABuilder par dobara check karenge.
