@@ -1,20 +1,19 @@
-const CACHE_NAME = "interest-calculator-v2";
+const CACHE_NAME = "interest-calculator-v3";
+
+const BASE = "/Compound-int-cal/";
 
 const FILES_TO_CACHE = [
-  "./",
-  "./index.html",
-  "./manifest.json",
-  "./icon-192.png",
-  "./icon-512.png"
+  BASE,
+  BASE + "index.html",
+  BASE + "manifest.json",
+  BASE + "icon-192.png",
+  BASE + "icon-512.png"
 ];
 
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(FILES_TO_CACHE);
-    })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE))
   );
-
   self.skipWaiting();
 });
 
@@ -28,7 +27,6 @@ self.addEventListener("activate", event => {
       )
     )
   );
-
   self.clients.claim();
 });
 
