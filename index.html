@@ -1,17 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta name="theme-color" content="#172554">
-<meta name="description" content="Monthly Interest Calculator">
-
-<link rel="manifest" href="./manifest.json">
-
-<title>Monthly Interest Calculator</title>
-
-<style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Monthly Interest Calculator</title><meta name="theme-color" content="#172554">
+<meta name="description" content="Monthly Interest Calculator"><link rel="manifest" href="./manifest.json"><style>
 * {
     box-sizing: border-box;
     margin: 0;
@@ -341,171 +332,135 @@ tr:nth-child(even) {
         flex-direction: column;
     }
 }
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="header">
+</style></head><body><div class="container"><div class="header">
     <h1>Monthly Interest Calculator</h1>
     <p>Calculate interest with 12-month principal growth</p>
-</div>
+</div><div class="card"><div class="section-title">💰 Enter Details</div>
 
-<div class="card">
+<div class="input-grid">
 
-    <div class="section-title">💰 Enter Details</div>
-
-    <div class="input-grid">
-
-        <div class="field">
-            <label>Principal Amount</label>
-            <div class="input-wrap">
-                <span>₹</span>
-                <input type="number" id="principal" placeholder="10000" min="0">
-            </div>
+    <div class="field">
+        <label>Principal Amount</label>
+        <div class="input-wrap">
+            <span>₹</span>
+            <input type="number" id="principal" placeholder="10000" min="0">
         </div>
-
-        <div class="field">
-            <label>Monthly Interest Rate</label>
-            <div class="input-wrap">
-                <input type="number" id="rate" class="no-prefix"
-                       placeholder="3" min="0" step="0.01">
-            </div>
-        </div>
-
-        <div class="field">
-            <label>Total Months</label>
-            <div class="input-wrap">
-                <input type="number" id="months" class="no-prefix"
-                       placeholder="25" min="1" step="1">
-            </div>
-        </div>
-
     </div>
 
-    <div class="buttons">
-        <button class="calculate-btn" onclick="calculateInterest()">
-            Calculate
-        </button>
+    <div class="field">
+        <label>Monthly Interest Rate</label>
+        <div class="input-wrap">
+            <input type="number" id="rate" class="no-prefix"
+                   placeholder="3" min="0" step="0.01">
+        </div>
+    </div>
 
-        <button class="reset-btn" onclick="resetCalculator()">
-            Reset
-        </button>
+    <div class="field">
+        <label>Total Months</label>
+        <div class="input-wrap">
+            <input type="number" id="months" class="no-prefix"
+                   placeholder="25" min="1" step="1">
+        </div>
     </div>
 
 </div>
 
-<div class="card">
+<div class="buttons">
+    <button class="calculate-btn" onclick="calculateInterest()">
+        Calculate
+    </button>
 
-    <div class="section-title">📊 Calculation Summary</div>
+    <button class="reset-btn" onclick="resetCalculator()">
+        Reset
+    </button>
+</div>
 
-    <div class="summary-grid">
+</div><div class="card"><div class="section-title">📊 Calculation Summary</div>
 
-        <div class="summary-box">
-            <div class="label">Principal Amount</div>
-            <div class="value" id="summaryPrincipal">₹0</div>
-        </div>
+<div class="summary-grid">
 
-        <div class="summary-box">
-            <div class="label">1 Month Interest</div>
-            <div class="value" id="summaryMonthly">₹0</div>
-        </div>
+    <div class="summary-box">
+        <div class="label">Principal Amount</div>
+        <div class="value" id="summaryPrincipal">₹0</div>
+    </div>
 
-        <div class="summary-box">
-            <div class="label">Total Months</div>
-            <div class="value" id="summaryMonths">0</div>
-        </div>
+    <div class="summary-box">
+        <div class="label">1 Month Interest</div>
+        <div class="value" id="summaryMonthly">₹0</div>
+    </div>
 
-        <div class="summary-box">
-            <div class="label">Total Interest</div>
-            <div class="value" id="summaryInterest">₹0</div>
-        </div>
+    <div class="summary-box">
+        <div class="label">Total Months</div>
+        <div class="value" id="summaryMonths">0</div>
+    </div>
 
-        <div class="summary-box final-box" style="grid-column:1/-1">
-            <div class="label">Final Amount</div>
-            <div class="value" id="summaryFinal">₹0</div>
-        </div>
+    <div class="summary-box">
+        <div class="label">Total Interest</div>
+        <div class="value" id="summaryInterest">₹0</div>
+    </div>
 
+    <div class="summary-box final-box" style="grid-column:1/-1">
+        <div class="label">Final Amount</div>
+        <div class="value" id="summaryFinal">₹0</div>
     </div>
 
 </div>
 
-<div class="card">
+</div><div class="card"><div class="section-title">📋 Period-wise Interest Breakdown</div>
 
-    <div class="section-title">📋 Period-wise Interest Breakdown</div>
+<div class="table-wrapper">
 
-    <div class="table-wrapper">
+    <table>
 
-        <table>
+        <thead>
+            <tr>
+                <th>Period</th>
+                <th>Principal Amount</th>
+                <th>Using Amount</th>
+                <th>1 Month Interest</th>
+                <th>Months</th>
+                <th>Period Interest</th>
+                <th>Total Interest</th>
+                <th>New Principal</th>
+            </tr>
+        </thead>
 
-            <thead>
-                <tr>
-                    <th>Period</th>
-                    <th>Principal Amount</th>
-                    <th>Using Amount</th>
-                    <th>1 Month Interest</th>
-                    <th>Months</th>
-                    <th>Period Interest</th>
-                    <th>Total Interest</th>
-                    <th>New Principal</th>
-                </tr>
-            </thead>
+        <tbody id="resultTable">
+            <tr>
+                <td colspan="8" class="empty-message">
+                    Enter details and press Calculate
+                </td>
+            </tr>
+        </tbody>
 
-            <tbody id="resultTable">
-
-                <tr>
-                    <td colspan="8" class="empty-message">
-                        Enter details and press Calculate
-                    </td>
-                </tr>
-
-            </tbody>
-
-        </table>
-
-    </div>
+    </table>
 
 </div>
 
-<div class="card">
+</div><div class="card"><div class="section-title">ℹ️ Calculation Rule</div>
 
-    <div class="section-title">ℹ️ Calculation Rule</div>
-
-    <div class="rule-box">
-        Interest rate is calculated <strong>monthly</strong>.
-        Every 12 completed months, that period's interest is added
-        to the principal and becomes the new principal for the next period.
-        Any remaining months are calculated using the latest principal.
-    </div>
-
+<div class="rule-box">
+    Interest rate is calculated <strong>monthly</strong>.
+    Every 12 completed months, that period's interest is added
+    to the principal and becomes the new principal for the next period.
+    Any remaining months are calculated using the latest principal.
 </div>
 
-<div class="footer">
+</div><div class="footer">
     Monthly Interest Calculator
-</div>
+</div></div><div class="popup-overlay" id="popupOverlay"><div class="popup">
+
+    <div class="popup-icon">!</div>
+
+    <h3>Invalid Input</h3>
+
+    <p id="popupMessage">Please enter all required details.</p>
+
+    <button onclick="closePopup()">OK</button>
 
 </div>
 
-<div class="popup-overlay" id="popupOverlay">
-
-    <div class="popup">
-
-        <div class="popup-icon">!</div>
-
-        <h3>Invalid Input</h3>
-
-        <p id="popupMessage">Please enter all required details.</p>
-
-        <button onclick="closePopup()">OK</button>
-
-    </div>
-
-</div>
-
-<script>
-
+</div><script>
 function formatMoney(number) {
     return "₹" + number.toLocaleString("en-IN", {
         minimumFractionDigits: 0,
@@ -581,15 +536,12 @@ function calculateInterest() {
     while (remainingMonths > 0) {
 
         const periodMonths = Math.min(12, remainingMonths);
-
         const monthInterest = usingAmount * rate / 100;
-
         const periodInterest = monthInterest * periodMonths;
 
         totalInterest += periodInterest;
 
         const isCompleteYear = periodMonths === 12;
-
         let newPrincipal = null;
 
         if (isCompleteYear) {
@@ -663,25 +615,16 @@ function resetCalculator() {
     `;
 }
 
-/* PWA SERVICE WORKER */
-
 if ("serviceWorker" in navigator) {
-
-    window.addEventListener("load", () => {
-
-        navigator.serviceWorker.register("./service-worker.js")
-            .then(() => {
-                console.log("Service Worker registered");
-            })
-            .catch(error => {
-                console.log("Service Worker error:", error);
-            });
-
+    window.addEventListener("load", function() {
+        navigator.serviceWorker.register("./service-worker.js", {
+            scope: "./"
+        }).then(function(registration) {
+            console.log("Service Worker registered:", registration.scope);
+        }).catch(function(error) {
+            console.log("Service Worker error:", error);
+        });
     });
-
 }
-
-</script>
-
-</body>
+</script></body>
 </html>
