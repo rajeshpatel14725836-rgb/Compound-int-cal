@@ -2,21 +2,21 @@
   "name": "Monthly Interest Calculator",
   "short_name": "Interest Calc",
   "description": "Monthly Interest Calculator",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/Compound-int-cal/",
+  "scope": "/Compound-int-cal/",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#172554",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "./icon-192.png",
+      "src": "/Compound-int-cal/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./icon-512.png",
+      "src": "/Compound-int-cal/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
