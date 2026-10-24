@@ -74,6 +74,26 @@ body {
     font-weight: 700;
     color: #172554;
     margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-box {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 11px;
+    font-size: 15px;
+    outline: none;
+    margin-bottom: 15px;
+    background: #f8fafc;
+}
+
+.search-box:focus {
+    border-color: #2563eb;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(37,99,235,.10);
 }
 
 .input-grid {
@@ -98,14 +118,31 @@ body {
     color: #475569;
 }
 
+.input-wrap {
+    position: relative;
+}
+
+.input-wrap span {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    color: #64748b;
+}
+
 .input-wrap input, .input-wrap select {
     width: 100%;
-    padding: 12px;
+    padding: 12px 13px 12px 35px;
     border: 1.5px solid #cbd5e1;
     border-radius: 11px;
     outline: none;
     font-size: 15px;
     background: #f8fafc;
+}
+
+.input-wrap input.no-prefix, .input-wrap select.no-prefix {
+    padding-left: 13px;
 }
 
 .input-wrap input:focus, .input-wrap select:focus {
@@ -133,6 +170,11 @@ button {
     background: #166534;
     color: white;
     flex: 1;
+}
+
+.pay-btn {
+    background: #15803d;
+    color: white;
 }
 
 .reset-btn {
@@ -197,47 +239,147 @@ button {
     padding: 20px;
 }
 
-/* Modal Popup */
+/* Modal Popup Styles (Integrated Calculator) */
 .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(15,23,42,.6);
+    background: rgba(15,23,42,.75);
     display: none;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 15px;
     z-index: 999;
+    overflow-y: auto;
 }
 
 .modal {
-    background: white;
-    width: 100%;
-    max-width: 420px;
-    border-radius: 18px;
-    padding: 22px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-}
-
-.modal h3 {
-    margin-bottom: 15px;
-    color: #172554;
-    font-size: 18px;
-}
-
-.result-box {
     background: #f8fafc;
+    width: 100%;
+    max-width: 850px;
+    max-height: 90vh;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 10px;
+}
+
+.modal-header h3 {
+    color: #172554;
+    font-size: 20px;
+}
+
+.close-modal-btn {
+    background: #dc2626;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.summary-box {
+    padding: 14px;
+    background: white;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
-    padding: 14px;
-    margin-top: 15px;
-    font-size: 14px;
-    color: #334155;
-    line-height: 1.6;
 }
 
-.result-box span {
-    font-weight: bold;
+.summary-box .label {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.summary-box .value {
+    font-size: 18px;
+    font-weight: 800;
+    color: #172554;
+}
+
+.final-box {
+    background: linear-gradient(135deg, #172554, #1e40af);
+    color: white;
+    border: none;
+    grid-column: 1 / -1;
+}
+
+.final-box .label, .final-box .value {
+    color: white;
+}
+
+.final-box .value {
+    font-size: 22px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    min-width: 750px;
+    border-collapse: collapse;
+    background: white;
+}
+
+th {
+    background: #172554;
+    color: white;
+    padding: 10px;
+    font-size: 12px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: center;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+.period-number {
+    font-weight: 800;
+    color: #1e3a8a;
+}
+
+.new-principal {
+    font-weight: 800;
     color: #166534;
+}
+
+.rule-box {
+    background: white;
+    border-left: 4px solid #172554;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #475569;
 }
 
 .footer {
@@ -265,34 +407,123 @@ button {
 </head>
 <body>
 
-<div class="container" id="appContainer">
-    <!-- Dynamic Content -->
-</div>
+<div class="container" id="appContainer"></div>
 
-<!-- Calculator Modal -->
+<!-- Integrated Calculator Modal -->
 <div class="modal-overlay" id="calcModal">
     <div class="modal">
-        <h3>📊 Interest Calculator</h3>
-        <div class="field">
-            <label>Select Interest Type</label>
-            <div class="input-wrap">
-                <select id="modalInterestType">
-                    <option value="simple">Simple Interest (साधा ब्याज)</option>
-                    <option value="compound">Compound Interest (चक्रवृद्धि ब्याज)</option>
-                </select>
+        <div class="modal-header">
+            <h3>📊 Detailed Interest Calculator & Breakdown</h3>
+            <button class="close-modal-btn" onclick="closeModal('calcModal')">✕ Close</button>
+        </div>
+
+        <div class="card" style="margin-bottom: 15px;">
+            <div class="section-title">⚙️ Calculation Settings</div>
+            <div class="input-grid">
+                <div class="field">
+                    <label>Interest Type</label>
+                    <div class="input-wrap">
+                        <select id="modalInterestType" class="no-prefix" onchange="runCalculation()">
+                            <option value="compound">Compound (12-Month Add)</option>
+                            <option value="simple">Simple Interest</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Total Months Elapsed</label>
+                    <div class="input-wrap">
+                        <input type="number" id="modalMonths" class="no-prefix" oninput="runCalculation()">
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="buttons" style="margin-top: 15px;">
-            <button class="submit-btn" onclick="runCalculation()">Calculate Now</button>
-            <button class="reset-btn" onclick="closeModal()">Close</button>
+
+        <div class="card" style="margin-bottom: 15px;">
+            <div class="section-title">📈 Calculation Summary</div>
+            <div class="summary-grid">
+                <div class="summary-box">
+                    <div class="label">Principal Amount</div>
+                    <div class="value" id="summaryPrincipal">₹0</div>
+                </div>
+                <div class="summary-box">
+                    <div class="label">1 Month Interest</div>
+                    <div class="value" id="summaryMonthly">₹0</div>
+                </div>
+                <div class="summary-box">
+                    <div class="label">Total Interest</div>
+                    <div class="value" id="summaryInterest">₹0</div>
+                </div>
+                <div class="summary-box">
+                    <div class="label">Already Paid</div>
+                    <div class="value" id="summaryPaid" style="color: #166534;">₹0</div>
+                </div>
+                <div class="summary-box final-box">
+                    <div class="label">Net Payable Amount</div>
+                    <div class="value" id="summaryFinal">₹0</div>
+                </div>
+            </div>
         </div>
-        <div id="modalResultArea"></div>
+
+        <div class="card" style="margin-bottom: 15px;">
+            <div class="section-title">📋 Period-wise Interest Breakdown</div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Period</th>
+                            <th>Principal Amount</th>
+                            <th>Using Amount</th>
+                            <th>1 Month Interest</th>
+                            <th>Months</th>
+                            <th>Period Interest</th>
+                            <th>Total Interest</th>
+                            <th>New Principal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultTable">
+                        <tr>
+                            <td colspan="8" class="empty-message">Loading calculation...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="rule-box">
+            Interest rate is calculated <strong>monthly</strong>. Every 12 completed months, that period's interest is added to the principal (in compound mode) to form the new principal for the next period.
+        </div>
+    </div>
+</div>
+
+<!-- Payment Received Modal -->
+<div class="modal-overlay" id="payModal">
+    <div class="modal" style="max-width: 420px;">
+        <div class="modal-header">
+            <h3>💰 Receive Payment</h3>
+            <button class="close-modal-btn" onclick="closeModal('payModal')">✕</button>
+        </div>
+        <div class="field">
+            <label>Select Loan</label>
+            <div class="input-wrap"><select id="payLoanSelect" class="no-prefix"></select></div>
+        </div>
+        <div class="field">
+            <label>Received Amount (₹)</label>
+            <div class="input-wrap"><span>₹</span><input type="number" id="payAmount" placeholder="5000"></div>
+        </div>
+        <div class="field">
+            <label>Date</label>
+            <div class="input-wrap"><input type="date" id="payDate" class="no-prefix"></div>
+        </div>
+        <div class="buttons" style="margin-top: 15px;">
+            <button class="submit-btn pay-btn" onclick="savePayment()">Save Payment</button>
+            <button class="reset-btn" onclick="closeModal('payModal')">Cancel</button>
+        </div>
     </div>
 </div>
 
 <script>
 let clients = JSON.parse(localStorage.getItem("udhaar_clients")) || [];
-let currentView = "home"; // "home" or "ledger"
+let currentView = "home";
 let activeClientId = null;
 let activeLoanId = null;
 
@@ -317,23 +548,23 @@ function render() {
                 <div class="input-grid">
                     <div class="field">
                         <label>Client Name</label>
-                        <div class="input-wrap"><input type="text" id="clientName" placeholder="Full name"></div>
+                        <div class="input-wrap"><input type="text" id="clientName" class="no-prefix" placeholder="Full name"></div>
                     </div>
                     <div class="field">
                         <label>Phone Number</label>
-                        <div class="input-wrap"><input type="tel" id="clientPhone" placeholder="Mobile number"></div>
+                        <div class="input-wrap"><input type="tel" id="clientPhone" class="no-prefix" placeholder="Mobile number"></div>
                     </div>
                     <div class="field full-width">
                         <label>Address</label>
-                        <div class="input-wrap"><input type="text" id="clientAddress" placeholder="Address"></div>
+                        <div class="input-wrap"><input type="text" id="clientAddress" class="no-prefix" placeholder="Address"></div>
                     </div>
                     <div class="field">
                         <label>Nominee Name</label>
-                        <div class="input-wrap"><input type="text" id="nomineeName" placeholder="Nominee name"></div>
+                        <div class="input-wrap"><input type="text" id="nomineeName" class="no-prefix" placeholder="Nominee name"></div>
                     </div>
                     <div class="field">
                         <label>Nominee Phone</label>
-                        <div class="input-wrap"><input type="tel" id="nomineePhone" placeholder="Nominee phone"></div>
+                        <div class="input-wrap"><input type="tel" id="nomineePhone" class="no-prefix" placeholder="Nominee phone"></div>
                     </div>
                 </div>
                 <div class="buttons">
@@ -343,12 +574,13 @@ function render() {
 
             <div class="card">
                 <div class="section-title">📋 Clients List</div>
+                <input type="text" id="searchQuery" class="search-box" placeholder="🔍 Search by Name or Phone Number..." oninput="filterClients()">
                 <div id="clientListContainer" class="client-list"></div>
             </div>
 
             <div class="footer">Udhaar Manager App</div>
         `;
-        renderClientsList();
+        renderClientsList(clients);
     } else if (currentView === "ledger") {
         const client = clients.find(c => c.id === activeClientId);
         if (!client) { currentView = "home"; render(); return; }
@@ -363,32 +595,33 @@ function render() {
             </div>
 
             <div class="card">
-                <div class="section-title">➕ Give New Udhaar / Loan</div>
-                <div class="input-grid">
+                <div class="section-title">
+                    <span>📊 Loan Entries & Payments</span>
+                    <button class="action-btn pay-btn" onclick="openPayModal()">+ Receive Payment</button>
+                </div>
+                <div class="input-grid" style="margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 20px;">
+                    <div class="field full-width" style="font-weight: bold; color: #172554; font-size: 15px;">➕ Give New Udhaar / Loan</div>
                     <div class="field">
                         <label>Principal Amount (₹)</label>
-                        <div class="input-wrap"><input type="number" id="loanAmount" placeholder="10000"></div>
+                        <div class="input-wrap"><span>₹</span><input type="number" id="loanAmount" placeholder="10000"></div>
                     </div>
                     <div class="field">
                         <label>Monthly Interest Rate (%)</label>
-                        <div class="input-wrap"><input type="number" id="loanRate" placeholder="3" step="0.1"></div>
+                        <div class="input-wrap"><input type="number" id="loanRate" class="no-prefix" placeholder="3" step="0.1"></div>
                     </div>
                     <div class="field">
                         <label>Date Given</label>
-                        <div class="input-wrap"><input type="date" id="loanDate"></div>
+                        <div class="input-wrap"><input type="date" id="loanDate" class="no-prefix"></div>
                     </div>
                     <div class="field">
                         <label>Note / Remarks</label>
-                        <div class="input-wrap"><input type="text" id="loanNote" placeholder="e.g., Cash given"></div>
+                        <div class="input-wrap"><input type="text" id="loanNote" class="no-prefix" placeholder="e.g., Cash given"></div>
+                    </div>
+                    <div class="field full-width">
+                        <button class="submit-btn" onclick="addLoan()">Add Loan Entry</button>
                     </div>
                 </div>
-                <div class="buttons">
-                    <button class="submit-btn" onclick="addLoan()">Add Loan Entry</button>
-                </div>
-            </div>
 
-            <div class="card">
-                <div class="section-title">📊 Loan Entries & Calculation</div>
                 <div id="loanListContainer" class="loan-list"></div>
             </div>
 
@@ -399,6 +632,7 @@ function render() {
     }
 }
 
+// Client functions
 function saveClient() {
     const name = document.getElementById("clientName").value.trim();
     const phone = document.getElementById("clientPhone").value.trim();
@@ -436,20 +670,27 @@ function openLedger(id) {
     render();
 }
 
-function renderClientsList() {
+function filterClients() {
+    const query = document.getElementById("searchQuery").value.toLowerCase();
+    const filtered = clients.filter(c => 
+        c.name.toLowerCase().includes(query) || c.phone.includes(query)
+    );
+    renderClientsList(filtered);
+}
+
+function renderClientsList(listToRender) {
     const container = document.getElementById("clientListContainer");
-    if (clients.length === 0) {
-        container.innerHTML = `<div class="empty-message">No clients added yet.</div>`;
+    if (listToRender.length === 0) {
+        container.innerHTML = `<div class="empty-message">No clients found.</div>`;
         return;
     }
     let html = "";
-    clients.forEach(c => {
-        let totalLoanCount = c.loans.length;
+    listToRender.forEach(c => {
         html += `
             <div class="client-card">
                 <div class="client-info">
                     <h4>${c.name} (${c.phone})</h4>
-                    <p><strong>Address:</strong> ${c.address} | <strong>Total Loans:</strong> ${totalLoanCount}</p>
+                    <p><strong>Address:</strong> ${c.address} | <strong>Total Loans:</strong> ${c.loans.length}</p>
                 </div>
                 <div class="client-actions">
                     <button class="action-btn" onclick="openLedger(${c.id})">Open Ledger</button>
@@ -461,6 +702,7 @@ function renderClientsList() {
     container.innerHTML = html;
 }
 
+// Loan functions
 function addLoan() {
     const amount = Number(document.getElementById("loanAmount").value);
     const rate = Number(document.getElementById("loanRate").value);
@@ -475,7 +717,8 @@ function addLoan() {
     const client = clients.find(c => c.id === activeClientId);
     client.loans.push({
         id: Date.now(),
-        amount, rate, date, note: note || "Loan"
+        amount, rate, date, note: note || "Loan",
+        payments: []
     });
     saveToStorage();
     render();
@@ -501,15 +744,24 @@ function renderLoansList() {
 
     let html = "";
     client.loans.forEach((loan, index) => {
+        let totalPaid = loan.payments.reduce((sum, p) => sum + p.amount, 0);
+        let paymentsHTML = "";
+        if (loan.payments.length > 0) {
+            paymentsHTML = `<p style="color: #166534; margin-top: 4px;"><strong>Payments Received:</strong> ₹${totalPaid.toLocaleString("en-IN")} (${loan.payments.length} transactions)</p>`;
+        }
+
         html += `
-            <div class="loan-card">
-                <div class="loan-info">
-                    <h4>#${index + 1} - ₹${loan.amount.toLocaleString("en-IN")} (${loan.rate}% Monthly)</h4>
-                    <p><strong>Date Given:</strong> ${loan.date} | <strong>Note:</strong> ${loan.note}</p>
-                </div>
-                <div class="loan-actions">
-                    <button class="action-btn calc-btn" onclick="openCalcModal(${loan.id})">Calculate</button>
-                    <button class="action-btn delete-btn" onclick="deleteLoan(${loan.id})">Delete</button>
+            <div class="loan-card" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+                <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                    <div class="loan-info">
+                        <h4>#${index + 1} - ₹${loan.amount.toLocaleString("en-IN")} (${loan.rate}% Monthly)</h4>
+                        <p><strong>Date Given:</strong> ${loan.date} | <strong>Note:</strong> ${loan.note}</p>
+                        ${paymentsHTML}
+                    </div>
+                    <div class="loan-actions">
+                        <button class="action-btn calc-btn" onclick="openCalcModal(${loan.id})">Calculate</button>
+                        <button class="action-btn delete-btn" onclick="deleteLoan(${loan.id})">Delete</button>
+                    </div>
                 </div>
             </div>
         `;
@@ -517,61 +769,161 @@ function renderLoansList() {
     container.innerHTML = html;
 }
 
-function openCalcModal(loanId) {
-    activeLoanId = loanId;
-    document.getElementById("modalResultArea").innerHTML = "";
-    document.getElementById("calcModal").style.display = "flex";
+// Payment modal functions
+function openPayModal() {
+    const client = clients.find(c => c.id === activeClientId);
+    if (client.loans.length === 0) {
+        alert("No active loans to receive payment for!");
+        return;
+    }
+
+    let selectHTML = "";
+    client.loans.forEach((loan, index) => {
+        selectHTML += `<option value="${loan.id}">Loan #${index + 1} - ₹${loan.amount} (Dated: ${loan.date})</option>`;
+    });
+
+    document.getElementById("payLoanSelect").innerHTML = selectHTML;
+    document.getElementById("payAmount").value = "";
+    document.getElementById("payDate").valueAsDate = new Date();
+    document.getElementById("payModal").style.display = "flex";
 }
 
-function closeModal() {
-    document.getElementById("calcModal").style.display = "none";
+function savePayment() {
+    const loanId = Number(document.getElementById("payLoanSelect").value);
+    const amount = Number(document.getElementById("payAmount").value);
+    const date = document.getElementById("payDate").value;
+
+    if (!amount || !date) {
+        alert("Please enter amount and date.");
+        return;
+    }
+
+    const client = clients.find(c => c.id === activeClientId);
+    const loan = client.loans.find(l => l.id === loanId);
+
+    if (loan) {
+        loan.payments.push({ id: Date.now(), amount, date });
+        saveToStorage();
+        closeModal('payModal');
+        render();
+        alert("Payment recorded successfully!");
+    }
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = "none";
+}
+
+// Integrated Calculator Modal Logic
+function openCalcModal(loanId) {
+    activeLoanId = loanId;
+    const client = clients.find(c => c.id === activeClientId);
+    const loan = client.loans.find(l => l.id === activeLoanId);
+
+    // Calculate elapsed months from loan date to today
+    const startDate = new Date(loan.date);
+    const currentDate = new Date();
+    let diffYears = currentDate.getFullYear() - startDate.getFullYear();
+    let diffMonths = currentDate.getMonth() - startDate.getMonth();
+    let diffDays = currentDate.getDate() - startDate.getDate();
+
+    let totalMonthsElapsed = (diffYears * 12) + diffMonths;
+    if (diffDays < 0) totalMonthsElapsed -= 1;
+    if (totalMonthsElapsed < 1) totalMonthsElapsed = 1; // Minimum 1 month default
+
+    document.getElementById("modalMonths").value = totalMonthsElapsed;
+    document.getElementById("calcModal").style.display = "flex";
+    runCalculation();
+}
+
+function formatMoney(number) {
+    return "₹" + number.toLocaleString("en-IN", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    });
 }
 
 function runCalculation() {
     const client = clients.find(c => c.id === activeClientId);
     const loan = client.loans.find(l => l.id === activeLoanId);
     const type = document.getElementById("modalInterestType").value;
+    const totalMonths = Number(document.getElementById("modalMonths").value);
 
-    const startDate = new Date(loan.date);
-    const currentDate = new Date();
+    if (!totalMonths || totalMonths <= 0) return;
 
-    if (startDate > currentDate) {
-        alert("Loan date cannot be in the future!");
-        return;
-    }
+    const principal = loan.amount;
+    const rate = loan.rate;
 
-    let diffYears = currentDate.getFullYear() - startDate.getFullYear();
-    let diffMonths = currentDate.getMonth() - startDate.getMonth();
-    let diffDays = currentDate.getDate() - startDate.getDate();
+    let usingAmount = principal;
+    let totalInterest = 0;
+    let remainingMonths = totalMonths;
+    let period = 1;
+    let tableHTML = "";
 
-    let totalMonthsElapsed = (diffYears * 12) + diffMonths;
-    if (diffDays < 0) {
-        totalMonthsElapsed -= 1;
-        const prevMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0);
-        diffDays += prevMonth.getDate();
-    }
+    const firstMonthInterest = usingAmount * rate / 100;
 
-    const exactMonths = totalMonthsElapsed + (diffDays / 30);
+    if (type === "compound") {
+        while (remainingMonths > 0) {
+            const periodMonths = Math.min(12, remainingMonths);
+            const monthInterest = usingAmount * rate / 100;
+            const periodInterest = monthInterest * periodMonths;
+            totalInterest += periodInterest;
 
-    let interest = 0;
-    let finalAmount = 0;
+            const isCompleteYear = periodMonths === 12;
+            let newPrincipal = null;
 
-    if (type === "simple") {
-        interest = loan.amount * (loan.rate / 100) * exactMonths;
-        finalAmount = loan.amount + interest;
+            if (isCompleteYear) {
+                newPrincipal = usingAmount + periodInterest;
+            }
+
+            tableHTML += `
+                <tr>
+                    <td class="period-number">${period}</td>
+                    <td>${formatMoney(principal)}</td>
+                    <td>${formatMoney(usingAmount)}</td>
+                    <td>${formatMoney(monthInterest)}</td>
+                    <td>${periodMonths}</td>
+                    <td>${formatMoney(periodInterest)}</td>
+                    <td>${formatMoney(totalInterest)}</td>
+                    <td class="new-principal">${newPrincipal !== null ? formatMoney(newPrincipal) : "—"}</td>
+                </tr>
+            `;
+
+            if (isCompleteYear) {
+                usingAmount = newPrincipal;
+            }
+            remainingMonths -= periodMonths;
+            period++;
+        }
     } else {
-        finalAmount = loan.amount * Math.pow((1 + loan.rate / 100), exactMonths);
-        interest = finalAmount - loan.amount;
+        // Simple Interest mode
+        const periodInterest = (principal * (rate / 100)) * totalMonths;
+        totalInterest = periodInterest;
+        tableHTML += `
+            <tr>
+                <td class="period-number">1</td>
+                <td>${formatMoney(principal)}</td>
+                <td>${formatMoney(principal)}</td>
+                <td>${formatMoney(firstMonthInterest)}</td>
+                <td>${totalMonths}</td>
+                <td>${formatMoney(periodInterest)}</td>
+                <td>${formatMoney(totalInterest)}</td>
+                <td class="new-principal">—</td>
+            </tr>
+        `;
     }
 
-    document.getElementById("modalResultArea").innerHTML = `
-        <div class="result-box">
-            <p><strong>Time Elapsed:</strong> ${totalMonthsElapsed} Months & ${diffDays} Days</p>
-            <p><strong>Principal Amount:</strong> ₹${loan.amount.toLocaleString("en-IN")}</p>
-            <p><strong>Total Interest:</strong> <span>₹${Math.round(interest).toLocaleString("en-IN")}</span></p>
-            <p><strong>Final Payable Amount:</strong> <span style="font-size: 16px;">₹${Math.round(finalAmount).toLocaleString("en-IN")}</span></p>
-        </div>
-    `;
+    const finalAmount = principal + totalInterest;
+    let totalPaid = loan.payments.reduce((sum, p) => sum + p.amount, 0);
+    const netPayable = finalAmount - totalPaid;
+
+    document.getElementById("summaryPrincipal").innerText = formatMoney(principal);
+    document.getElementById("summaryMonthly").innerText = formatMoney(firstMonthInterest);
+    document.getElementById("summaryInterest").innerText = formatMoney(totalInterest);
+    document.getElementById("summaryPaid").innerText = formatMoney(totalPaid);
+    document.getElementById("summaryFinal").innerText = formatMoney(netPayable);
+
+    document.getElementById("resultTable").innerHTML = tableHTML;
 }
 
 render();
