@@ -193,12 +193,13 @@ button {
 
 .client-actions, .loan-actions {
     display: flex;
-    gap: 8px;
+    gap: 6px;
+    flex-wrap: wrap;
 }
 
 .action-btn {
-    padding: 8px 12px;
-    font-size: 13px;
+    padding: 8px 10px;
+    font-size: 12px;
     border-radius: 8px;
     background: #2563eb;
     color: white;
@@ -206,7 +207,14 @@ button {
 
 .calc-btn {
     background: #0284c7;
-    color: white;
+}
+
+.adjust-btn {
+    background: #d97706;
+}
+
+.edit-btn {
+    background: #4f46e5;
 }
 
 .delete-btn {
@@ -423,7 +431,6 @@ td {
             <button class="close-modal-btn" onclick="closeModal('calcModal')">✕ Close</button>
         </div>
 
-        <!-- TAB SWITCHER -->
         <div class="tab-container">
             <button class="tab-btn active" id="tabCompoundBtn" onclick="switchCalcTab('compound')">Compound Interest</button>
             <button class="tab-btn" id="tabSimpleBtn" onclick="switchCalcTab('simple')">Simple Interest</button>
@@ -570,6 +577,80 @@ td {
     </div>
 </div>
 
+<!-- Adjustment Modal -->
+<div class="modal-overlay" id="adjustModal">
+    <div class="modal" style="max-width: 500px;">
+        <div class="modal-header">
+            <h3>⚖️ Loan Adjustment & Settlement</h3>
+            <button class="close-modal-btn" onclick="closeModal('adjustModal')">✕</button>
+        </div>
+        <div class="field">
+            <label>Interest Basis for Settlement</label>
+            <div class="input-wrap">
+                <select id="adjustType" onchange="calculateAdjustmentSummary()">
+                    <option value="compound">Compound Interest (चक्रवृद्धि ब्याज)</option>
+                    <option value="simple">Simple Interest (साधा ब्याज)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="summary-grid" style="margin-bottom: 12px;">
+            <div class="summary-box"><div class="summary-label">Total Due (Principal + Interest)</div><div class="summary-value" id="adjTotalDue">₹ 0</div></div>
+            <div class="summary-box"><div class="summary-label">Already Paid</div><div class="summary-value" id="adjAlreadyPaid" style="color:#166534;">₹ 0</div></div>
+        </div>
+        <div class="final-box" style="margin-bottom: 12px;">
+            <div class="summary-label">Current Net Payable Balance</div>
+            <div class="summary-value" id="adjNetBalance">₹ 0</div>
+        </div>
+
+        <div class="field">
+            <label>Amount Given by Customer (₹)</label>
+            <div class="input-wrap"><input type="number" id="adjGivenAmount" placeholder="e.g. 5000"></div>
+        </div>
+        <div class="field">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; margin-top:8px;">
+                <input type="checkbox" id="adjFullSettle" style="width:18px; height:18px;"> 
+                <span><strong>Full Settlement / Account Close</strong> (Bacha hua saara balance zero karke account close karein)</span>
+            </label>
+        </div>
+
+        <div class="buttons" style="margin-top: 15px;">
+            <button class="submit-btn pay-btn" onclick="saveAdjustment()">Confirm Adjustment</button>
+            <button class="reset-btn" onclick="closeModal('adjustModal')">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Loan Modal -->
+<div class="modal-overlay" id="editModal">
+    <div class="modal" style="max-width: 450px;">
+        <div class="modal-header">
+            <h3>✏️ Edit Loan Details</h3>
+            <button class="close-modal-btn" onclick="closeModal('editModal')">✕</button>
+        </div>
+        <div class="field">
+            <label>Principal Amount (₹)</label>
+            <div class="input-wrap"><input type="number" id="editLoanAmount"></div>
+        </div>
+        <div class="field">
+            <label>Monthly Interest Rate (%)</label>
+            <div class="input-wrap"><input type="number" id="editLoanRate" step="0.1"></div>
+        </div>
+        <div class="field">
+            <label>Date Given</label>
+            <div class="input-wrap"><input type="date" id="editLoanDate"></div>
+        </div>
+        <div class="field">
+            <label>Note / Remarks</label>
+            <div class="input-wrap"><input type="text" id="editLoanNote"></div>
+        </div>
+        <div class="buttons" style="margin-top: 15px;">
+            <button class="submit-btn" onclick="saveEditedLoan()">Update Loan</button>
+            <button class="reset-btn" onclick="closeModal('editModal')">Cancel</button>
+        </div>
+    </div>
+</div>
+
 <!-- Payment Received Modal -->
 <div class="modal-overlay" id="payModal">
     <div class="modal" style="max-width: 420px;">
@@ -615,7 +696,6 @@ function formatINR(val) {
     return '₹' + Math.round(val).toLocaleString('en-IN');
 }
 
-// Calculate duration between start and end date
 function getDuration(startDateStr, endDateStr) {
     const start = new Date(startDateStr);
     const end = new Date(endDateStr);
@@ -869,6 +949,8 @@ function renderLoansList() {
                     </div>
                     <div class="loan-actions">
                         <button class="action-btn calc-btn" onclick="openCalcModal(${loan.id})">Calculate</button>
+                        <button class="action-btn adjust-btn" onclick="openAdjustModal(${loan.id})">⚖️ Adjust</button>
+                        <button class="action-btn edit-btn" onclick="openEditModal(${loan.id})">✏️ Edit</button>
                         <button class="action-btn delete-btn" onclick="deleteLoan(${loan.id})">Delete</button>
                     </div>
                 </div>
@@ -919,6 +1001,141 @@ function savePayment() {
     }
 }
 
+// Edit Loan Functions
+function openEditModal(loanId) {
+    activeLoanId = loanId;
+    const client = clients.find(c => c.id === activeClientId);
+    const loan = client.loans.find(l => l.id === activeLoanId);
+
+    document.getElementById('editLoanAmount').value = loan.amount;
+    document.getElementById('editLoanRate').value = loan.rate;
+    document.getElementById('editLoanDate').value = loan.date;
+    document.getElementById('editLoanNote').value = loan.note;
+
+    document.getElementById('editModal').style.display = 'flex';
+}
+
+function saveEditedLoan() {
+    const amount = Number(document.getElementById('editLoanAmount').value);
+    const rate = Number(document.getElementById('editLoanRate').value);
+    const date = document.getElementById('editLoanDate').value;
+    const note = document.getElementById('editLoanNote').value.trim();
+
+    if (!amount || !rate || !date) {
+        alert("Please fill all required fields.");
+        return;
+    }
+
+    const client = clients.find(c => c.id === activeClientId);
+    const loan = client.loans.find(l => l.id === activeLoanId);
+
+    if (loan) {
+        loan.amount = amount;
+        loan.rate = rate;
+        loan.date = date;
+        loan.note = note || "Loan";
+        saveToStorage();
+        closeModal('editModal');
+        render();
+        alert("Loan updated successfully!");
+    }
+}
+
+// Adjustment Modal Functions
+function openAdjustModal(loanId) {
+    activeLoanId = loanId;
+    document.getElementById('adjGivenAmount').value = "";
+    document.getElementById('adjFullSettle').checked = false;
+    document.getElementById('adjustModal').style.display = 'flex';
+    calculateAdjustmentSummary();
+}
+
+function calculateAdjustmentSummary() {
+    const client = clients.find(c => c.id === activeClientId);
+    const loan = client.loans.find(l => l.id === activeLoanId);
+    const type = document.getElementById('adjustType').value;
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    let dur = getDuration(loan.date, todayStr);
+    let totalMonths = dur.months;
+    let extraDays = dur.days;
+
+    let totalInterest = 0;
+    if (type === 'compound') {
+        let years = Math.floor(totalMonths / 12);
+        let remMonths = totalMonths % 12;
+        let currentP = loan.amount;
+
+        for (let i = 1; i <= years; i++) {
+            let yrInt = currentP * (loan.rate / 100) * 12;
+            totalInterest += yrInt;
+            currentP += yrInt;
+        }
+        let cur1M = currentP * (loan.rate / 100);
+        totalInterest += (cur1M * remMonths) + ((cur1M / 30) * extraDays);
+    } else {
+        let m1Int = loan.amount * (loan.rate / 100);
+        totalInterest = (m1Int * totalMonths) + ((m1Int / 30) * extraDays);
+    }
+
+    let totalDue = loan.amount + totalInterest;
+    let totalPaid = loan.payments.reduce((sum, p) => sum + p.amount, 0);
+    let netBalance = totalDue - totalPaid;
+
+    document.getElementById('adjTotalDue').innerText = formatINR(totalDue);
+    document.getElementById('adjAlreadyPaid').innerText = formatINR(totalPaid);
+    document.getElementById('adjNetBalance').innerText = formatINR(netBalance);
+}
+
+function saveAdjustment() {
+    const client = clients.find(c => c.id === activeClientId);
+    const loan = client.loans.find(l => l.id === activeLoanId);
+    const givenAmount = Number(document.getElementById('adjGivenAmount').value) || 0;
+    const isFullSettle = document.getElementById('adjFullSettle').checked;
+
+    const todayStr = new Date().toISOString().split('T')[0];
+
+    if (givenAmount > 0) {
+        loan.payments.push({ id: Date.now(), amount: givenAmount, date: todayStr });
+    }
+
+    if (isFullSettle) {
+        // Calculate total due again to match payments or close
+        const type = document.getElementById('adjustType').value;
+        let dur = getDuration(loan.date, todayStr);
+        let totalInterest = 0;
+        if (type === 'compound') {
+            let years = Math.floor(dur.months / 12);
+            let remMonths = dur.months % 12;
+            let currentP = loan.amount;
+            for (let i = 1; i <= years; i++) {
+                let yrInt = currentP * (loan.rate / 100) * 12;
+                totalInterest += yrInt;
+                currentP += yrInt;
+            }
+            let cur1M = currentP * (loan.rate / 100);
+            totalInterest += (cur1M * remMonths) + ((cur1M / 30) * dur.days);
+        } else {
+            let m1Int = loan.amount * (loan.rate / 100);
+            totalInterest = (m1Int * dur.months) + ((m1Int / 30) * dur.days);
+        }
+        let totalDue = loan.amount + totalInterest;
+        let totalPaid = loan.payments.reduce((sum, p) => sum + p.amount, 0);
+        let diff = totalDue - totalPaid;
+
+        if (diff > 0) {
+            loan.payments.push({ id: Date.now() + 1, amount: diff, date: todayStr, note: "Settlement adjustment" });
+        }
+        alert("Loan fully settled and closed!");
+    } else {
+        alert("Adjustment saved successfully!");
+    }
+
+    saveToStorage();
+    closeModal('adjustModal');
+    render();
+}
+
 function closeModal(modalId) {
     document.getElementById(modalId).style.display = "none";
 }
@@ -952,7 +1169,6 @@ function openCalcModal(loanId) {
 
     const todayStr = new Date().toISOString().split('T')[0];
 
-    // Populate both compound and simple fields
     document.getElementById('cmpPrincipal').value = loan.amount;
     document.getElementById('cmpRate').value = loan.rate;
     document.getElementById('cmpStartDate').value = loan.date;
