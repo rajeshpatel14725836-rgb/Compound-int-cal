@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Study Checkpoint & Daily Planner</title>
+  <title>Study Checkpoints & Daily Planner</title>
   <style>
-    :root {
+    /* Themes */
+    [data-theme="dark"] {
       --bg-color: #0f172a;
       --card-bg: #1e293b;
       --accent: #3b82f6;
@@ -15,6 +16,20 @@
       --border: #334155;
       --success: #22c55e;
       --danger: #ef4444;
+      --banner-bg: #1e293b;
+    }
+
+    [data-theme="light"] {
+      --bg-color: #f1f5f9;
+      --card-bg: #ffffff;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --text-main: #0f172a;
+      --text-sub: #64748b;
+      --border: #cbd5e1;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --banner-bg: #ffffff;
     }
 
     * {
@@ -23,6 +38,7 @@
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       -webkit-tap-highlight-color: transparent;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     body {
@@ -31,29 +47,48 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      padding-bottom: 20px;
+      padding-bottom: 30px;
     }
 
     header {
       background-color: var(--card-bg);
-      padding: 16px;
-      text-align: center;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 10;
     }
 
-    header h1 {
-      font-size: 1.25rem;
+    .header-title h1 {
+      font-size: 1.15rem;
       font-weight: 700;
-      color: var(--text-main);
     }
 
-    header p {
-      font-size: 0.8rem;
+    .header-title p {
+      font-size: 0.75rem;
       color: var(--text-sub);
-      margin-top: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      background: var(--bg-color);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
     }
 
     .container {
@@ -69,25 +104,27 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 16px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+      margin-bottom: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
 
     .card-title {
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 600;
       margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      color: var(--text-main);
     }
 
-    /* Date Selector & Quick Buttons */
     .date-row {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-bottom: 16px;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    label {
+      font-size: 0.8rem;
+      color: var(--text-sub);
     }
 
     input[type="date"], input[type="time"], input[type="text"] {
@@ -107,7 +144,7 @@
 
     .quick-date-btns {
       display: flex;
-      gap: 8px;
+      gap: 6px;
     }
 
     .btn-quick {
@@ -115,18 +152,13 @@
       background: var(--bg-color);
       border: 1px solid var(--border);
       color: var(--text-main);
-      padding: 8px;
+      padding: 6px;
       border-radius: 6px;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       cursor: pointer;
       text-align: center;
     }
 
-    .btn-quick:active {
-      background: var(--border);
-    }
-
-    /* Checkbox / Toggle options */
     .reminder-setting {
       display: flex;
       align-items: center;
@@ -136,20 +168,14 @@
       padding: 10px;
       border-radius: 8px;
       border: 1px solid var(--border);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
-    .reminder-setting label {
-      font-size: 0.85rem;
-      color: var(--text-sub);
-    }
-
-    /* Task Dynamic Inputs */
     .task-input-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-bottom: 16px;
+      gap: 8px;
+      margin-bottom: 14px;
     }
 
     .task-input-item {
@@ -171,15 +197,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--text-sub);
-      margin-top: 4px;
     }
 
     .task-time-row input[type="time"] {
-      width: 120px;
-      padding: 4px 8px;
-      font-size: 0.8rem;
+      width: 110px;
+      padding: 4px 6px;
+      font-size: 0.75rem;
     }
 
     .btn {
@@ -198,6 +223,10 @@
       width: 100%;
     }
 
+    .btn:active {
+      background-color: var(--accent-hover);
+    }
+
     .btn-secondary {
       background-color: transparent;
       border: 1px solid var(--border);
@@ -208,17 +237,17 @@
       background: transparent;
       border: none;
       color: var(--danger);
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       cursor: pointer;
-      padding: 4px 8px;
+      padding: 4px;
     }
 
-    /* Checklist View */
-    .checklist-section-title {
-      font-size: 0.9rem;
+    /* Checklist Section */
+    .section-title {
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--text-sub);
-      margin-bottom: 10px;
+      margin: 20px 0 10px 0;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
@@ -228,10 +257,10 @@
     }
 
     .date-header {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 600;
       color: var(--accent);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -241,11 +270,11 @@
       background-color: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 12px;
+      padding: 10px 12px;
       margin-bottom: 8px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .task-card.completed {
@@ -257,8 +286,8 @@
     }
 
     .checkbox {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       accent-color: var(--accent);
       cursor: pointer;
     }
@@ -268,49 +297,96 @@
     }
 
     .task-text {
-      font-size: 0.95rem;
-      color: var(--text-main);
+      font-size: 0.9rem;
     }
 
     .task-time-tag {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: var(--text-sub);
       margin-top: 2px;
     }
 
-    .empty-state {
-      text-align: center;
-      padding: 24px;
-      color: var(--text-sub);
+    /* Non-Distracting Bottom Toast Banner */
+    .toast-banner {
+      position: fixed;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      max-width: 560px;
+      margin: 0 auto;
+      background-color: var(--banner-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+      z-index: 100;
+      display: none;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .toast-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .toast-title {
+      font-weight: 600;
       font-size: 0.9rem;
+      color: var(--accent);
+    }
+
+    .toast-body {
+      font-size: 0.82rem;
+      color: var(--text-main);
+      line-height: 1.4;
     }
 
     footer {
       text-align: center;
       font-size: 0.75rem;
       color: var(--text-sub);
-      padding: 16px;
+      padding: 10px;
+      margin-top: auto;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Study Checkpoints</h1>
-    <p>Daily Planner & Precision Reminders</p>
+    <div class="header-title">
+      <h1>Study Checkpoints</h1>
+      <p>Precision Daily Planner</p>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="notifBtn" onclick="requestNotificationPermission()" title="Enable Notifications">🔔</button>
+      <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Switch Theme">☀️</button>
+    </div>
   </header>
+
+  <!-- Non-Distracting Bottom Toast Banner -->
+  <div class="toast-banner" id="toastBanner">
+    <div class="toast-header">
+      <span class="toast-title" id="toastTitle">Daily Update</span>
+      <button class="btn-icon" style="font-size:0.9rem;" onclick="closeToast()">✕</button>
+    </div>
+    <div class="toast-body" id="toastMessage">Loading message...</div>
+  </div>
 
   <div class="container">
     
-    <!-- ADD CHECKLIST CARD -->
+    <!-- ADD CHECKLIST -->
     <div class="card">
-      <div class="card-title">
-        <span>Add Checklist / Milestone</span>
-      </div>
+      <div class="card-title">Add Checkpoint / Task</div>
 
-      <!-- Date Selection -->
       <div class="date-row">
-        <label style="font-size: 0.85rem; color: var(--text-sub);">Target Date:</label>
+        <label>Target Date:</label>
         <input type="date" id="targetDate">
         <div class="quick-date-btns">
           <button class="btn-quick" onclick="setQuickDate(0)">Today</button>
@@ -320,54 +396,72 @@
         </div>
       </div>
 
-      <!-- Global Reminder for the Date -->
       <div class="reminder-setting">
-        <label for="globalTime">Daily Reminder Time for this Date:</label>
+        <label for="globalTime">Default Reminder Time:</label>
         <input type="time" id="globalTime" value="10:30">
       </div>
 
-      <!-- Dynamic Task Inputs -->
       <div class="task-input-list" id="taskInputContainer">
-        <!-- Input rows injected via Javascript -->
+        <!-- Dynamic task inputs injected here -->
       </div>
 
-      <div style="display: flex; gap: 10px;">
-        <button class="btn btn-secondary" onclick="addTaskInputRow()">+ Add Task Line</button>
-        <button class="btn" onclick="saveChecklist()">Done & Save</button>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn btn-secondary" onclick="addTaskInputRow()">+ Add Line</button>
+        <button class="btn" onclick="saveChecklist()">Save Checklist</button>
       </div>
     </div>
 
     <!-- VIEW CHECKLISTS -->
-    <div class="checklist-section-title">Upcoming & Daily Checkpoints</div>
+    <div class="section-title">Your Checkpoints</div>
     <div id="checklistsContainer">
-      <!-- Saved checklists will be displayed here -->
+      <!-- Saved checklists rendered here -->
     </div>
 
   </div>
 
   <footer>
-    Concept by Rajesh • Study Checkpoint App
+    Concept by Rajesh
   </footer>
 
   <script>
     let taskCount = 0;
 
-    // Request notification permission on load
     document.addEventListener("DOMContentLoaded", () => {
+      initTheme();
       setQuickDate(0);
       addTaskInputRow();
       loadChecklists();
-      requestNotificationPermission();
-      checkDailyReminders();
+      checkAppOpenBehavior();
+      initNotificationChecker();
     });
 
-    function setQuickDate(daysToAdd) {
-      const today = new Date();
-      today.setDate(today.getDate() + daysToAdd);
-      const formattedDate = today.toISOString().split('T')[0];
-      document.getElementById('targetDate').value = formattedDate;
+    // Theme Management
+    function initTheme() {
+      const savedTheme = localStorage.getItem('study_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      updateThemeIcon(savedTheme);
     }
 
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('study_theme', next);
+      updateThemeIcon(next);
+    }
+
+    function updateThemeIcon(theme) {
+      document.getElementById('themeBtn').innerText = theme === 'dark' ? '☀️' : '🌙';
+    }
+
+    // Quick Date Picker
+    function setQuickDate(daysToAdd) {
+      const d = new Date();
+      d.setDate(d.getDate() + daysToAdd);
+      document.getElementById('targetDate').value = d.toISOString().split('T')[0];
+    }
+
+    // Dynamic Input Rows
     function addTaskInputRow() {
       taskCount++;
       const container = document.getElementById('taskInputContainer');
@@ -376,12 +470,12 @@
       row.id = `task-row-${taskCount}`;
       row.innerHTML = `
         <div class="task-input-row">
-          <input type="text" class="task-input-text" placeholder="Enter task (e.g., Revise Chapter 3)...">
+          <input type="text" class="task-input-text" placeholder="Enter task (e.g., Complete Chapter 2)...">
           <button class="btn-icon" onclick="removeTaskInputRow(${taskCount})">✕</button>
         </div>
         <div class="task-time-row">
-          <span>Custom Notification Time (Optional):</span>
-          <input type="time" class="task-input-time" placeholder="Use global">
+          <span>Custom Time (Optional):</span>
+          <input type="time" class="task-input-time">
         </div>
       `;
       container.appendChild(row);
@@ -395,18 +489,16 @@
       }
     }
 
+    // Save Checklist
     function saveChecklist() {
       const dateVal = document.getElementById('targetDate').value;
       const globalTimeVal = document.getElementById('globalTime').value || '10:30';
-      const taskItems = document.querySelectorAll('.task-input-item');
+      const items = document.querySelectorAll('.task-input-item');
 
-      if (!dateVal) {
-        alert("Please select a date.");
-        return;
-      }
+      if (!dateVal) { alert("Please select a date."); return; }
 
       let newTasks = [];
-      taskItems.forEach(item => {
+      items.forEach(item => {
         const text = item.querySelector('.task-input-text').value.trim();
         const customTime = item.querySelector('.task-input-time').value;
         if (text !== '') {
@@ -419,86 +511,71 @@
         }
       });
 
-      if (newTasks.length === 0) {
-        alert("Please enter at least one task.");
-        return;
-      }
+      if (newTasks.length === 0) { alert("Please enter at least one task."); return; }
 
       let store = JSON.parse(localStorage.getItem('study_checkpoints')) || {};
-      if (!store[dateVal]) {
-        store[dateVal] = [];
-      }
-
+      if (!store[dateVal]) store[dateVal] = [];
       store[dateVal] = store[dateVal].concat(newTasks);
       localStorage.setItem('study_checkpoints', JSON.stringify(store));
 
-      // Reset Inputs
       document.getElementById('taskInputContainer').innerHTML = '';
       taskCount = 0;
       addTaskInputRow();
-
       loadChecklists();
-      alert("Checklist saved successfully!");
+      showToast("Success", "Checklist saved successfully!");
     }
 
+    // Render Checklists
     function loadChecklists() {
       const container = document.getElementById('checklistsContainer');
       const store = JSON.parse(localStorage.getItem('study_checkpoints')) || {};
       const dates = Object.keys(store).sort();
 
       if (dates.length === 0) {
-        container.innerHTML = `<div class="card empty-state">No checkpoints created yet. Add one above!</div>`;
+        container.innerHTML = `<div class="card" style="text-align:center; color:var(--text-sub);">No checkpoints found. Add one above!</div>`;
         return;
       }
 
       container.innerHTML = '';
-
       dates.forEach(date => {
-        const dateGroup = document.createElement('div');
-        dateGroup.className = 'date-group';
+        const group = document.createElement('div');
+        group.className = 'date-group';
 
-        const dateHeader = document.createElement('div');
-        dateHeader.className = 'date-header';
-        dateHeader.innerHTML = `
-          <span>📅 ${formatDisplayDate(date)}</span>
-          <button class="btn-icon" style="font-size: 0.8rem; color: var(--danger);" onclick="deleteDateGroup('${date}')">Delete Day</button>
-        `;
-        dateGroup.appendChild(dateHeader);
+        const header = document.createElement('div');
+        header.className = 'date-header';
+        header.innerHTML = `<span>📅 ${formatDisplayDate(date)}</span> <button class="btn-icon" style="font-size:0.75rem;" onclick="deleteDateGroup('${date}')">Delete Day</button>`;
+        group.appendChild(header);
 
-        store[date].forEach(task => {
-          const taskCard = document.createElement('div');
-          taskCard.className = `task-card ${task.completed ? 'completed' : ''}`;
-          taskCard.innerHTML = `
-            <input type="checkbox" class="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask('${date}', ${task.id})">
+        store[date].forEach(t => {
+          const card = document.createElement('div');
+          card.className = `task-card ${t.completed ? 'completed' : ''}`;
+          card.innerHTML = `
+            <input type="checkbox" class="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask('${date}', ${t.id})">
             <div class="task-info">
-              <div class="task-text">${escapeHtml(task.text)}</div>
-              <div class="task-time-tag">⏰ Reminder: ${task.time}</div>
+              <div class="task-text">${escapeHtml(t.text)}</div>
+              <div class="task-time-tag">⏰ ${t.time}</div>
             </div>
-            <button class="btn-icon" onclick="deleteSingleTask('${date}', ${task.id})">✕</button>
+            <button class="btn-icon" onclick="deleteTask('${date}', ${t.id})">✕</button>
           `;
-          dateGroup.appendChild(taskCard);
+          group.appendChild(card);
         });
-
-        container.appendChild(dateGroup);
+        container.appendChild(group);
       });
     }
 
-    function toggleTask(date, taskId) {
+    function toggleTask(date, id) {
       let store = JSON.parse(localStorage.getItem('study_checkpoints')) || {};
       if (store[date]) {
-        store[date] = store[date].map(t => {
-          if (t.id === taskId) t.completed = !t.completed;
-          return t;
-        });
+        store[date] = store[date].map(t => { if (t.id === id) t.completed = !t.completed; return t; });
         localStorage.setItem('study_checkpoints', JSON.stringify(store));
         loadChecklists();
       }
     }
 
-    function deleteSingleTask(date, taskId) {
+    function deleteTask(date, id) {
       let store = JSON.parse(localStorage.getItem('study_checkpoints')) || {};
       if (store[date]) {
-        store[date] = store[date].filter(t => t.id !== taskId);
+        store[date] = store[date].filter(t => t.id !== id);
         if (store[date].length === 0) delete store[date];
         localStorage.setItem('study_checkpoints', JSON.stringify(store));
         loadChecklists();
@@ -506,7 +583,7 @@
     }
 
     function deleteDateGroup(date) {
-      if (confirm(`Delete all tasks for ${date}?`)) {
+      if (confirm(`Delete all for ${date}?`)) {
         let store = JSON.parse(localStorage.getItem('study_checkpoints')) || {};
         delete store[date];
         localStorage.setItem('study_checkpoints', JSON.stringify(store));
@@ -514,51 +591,109 @@
       }
     }
 
-    function formatDisplayDate(dateStr) {
-      const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-      const d = new Date(dateStr + 'T00:00:00');
-      return d.toLocaleDateString(undefined, options);
+    // Smart Open Behavior (Toast Notifications based on count/time)
+    function checkAppOpenBehavior() {
+      const todayStr = new Date().toISOString().split('T')[0];
+      const store = JSON.parse(localStorage.getItem('study_checkpoints')) || {};
+      const todayTasks = store[todayStr] || [];
+      const pendingCount = todayTasks.filter(t => !t.completed).length;
+      const totalCount = todayTasks.length;
+
+      let openData = JSON.parse(localStorage.getItem('app_open_tracker')) || { date: todayStr, count: 0 };
+      if (openData.date !== todayStr) {
+        openData = { date: todayStr, count: 0 };
+      }
+      openData.count++;
+      localStorage.setItem('app_open_tracker', JSON.stringify(openData));
+
+      const hour = new Date().getHours();
+      let title = "Daily Checklist";
+      let msg = "";
+
+      if (totalCount > 0 && pendingCount === 0) {
+        title = "🎉 Amazing Job!";
+        msg = "You have crushed all your goals for today! Keep up the brilliant momentum.";
+      } else if (openData.count === 1 && hour < 12) {
+        title = "🌅 Good Morning!";
+        msg = `Here is your checklist for today. You have ${pendingCount} pending task(s). Consistency is key!`;
+      } else if (openData.count >= 5 || hour >= 18) {
+        if (pendingCount > 0) {
+          title = "⚠️ Pending Tasks Warning";
+          msg = `Your checklist still has ${pendingCount} task(s) pending. Let's finish them up before the day ends!`;
+        } else {
+          title = "🌟 Great Progress!";
+          msg = "All tasks are up to date. Stay focused and keep shining!";
+        }
+      } else {
+        title = "🎯 Study Checkpoint Reminder";
+        msg = `You have ${pendingCount} pending task(s) scheduled for today. Stay locked in!`;
+      }
+
+      setTimeout(() => { showToast(title, msg); }, 600);
     }
 
-    function escapeHtml(text) {
-      return text.replace(/[&<>"']/g, function(m) {
-        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+    function showToast(title, msg) {
+      document.getElementById('toastTitle').innerText = title;
+      document.getElementById('toastMessage').innerText = msg;
+      const banner = document.getElementById('toastBanner');
+      banner.style.display = 'block';
+    }
+
+    function closeToast() {
+      document.getElementById('toastBanner').style.display = 'none';
+    }
+
+    // Notifications API
+    function requestNotificationPermission() {
+      if (!("Notification" in window)) {
+        alert("This browser does not support desktop notifications.");
+        return;
+      }
+      Notification.requestPermission().then(permission => {
+        if (permission === "granted") {
+          alert("Notifications enabled successfully!");
+          document.getElementById('notifBtn').style.color = "var(--success)";
+        } else {
+          alert("Notification permission denied.");
+        }
       });
     }
 
-    // Push Notifications Logic
-    function requestNotificationPermission() {
-      if ("Notification" in window && Notification.permission !== "granted") {
-        Notification.requestPermission();
-      }
-    }
-
-    function checkDailyReminders() {
+    function initNotificationChecker() {
       setInterval(() => {
         const todayStr = new Date().toISOString().split('T')[0];
         const now = new Date();
-        const currentTimeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+        const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
         let store = JSON.parse(localStorage.getItem('study_checkpoints')) || {};
         if (store[todayStr]) {
-          store[todayStr].forEach(task => {
-            if (!task.completed && task.time === currentTimeStr && !task.notified) {
-              triggerNotification(task.text);
-              task.notified = true;
+          store[todayStr].forEach(t => {
+            if (!t.completed && t.time === timeStr && !t.notified) {
+              triggerSystemNotification(t.text);
+              t.notified = true;
               localStorage.setItem('study_checkpoints', JSON.stringify(store));
             }
           });
         }
-      }, 30000); // Check every 30 seconds
+      }, 30000);
     }
 
-    function triggerNotification(taskText) {
+    function triggerSystemNotification(taskText) {
       if ("Notification" in window && Notification.permission === "granted") {
         new Notification("Study Checkpoint Reminder", {
-          body: `Task scheduled for right now: ${taskText}`,
+          body: `Time for your task: ${taskText}`,
           icon: "https://cdn-icons-png.flaticon.com/512/3209/3209265.png"
         });
       }
+    }
+
+    function formatDisplayDate(dateStr) {
+      const d = new Date(dateStr + 'T00:00:00');
+      return d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
     }
   </script>
 </body>
