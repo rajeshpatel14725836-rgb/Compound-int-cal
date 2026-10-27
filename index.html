@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Study Checkpoints & Daily Planner</title>
   <style>
-    /* Themes */
-    [data-theme="dark"] {
+    :root {
       --bg-color: #0f172a;
       --card-bg: #1e293b;
       --accent: #3b82f6;
@@ -112,7 +111,6 @@
       font-size: 0.95rem;
       font-weight: 600;
       margin-bottom: 12px;
-      color: var(--text-main);
     }
 
     .date-row {
@@ -242,7 +240,6 @@
       padding: 4px;
     }
 
-    /* Checklist Section */
     .section-title {
       font-size: 0.85rem;
       font-weight: 600;
@@ -306,12 +303,45 @@
       margin-top: 2px;
     }
 
-    /* Non-Distracting Bottom Toast Banner */
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    .modal-content h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .modal-content p {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+
+    /* Toast Banner */
     .toast-banner {
       position: fixed;
-      bottom: 16px;
-      left: 16px;
-      right: 16px;
+      bottom: 16px; left: 16px; right: 16px;
       max-width: 560px;
       margin: 0 auto;
       background-color: var(--banner-bg);
@@ -365,12 +395,22 @@
       <p>Precision Daily Planner</p>
     </div>
     <div class="header-actions">
-      <button class="icon-btn" id="notifBtn" onclick="requestNotificationPermission()" title="Enable Notifications">🔔</button>
+      <button class="icon-btn" id="notifBtn" onclick="handleNotifBtnClick()" title="Notification Status">🔔</button>
       <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Switch Theme">☀️</button>
     </div>
   </header>
 
-  <!-- Non-Distracting Bottom Toast Banner -->
+  <!-- First Launch Permission Modal -->
+  <div class="modal-overlay" id="permModal" style="display: none;">
+    <div class="modal-content">
+      <h3>🔔 Enable Study Reminders</h3>
+      <p>Allow notifications so the app can remind you at 10:30 AM (or your set time) for upcoming daily checkpoints.</p>
+      <button class="btn" onclick="requestPermissionFromModal()">Enable Reminders</button>
+      <button class="btn btn-secondary" style="margin-top: 8px;" onclick="closeModal()">Skip for Now</button>
+    </div>
+  </div>
+
+  <!-- Toast Banner -->
   <div class="toast-banner" id="toastBanner">
     <div class="toast-header">
       <span class="toast-title" id="toastTitle">Daily Update</span>
@@ -381,7 +421,7 @@
 
   <div class="container">
     
-    <!-- ADD CHECKLIST -->
+    <!-- ADD CHECKLIST CARD -->
     <div class="card">
       <div class="card-title">Add Checkpoint / Task</div>
 
@@ -401,9 +441,7 @@
         <input type="time" id="globalTime" value="10:30">
       </div>
 
-      <div class="task-input-list" id="taskInputContainer">
-        <!-- Dynamic task inputs injected here -->
-      </div>
+      <div class="task-input-list" id="taskInputContainer"></div>
 
       <div style="display: flex; gap: 8px;">
         <button class="btn btn-secondary" onclick="addTaskInputRow()">+ Add Line</button>
@@ -413,9 +451,7 @@
 
     <!-- VIEW CHECKLISTS -->
     <div class="section-title">Your Checkpoints</div>
-    <div id="checklistsContainer">
-      <!-- Saved checklists rendered here -->
-    </div>
+    <div id="checklistsContainer"></div>
 
   </div>
 
@@ -431,8 +467,10 @@
       setQuickDate(0);
       addTaskInputRow();
       loadChecklists();
+      checkFirstLaunchPermission();
       checkAppOpenBehavior();
       initNotificationChecker();
+      updateNotifBtnStatus();
     });
 
     // Theme Management
@@ -454,14 +492,14 @@
       document.getElementById('themeBtn').innerText = theme === 'dark' ? '☀️' : '🌙';
     }
 
-    // Quick Date Picker
+    // Date Functions
     function setQuickDate(daysToAdd) {
       const d = new Date();
       d.setDate(d.getDate() + daysToAdd);
       document.getElementById('targetDate').value = d.toISOString().split('T')[0];
     }
 
-    // Dynamic Input Rows
+    // Dynamic Task Inputs
     function addTaskInputRow() {
       taskCount++;
       const container = document.getElementById('taskInputContainer');
@@ -525,7 +563,7 @@
       showToast("Success", "Checklist saved successfully!");
     }
 
-    // Render Checklists
+    // Load Checklists
     function loadChecklists() {
       const container = document.getElementById('checklistsContainer');
       const store = JSON.parse(localStorage.getItem('study_checkpoints')) || {};
@@ -591,7 +629,58 @@
       }
     }
 
-    // Smart Open Behavior (Toast Notifications based on count/time)
+    // Permission Handlers
+    function checkFirstLaunchPermission() {
+      const asked = localStorage.getItem('notif_asked');
+      if (!asked && "Notification" in window && Notification.permission !== "granted") {
+        document.getElementById('permModal').style.display = 'flex';
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('permModal').style.display = 'none';
+      localStorage.setItem('notif_asked', 'true');
+    }
+
+    function requestPermissionFromModal() {
+      closeModal();
+      requestNotificationPermission();
+    }
+
+    function handleNotifBtnClick() {
+      if ("Notification" in window) {
+        if (Notification.permission === "denied") {
+          showToast("Permission Blocked", "Notifications are blocked by Chrome. Tap Chrome's URL bar Lock icon -> Site settings -> Notifications -> Allow.");
+        } else {
+          requestNotificationPermission();
+        }
+      }
+    }
+
+    function requestNotificationPermission() {
+      if ("Notification" in window) {
+        Notification.requestPermission().then(permission => {
+          localStorage.setItem('notif_asked', 'true');
+          updateNotifBtnStatus();
+          if (permission === "granted") {
+            showToast("Notifications Enabled", "You will now receive daily reminders at your scheduled times.");
+          }
+        });
+      }
+    }
+
+    function updateNotifBtnStatus() {
+      const btn = document.getElementById('notifBtn');
+      if ("Notification" in window && Notification.permission === "granted") {
+        btn.style.borderColor = "var(--success)";
+        btn.style.color = "var(--success)";
+      } else {
+        btn.style.borderColor = "var(--border)";
+        btn.style.color = "var(--text-main)";
+      }
+    }
+
+    // Toast Messages
     function checkAppOpenBehavior() {
       const todayStr = new Date().toISOString().split('T')[0];
       const store = JSON.parse(localStorage.getItem('study_checkpoints')) || {};
@@ -600,9 +689,7 @@
       const totalCount = todayTasks.length;
 
       let openData = JSON.parse(localStorage.getItem('app_open_tracker')) || { date: todayStr, count: 0 };
-      if (openData.date !== todayStr) {
-        openData = { date: todayStr, count: 0 };
-      }
+      if (openData.date !== todayStr) openData = { date: todayStr, count: 0 };
       openData.count++;
       localStorage.setItem('app_open_tracker', JSON.stringify(openData));
 
@@ -635,28 +722,31 @@
     function showToast(title, msg) {
       document.getElementById('toastTitle').innerText = title;
       document.getElementById('toastMessage').innerText = msg;
-      const banner = document.getElementById('toastBanner');
-      banner.style.display = 'block';
+      document.getElementById('toastBanner').style.display = 'block';
     }
 
     function closeToast() {
       document.getElementById('toastBanner').style.display = 'none';
     }
 
-    // Notifications API
-    function requestNotificationPermission() {
-      if (!("Notification" in window)) {
-        alert("This browser does not support desktop notifications.");
-        return;
+    // Sound Alarm & Notifications
+    function playChimeSound() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.3); // A5
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.5);
+      } catch (e) {
+        console.log("Audio not allowed yet");
       }
-      Notification.requestPermission().then(permission => {
-        if (permission === "granted") {
-          alert("Notifications enabled successfully!");
-          document.getElementById('notifBtn').style.color = "var(--success)";
-        } else {
-          alert("Notification permission denied.");
-        }
-      });
     }
 
     function initNotificationChecker() {
@@ -670,6 +760,7 @@
           store[todayStr].forEach(t => {
             if (!t.completed && t.time === timeStr && !t.notified) {
               triggerSystemNotification(t.text);
+              playChimeSound();
               t.notified = true;
               localStorage.setItem('study_checkpoints', JSON.stringify(store));
             }
