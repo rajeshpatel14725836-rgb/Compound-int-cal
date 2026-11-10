@@ -1,817 +1,1103 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>APEXTASK - Study Checkpoints</title>
-  <style>
-    :root {
-      --bg-color: #0f172a;
-      --card-bg: #1e293b;
-      --accent: #3b82f6;
-      --accent-hover: #2563eb;
-      --text-main: #f8fafc;
-      --text-sub: #94a3b8;
-      --border: #334155;
-      --success: #22c55e;
-      --danger: #ef4444;
-      --banner-bg: #1e293b;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Udhaar & Interest Manager</title>
+<meta name="theme-color" content="#1e3a8a">
+<style>
+* {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
 
-    [data-theme="light"] {
-      --bg-color: #f1f5f9;
-      --card-bg: #ffffff;
-      --accent: #2563eb;
-      --accent-hover: #1d4ed8;
-      --text-main: #0f172a;
-      --text-sub: #64748b;
-      --border: #cbd5e1;
-      --success: #16a34a;
-      --danger: #dc2626;
-      --banner-bg: #ffffff;
-    }
+body {
+    background: #f1f5f9;
+    color: #1e293b;
+    min-height: 100vh;
+    padding: 12px 10px 40px;
+}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      -webkit-tap-highlight-color: transparent;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
 
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      padding-bottom: 30px;
-    }
+.header {
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    color: white;
+    padding: 18px 16px;
+    border-radius: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 15px rgba(30, 58, 138, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-    header {
-      background-color: var(--card-bg);
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
+.header h1 {
+    font-size: 20px;
+    font-weight: 700;
+}
 
-    .header-title h1 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
+.header p {
+    font-size: 12px;
+    opacity: 0.9;
+}
 
-    .header-title p {
-      font-size: 0.75rem;
-      color: var(--text-sub);
-    }
+.back-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 12px;
+}
 
-    .header-actions {
-      display: flex;
-      gap: 8px;
-    }
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e2e8f0;
+}
 
-    .icon-btn {
-      background: var(--bg-color);
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1rem;
-    }
+.section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-    .container {
-      padding: 16px;
-      max-width: 600px;
-      width: 100%;
-      margin: 0 auto;
-      flex: 1;
-    }
+.search-box {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+    background: #f8fafc;
+}
 
-    .card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
+.search-box:focus {
+    border-color: #3b82f6;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
 
-    .card-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
 
-    .date-row {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
+.field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #64748b;
+}
 
-    label {
-      font-size: 0.8rem;
-      color: var(--text-sub);
-    }
+.input-wrap input, .input-wrap select {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    background: #f8fafc;
+}
 
-    input[type="date"], input[type="time"], input[type="text"] {
-      background-color: var(--bg-color);
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      padding: 10px 12px;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      outline: none;
-      width: 100%;
-    }
+.input-wrap input:focus, .input-wrap select:focus {
+    border-color: #3b82f6;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
 
-    input[type="date"]:focus, input[type="time"]:focus, input[type="text"]:focus {
-      border-color: var(--accent);
-    }
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
 
-    .quick-date-btns {
-      display: flex;
-      gap: 6px;
-    }
+button {
+    border: none;
+    padding: 11px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
 
-    .btn-quick {
-      flex: 1;
-      background: var(--bg-color);
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      padding: 6px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      cursor: pointer;
-      text-align: center;
-    }
+button:active {
+    opacity: 0.8;
+}
 
-    .reminder-setting {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      background: var(--bg-color);
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      margin-bottom: 14px;
-    }
+.submit-btn {
+    background: #16a34a;
+    color: white;
+    width: 100%;
+}
 
-    .task-input-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
+.toggle-form-btn {
+    background: #2563eb;
+    color: white;
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border-radius: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 14px;
+}
 
-    .task-input-item {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      background: var(--bg-color);
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-    }
+.reset-btn {
+    background: #e2e8f0;
+    color: #334155;
+}
 
-    .task-input-row {
-      display: flex;
-      gap: 8px;
-    }
+.client-list, .loan-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-    .task-time-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: var(--text-sub);
-    }
+.client-card, .loan-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
 
-    .task-time-row input[type="time"] {
-      width: 110px;
-      padding: 4px 6px;
-      font-size: 0.75rem;
-    }
+.client-info h4, .loan-info h4 {
+    font-size: 15px;
+    color: #1e3a8a;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
 
-    .btn {
-      background-color: var(--accent);
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      width: 100%;
-    }
+.client-info p, .loan-info p {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 2px;
+}
 
-    .btn:active {
-      background-color: var(--accent-hover);
-    }
+.loan-actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    width: 130px;
+}
 
-    .btn-secondary {
-      background-color: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-main);
-    }
+.action-btn {
+    padding: 7px 6px;
+    font-size: 11px;
+    border-radius: 7px;
+    color: white;
+    text-align: center;
+    font-weight: 600;
+}
 
-    .btn-icon {
-      background: transparent;
-      border: none;
-      color: var(--danger);
-      font-size: 1.1rem;
-      cursor: pointer;
-      padding: 4px;
-    }
+.calc-btn { background: #0284c7; grid-column: span 2; }
+.adjust-btn { background: #d97706; }
+.edit-btn { background: #4f46e5; }
+.delete-btn { background: #dc2626; grid-column: span 2; }
 
-    .section-title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-sub);
-      margin: 20px 0 10px 0;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+.client-actions {
+    display: flex;
+    gap: 6px;
+}
 
-    .date-group {
-      margin-bottom: 16px;
-    }
+.client-action-btn {
+    padding: 8px 10px;
+    font-size: 12px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+}
 
-    .date-header {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--accent);
-      margin-bottom: 6px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+.empty-message {
+    text-align: center;
+    color: #94a3b8;
+    padding: 20px;
+    font-size: 13px;
+}
 
-    .task-card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px 12px;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    z-index: 999;
+    overflow-y: auto;
+}
 
-    .task-card.completed {
-      opacity: 0.5;
-    }
+.modal {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    border-radius: 20px;
+    padding: 18px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    overflow-y: auto;
+}
 
-    .task-card.completed .task-text {
-      text-decoration: line-through;
-    }
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 8px;
+}
 
-    .checkbox {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--accent);
-      cursor: pointer;
-    }
+.modal-header h3 {
+    color: #1e3a8a;
+    font-size: 16px;
+    font-weight: 700;
+}
 
-    .task-info {
-      flex: 1;
-    }
+.close-modal-btn {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
 
-    .task-text {
-      font-size: 0.9rem;
-    }
+.tab-container {
+    display: flex;
+    background: #e2e8f0;
+    padding: 4px;
+    border-radius: 10px;
+    margin-bottom: 14px;
+    gap: 4px;
+}
 
-    .task-time-tag {
-      font-size: 0.7rem;
-      color: var(--text-sub);
-      margin-top: 2px;
-    }
+.tab-btn {
+    flex: 1;
+    padding: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: transparent;
+    color: #64748b;
+}
 
-    /* Modal Styling */
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      padding: 20px;
-    }
+.tab-btn.active {
+    background: #1e3a8a;
+    color: white;
+}
 
-    .modal-content {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px;
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    }
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+}
 
-    .modal-content h3 {
-      font-size: 1.1rem;
-      margin-bottom: 8px;
-    }
+.summary-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 10px;
+}
 
-    .modal-content p {
-      font-size: 0.85rem;
-      color: var(--text-sub);
-      margin-bottom: 16px;
-      line-height: 1.4;
-    }
+.summary-label {
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 3px;
+}
 
-    /* Toast Banner */
-    .toast-banner {
-      position: fixed;
-      bottom: 16px; left: 16px; right: 16px;
-      max-width: 560px;
-      margin: 0 auto;
-      background-color: var(--banner-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 16px;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-      z-index: 100;
-      display: none;
-      animation: slideUp 0.3s ease;
-    }
+.summary-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e3a8a;
+}
 
-    @keyframes slideUp {
-      from { transform: translateY(100px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
+.final-box {
+    background: #1e3a8a;
+    color: white;
+    border-radius: 10px;
+    padding: 12px;
+    margin-top: 8px;
+    grid-column: span 2;
+}
 
-    .toast-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
+.final-box .summary-label {
+    color: #cbd5e1;
+    font-size: 12px;
+}
 
-    .toast-title {
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: var(--accent);
-    }
+.final-box .summary-value {
+    color: white;
+    font-size: 20px;
+}
 
-    .toast-body {
-      font-size: 0.82rem;
-      color: var(--text-main);
-      line-height: 1.4;
-    }
+.extra-days-box {
+    background: #eff6ff;
+    border-left: 4px solid #3b82f6;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #1e293b;
+}
 
-    footer {
-      text-align: center;
-      font-size: 0.75rem;
-      color: var(--text-sub);
-      padding: 10px;
-      margin-top: auto;
-    }
-  </style>
+.extra-days-title {
+    font-weight: 700;
+    color: #1d4ed8;
+    margin-bottom: 4px;
+}
+
+.extra-days-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 0;
+}
+
+.table-box {
+    overflow-x: auto;
+    margin-top: 12px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    background: white;
+}
+
+th {
+    background: #1e3a8a;
+    color: white;
+    padding: 8px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+td {
+    border-bottom: 1px solid #e2e8f0;
+    padding: 8px;
+    white-space: nowrap;
+}
+
+.footer {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 11px;
+    margin-top: 20px;
+}
+</style>
 </head>
 <body>
 
-  <header>
-    <div class="header-title">
-      <h1>APEXTASK</h1>
-      <p>Precision Daily Planner</p>
-    </div>
-    <div class="header-actions">
-      <button class="icon-btn" id="notifBtn" onclick="handleNotifBtnClick()" title="Notification Status">🔔</button>
-      <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Switch Theme">☀️</button>
-    </div>
-  </header>
+<div class="container" id="appContainer"></div>
 
-  <!-- First Launch Permission Modal -->
-  <div class="modal-overlay" id="permModal" style="display: none;">
-    <div class="modal-content">
-      <h3>🔔 Enable Study Reminders</h3>
-      <p>Allow notifications so APEXTASK can remind you at 10:30 AM (or your set time) for upcoming daily checkpoints.</p>
-      <button class="btn" onclick="requestPermissionFromModal()">Allow Notifications</button>
-      <button class="btn btn-secondary" style="margin-top: 8px;" onclick="closeModal()">Skip for Now</button>
-    </div>
-  </div>
-
-  <!-- Toast Banner -->
-  <div class="toast-banner" id="toastBanner">
-    <div class="toast-header">
-      <span class="toast-title" id="toastTitle">Daily Update</span>
-      <button class="btn-icon" style="font-size:0.9rem;" onclick="closeToast()">✕</button>
-    </div>
-    <div class="toast-body" id="toastMessage">Loading message...</div>
-  </div>
-
-  <div class="container">
-    
-    <!-- TEST NOTIFICATION CARD -->
-    <div class="card" style="background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(30,41,59,0.5)); border-color: var(--accent);">
-      <div class="card-title" style="margin-bottom: 8px;">⚡ Test Notification System</div>
-      <p style="font-size: 0.8rem; color: var(--text-sub); margin-bottom: 12px;">Click below to test if phone permissions and notification alerts are working correctly.</p>
-      <button class="btn" style="background-color: var(--success);" onclick="testNotificationNow()">🔔 Test Notification Now</button>
-    </div>
-
-    <!-- ADD CHECKLIST CARD -->
-    <div class="card">
-      <div class="card-title">Add Checkpoint / Task</div>
-
-      <div class="date-row">
-        <label>Target Date:</label>
-        <input type="date" id="targetDate">
-        <div class="quick-date-btns">
-          <button class="btn-quick" onclick="setQuickDate(0)">Today</button>
-          <button class="btn-quick" onclick="setQuickDate(1)">+1 Day</button>
-          <button class="btn-quick" onclick="setQuickDate(2)">+2 Days</button>
-          <button class="btn-quick" onclick="setQuickDate(7)">+7 Days</button>
+<!-- Calculator Modal -->
+<div class="modal-overlay" id="calcModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>📊 Interest Calculator</h3>
+            <button class="close-modal-btn" onclick="closeModal('calcModal')">✕ Close</button>
         </div>
-      </div>
 
-      <div class="reminder-setting">
-        <label for="globalTime">Default Reminder Time:</label>
-        <input type="time" id="globalTime" value="10:30">
-      </div>
-
-      <div class="task-input-list" id="taskInputContainer"></div>
-
-      <div style="display: flex; gap: 8px;">
-        <button class="btn btn-secondary" onclick="addTaskInputRow()">+ Add Line</button>
-        <button class="btn" onclick="saveChecklist()">Save Checklist</button>
-      </div>
-    </div>
-
-    <!-- VIEW CHECKLISTS -->
-    <div class="section-title">Your Checkpoints</div>
-    <div id="checklistsContainer"></div>
-
-  </div>
-
-  <footer>
-    APEXTASK • Concept by Rajesh
-  </footer>
-
-  <script>
-    let taskCount = 0;
-
-    document.addEventListener("DOMContentLoaded", () => {
-      initTheme();
-      setQuickDate(0);
-      addTaskInputRow();
-      loadChecklists();
-      checkFirstLaunchPermission();
-      checkAppOpenBehavior();
-      initNotificationChecker();
-      updateNotifBtnStatus();
-    });
-
-    // Theme Management
-    function initTheme() {
-      const savedTheme = localStorage.getItem('study_theme') || 'dark';
-      document.documentElement.setAttribute('data-theme', savedTheme);
-      updateThemeIcon(savedTheme);
-    }
-
-    function toggleTheme() {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('study_theme', next);
-      updateThemeIcon(next);
-    }
-
-    function updateThemeIcon(theme) {
-      document.getElementById('themeBtn').innerText = theme === 'dark' ? '☀️' : '🌙';
-    }
-
-    // Date Functions
-    function setQuickDate(daysToAdd) {
-      const d = new Date();
-      d.setDate(d.getDate() + daysToAdd);
-      document.getElementById('targetDate').value = d.toISOString().split('T')[0];
-    }
-
-    // Dynamic Task Inputs
-    function addTaskInputRow() {
-      taskCount++;
-      const container = document.getElementById('taskInputContainer');
-      const row = document.createElement('div');
-      row.className = 'task-input-item';
-      row.id = `task-row-${taskCount}`;
-      row.innerHTML = `
-        <div class="task-input-row">
-          <input type="text" class="task-input-text" placeholder="Enter task (e.g., Complete Chapter 2)...">
-          <button class="btn-icon" onclick="removeTaskInputRow(${taskCount})">✕</button>
+        <div class="tab-container">
+            <button class="tab-btn active" id="tabCompoundBtn" onclick="switchCalcTab('compound')">Compound Interest</button>
+            <button class="tab-btn" id="tabSimpleBtn" onclick="switchCalcTab('simple')">Simple Interest</button>
         </div>
-        <div class="task-time-row">
-          <span>Custom Time (Optional):</span>
-          <input type="time" class="task-input-time">
-        </div>
-      `;
-      container.appendChild(row);
-    }
 
-    function removeTaskInputRow(id) {
-      const container = document.getElementById('taskInputContainer');
-      if (container.children.length > 1) {
-        const row = document.getElementById(`task-row-${id}`);
-        if (row) row.remove();
-      }
-    }
-
-    // Save Checklist
-    function saveChecklist() {
-      const dateVal = document.getElementById('targetDate').value;
-      const globalTimeVal = document.getElementById('globalTime').value || '10:30';
-      const items = document.querySelectorAll('.task-input-item');
-
-      if (!dateVal) { alert("Please select a date."); return; }
-
-      let newTasks = [];
-      items.forEach(item => {
-        const text = item.querySelector('.task-input-text').value.trim();
-        const customTime = item.querySelector('.task-input-time').value;
-        if (text !== '') {
-          newTasks.push({
-            id: Date.now() + Math.random(),
-            text: text,
-            time: customTime ? customTime : globalTimeVal,
-            completed: false
-          });
-        }
-      });
-
-      if (newTasks.length === 0) { alert("Please enter at least one task."); return; }
-
-      let store = JSON.parse(localStorage.getItem('study_checkpoints')) || {};
-      if (!store[dateVal]) store[dateVal] = [];
-      store[dateVal] = store[dateVal].concat(newTasks);
-      localStorage.setItem('study_checkpoints', JSON.stringify(store));
-
-      document.getElementById('taskInputContainer').innerHTML = '';
-      taskCount = 0;
-      addTaskInputRow();
-      loadChecklists();
-      showToast("Success", "Checklist saved successfully!");
-    }
-
-    // Load Checklists
-    function loadChecklists() {
-      const container = document.getElementById('checklistsContainer');
-      const store = JSON.parse(localStorage.getItem('study_checkpoints')) || {};
-      const dates = Object.keys(store).sort();
-
-      if (dates.length === 0) {
-        container.innerHTML = `<div class="card" style="text-align:center; color:var(--text-sub);">No checkpoints found. Add one above!</div>`;
-        return;
-      }
-
-      container.innerHTML = '';
-      dates.forEach(date => {
-        const group = document.createElement('div');
-        group.className = 'date-group';
-
-        const header = document.createElement('div');
-        header.className = 'date-header';
-        header.innerHTML = `<span>📅 ${formatDisplayDate(date)}</span> <button class="btn-icon" style="font-size:0.75rem;" onclick="deleteDateGroup('${date}')">Delete Day</button>`;
-        group.appendChild(header);
-
-        store[date].forEach(t => {
-          const card = document.createElement('div');
-          card.className = `task-card ${t.completed ? 'completed' : ''}`;
-          card.innerHTML = `
-            <input type="checkbox" class="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask('${date}', ${t.id})">
-            <div class="task-info">
-              <div class="task-text">${escapeHtml(t.text)}</div>
-              <div class="task-time-tag">⏰ ${t.time}</div>
+        <!-- COMPOUND SECTION -->
+        <div id="modalCompoundSection">
+            <div class="input-grid">
+                <div class="field"><label>Principal Amount (₹)</label><div class="input-wrap"><input type="number" id="cmpPrincipal"></div></div>
+                <div class="field"><label>Monthly Rate (%)</label><div class="input-wrap"><input type="number" id="cmpRate" step="0.01"></div></div>
+                <div class="field"><label>Start Date</label><div class="input-wrap"><input type="date" id="cmpStartDate" onchange="calculateCompound()"></div></div>
+                <div class="field"><label>End Date</label><div class="input-wrap"><input type="date" id="cmpEndDate" onchange="calculateCompound()"></div></div>
             </div>
-            <button class="btn-icon" onclick="deleteTask('${date}', ${t.id})">✕</button>
-          `;
-          group.appendChild(card);
-        });
-        container.appendChild(group);
-      });
-    }
 
-    function toggleTask(date, id) {
-      let store = JSON.parse(localStorage.getItem('study_checkpoints')) || {};
-      if (store[date]) {
-        store[date] = store[date].map(t => { if (t.id === id) t.completed = !t.completed; return t; });
-        localStorage.setItem('study_checkpoints', JSON.stringify(store));
-        loadChecklists();
-      }
-    }
+            <button class="submit-btn" style="margin-top:10px;" onclick="calculateCompound()">Re-Calculate</button>
 
-    function deleteTask(date, id) {
-      let store = JSON.parse(localStorage.getItem('study_checkpoints')) || {};
-      if (store[date]) {
-        store[date] = store[date].filter(t => t.id !== id);
-        if (store[date].length === 0) delete store[date];
-        localStorage.setItem('study_checkpoints', JSON.stringify(store));
-        loadChecklists();
-      }
-    }
+            <div id="resultsCompound" style="margin-top: 12px;">
+                <div class="summary-grid">
+                    <div class="summary-box"><div class="summary-label">Principal</div><div class="summary-value" id="cmpResPrincipal">₹ 0</div></div>
+                    <div class="summary-box"><div class="summary-label">1 Month Interest</div><div class="summary-value" id="cmpRes1m">₹ 0</div></div>
+                    <div class="summary-box"><div class="summary-label">Duration</div><div class="summary-value" id="cmpResDuration">-</div></div>
+                    <div class="summary-box"><div class="summary-label">Total Interest</div><div class="summary-value" id="cmpResInterest">₹ 0</div></div>
+                    <div class="summary-box" style="background:#f0fdf4;"><div class="summary-label">Already Paid</div><div class="summary-value" id="cmpResPaid" style="color:#16a34a;">₹ 0</div></div>
+                    <div class="final-box">
+                        <div class="summary-label">Net Payable Amount (Due)</div>
+                        <div class="summary-value" id="cmpResFinal">₹ 0</div>
+                    </div>
+                </div>
 
-    function deleteDateGroup(date) {
-      if (confirm(`Delete all for ${date}?`)) {
-        let store = JSON.parse(localStorage.getItem('study_checkpoints')) || {};
-        delete store[date];
-        localStorage.setItem('study_checkpoints', JSON.stringify(store));
-        loadChecklists();
-      }
-    }
+                <div id="cmpExtraDaysBox" class="extra-days-box" style="display:none;">
+                    <div class="extra-days-title">Extra Days Calculation</div>
+                    <div class="extra-days-row"><span>1 Day Interest:</span> <b id="cmp1Day">₹ 0</b></div>
+                    <div class="extra-days-row"><span><span id="cmpDaysCount">0</span> Days Interest:</span> <b id="cmpDaysVal">₹ 0</b></div>
+                </div>
 
-    // Permission Handlers & Testing
-    function checkFirstLaunchPermission() {
-      const asked = localStorage.getItem('notif_asked');
-      if (!asked && "Notification" in window && Notification.permission !== "granted") {
-        document.getElementById('permModal').style.display = 'flex';
-      }
-    }
+                <div id="cmpTableBox" style="display:none; margin-top:12px;">
+                    <div class="section-title" style="font-size:13px;">📋 Yearly Breakdown</div>
+                    <div class="table-box">
+                        <table>
+                            <thead><tr><th>Period</th><th>Period Interest</th><th>Total Interest</th><th>New Principal</th></tr></thead>
+                            <tbody id="cmpTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    function closeModal() {
-      document.getElementById('permModal').style.display = 'none';
-      localStorage.setItem('notif_asked', 'true');
-    }
+        <!-- SIMPLE SECTION -->
+        <div id="modalSimpleSection" style="display:none;">
+            <div class="input-grid">
+                <div class="field"><label>Principal Amount (₹)</label><div class="input-wrap"><input type="number" id="simPrincipal"></div></div>
+                <div class="field"><label>Monthly Rate (%)</label><div class="input-wrap"><input type="number" id="simRate" step="0.01"></div></div>
+                <div class="field"><label>Start Date</label><div class="input-wrap"><input type="date" id="simStartDate" onchange="calculateSimple()"></div></div>
+                <div class="field"><label>End Date</label><div class="input-wrap"><input type="date" id="simEndDate" onchange="calculateSimple()"></div></div>
+            </div>
 
-    function requestPermissionFromModal() {
-      closeModal();
-      requestNotificationPermission();
-    }
+            <button class="submit-btn" style="margin-top:10px;" onclick="calculateSimple()">Re-Calculate</button>
 
-    function handleNotifBtnClick() {
-      testNotificationNow();
-    }
+            <div id="resultsSimple" style="margin-top: 12px;">
+                <div class="summary-grid">
+                    <div class="summary-box"><div class="summary-label">Principal</div><div class="summary-value" id="simResPrincipal">₹ 0</div></div>
+                    <div class="summary-box"><div class="summary-label">1 Month Interest</div><div class="summary-value" id="simRes1m">₹ 0</div></div>
+                    <div class="summary-box"><div class="summary-label">Duration</div><div class="summary-value" id="simResDuration">-</div></div>
+                    <div class="summary-box"><div class="summary-label">Total Interest</div><div class="summary-value" id="simResInterest">₹ 0</div></div>
+                    <div class="summary-box" style="background:#f0fdf4;"><div class="summary-label">Already Paid</div><div class="summary-value" id="simResPaid" style="color:#16a34a;">₹ 0</div></div>
+                    <div class="final-box">
+                        <div class="summary-label">Net Payable Amount (Due)</div>
+                        <div class="summary-value" id="simResFinal">₹ 0</div>
+                    </div>
+                </div>
 
-    function requestNotificationPermission() {
-      if ("Notification" in window) {
-        Notification.requestPermission().then(permission => {
-          localStorage.setItem('notif_asked', 'true');
-          updateNotifBtnStatus();
-          if (permission === "granted") {
-            showToast("Notifications Enabled", "You will now receive daily reminders at your scheduled times.");
-          }
-        });
-      }
-    }
+                <div id="simExtraDaysBox" class="extra-days-box" style="display:none;">
+                    <div class="extra-days-title">Extra Days Calculation</div>
+                    <div class="extra-days-row"><span>1 Day Interest:</span> <b id="sim1Day">₹ 0</b></div>
+                    <div class="extra-days-row"><span><span id="simDaysCount">0</span> Days Interest:</span> <b id="simDaysVal">₹ 0</b></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    function testNotificationNow() {
-      if (!("Notification" in window)) {
-        alert("Notifications are not supported on this device/browser.");
+<!-- Adjustment Modal -->
+<div class="modal-overlay" id="adjustModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>⚖️ Loan Adjustment & Settlement</h3>
+            <button class="close-modal-btn" onclick="closeModal('adjustModal')">✕</button>
+        </div>
+        <div class="field" style="margin-bottom:10px;">
+            <label>Interest Basis for Calculation</label>
+            <div class="input-wrap">
+                <select id="adjustType" onchange="calculateAdjustmentSummary()">
+                    <option value="compound">Compound Interest (चक्रवृद्धि)</option>
+                    <option value="simple">Simple Interest (साधा)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="summary-grid" style="margin-bottom: 10px;">
+            <div class="summary-box"><div class="summary-label">Total Due</div><div class="summary-value" id="adjTotalDue">₹ 0</div></div>
+            <div class="summary-box"><div class="summary-label">Already Paid</div><div class="summary-value" id="adjAlreadyPaid" style="color:#16a34a;">₹ 0</div></div>
+            <div class="final-box"><div class="summary-label">Remaining Net Balance</div><div class="summary-value" id="adjNetBalance">₹ 0</div></div>
+        </div>
+
+        <div class="field" style="margin-bottom:10px;">
+            <label>Amount Given by Customer (₹)</label>
+            <div class="input-wrap"><input type="number" id="adjGivenAmount" placeholder="e.g. 5000"></div>
+        </div>
+        <div class="field" style="margin-bottom:10px;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                <input type="checkbox" id="adjFullSettle" style="width:16px; height:16px;"> 
+                <span style="font-size:12px;"><strong>Full Settlement / Account Close</strong> (Zero out remaining balance)</span>
+            </label>
+        </div>
+
+        <button class="submit-btn" style="background:#d97706;" onclick="saveAdjustment()">Confirm Adjustment</button>
+    </div>
+</div>
+
+<!-- Edit Loan Modal -->
+<div class="modal-overlay" id="editModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>✏️ Edit Loan Details</h3>
+            <button class="close-modal-btn" onclick="closeModal('editModal')">✕</button>
+        </div>
+        <div class="input-grid">
+            <div class="field"><label>Principal Amount (₹)</label><div class="input-wrap"><input type="number" id="editLoanAmount"></div></div>
+            <div class="field"><label>Monthly Interest Rate (%)</label><div class="input-wrap"><input type="number" id="editLoanRate" step="0.1"></div></div>
+            <div class="field"><label>Date Given</label><div class="input-wrap"><input type="date" id="editLoanDate"></div></div>
+            <div class="field"><label>Note / Remarks</label><div class="input-wrap"><input type="text" id="editLoanNote"></div></div>
+        </div>
+        <button class="submit-btn" style="margin-top:12px; background:#4f46e5;" onclick="saveEditedLoan()">Update Loan</button>
+    </div>
+</div>
+
+<!-- Payment Received Modal (Simple Direct Payment without calculation) -->
+<div class="modal-overlay" id="payModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>💰 Receive Payment</h3>
+            <button class="close-modal-btn" onclick="closeModal('payModal')">✕</button>
+        </div>
+        <div class="field" style="margin-bottom:10px;"><label>Select Loan</label><div class="input-wrap"><select id="payLoanSelect"></select></div></div>
+        <div class="field" style="margin-bottom:10px;"><label>Received Amount (₹)</label><div class="input-wrap"><input type="number" id="payAmount" placeholder="5000"></div></div>
+        <div class="field" style="margin-bottom:12px;"><label>Date</label><div class="input-wrap"><input type="date" id="payDate"></div></div>
+        <button class="submit-btn" style="background:#16a34a;" onclick="savePayment()">Save Payment</button>
+    </div>
+</div>
+
+<script>
+let clients = JSON.parse(localStorage.getItem("udhaar_clients")) || [];
+let currentView = "home";
+let activeClientId = null;
+let activeLoanId = null;
+
+function saveToStorage() {
+    localStorage.setItem("udhaar_clients", JSON.stringify(clients));
+}
+
+function formatDate(dateStr) {
+    const d = new Date(dateStr);
+    return isNaN(d) ? dateStr : d.toLocaleDateString('en-GB');
+}
+
+function formatINR(val) {
+    return '₹' + Math.round(val).toLocaleString('en-IN');
+}
+
+function getDuration(startDateStr, endDateStr) {
+    const start = new Date(startDateStr);
+    const end = new Date(endDateStr);
+    if (end < start) return { months: 0, days: 0, text: "0 Months" };
+
+    let y = end.getFullYear() - start.getFullYear();
+    let m = end.getMonth() - start.getMonth();
+    let d = end.getDate() - start.getDate();
+
+    if (d < 0) {
+        m--;
+        let prevMonth = new Date(end.getFullYear(), end.getMonth(), 0).getDate();
+        d += prevMonth;
+    }
+    if (m < 0) {
+        y--;
+        m += 12;
+    }
+    let totalMonths = (y * 12) + m;
+    let text = totalMonths + " Months" + (d > 0 ? " " + d + " Days" : "");
+    return { months: totalMonths, days: d, text };
+}
+
+function render() {
+    const container = document.getElementById("appContainer");
+    
+    if (currentView === "home") {
+        container.innerHTML = `
+            <div class="header">
+                <div>
+                    <h1>Udhaar Manager</h1>
+                    <p>Track clients & calculate interest</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title">👤 Add New Client</div>
+                <div class="input-grid">
+                    <div class="field"><label>Client Name</label><div class="input-wrap"><input type="text" id="clientName" placeholder="Full name"></div></div>
+                    <div class="field"><label>Phone Number</label><div class="input-wrap"><input type="tel" id="clientPhone" placeholder="Mobile number"></div></div>
+                    <div class="field"><label>Address</label><div class="input-wrap"><input type="text" id="clientAddress" placeholder="Address"></div></div>
+                    <div class="field"><label>Nominee Name</label><div class="input-wrap"><input type="text" id="nomineeName" placeholder="Nominee name"></div></div>
+                    <div class="field"><label>Nominee Phone</label><div class="input-wrap"><input type="tel" id="nomineePhone" placeholder="Nominee phone"></div></div>
+                </div>
+                <button class="submit-btn" style="margin-top:12px;" onclick="saveClient()">Save Client</button>
+            </div>
+
+            <div class="card">
+                <div class="section-title">📋 Clients List</div>
+                <input type="text" id="searchQuery" class="search-box" placeholder="🔍 Search by Name or Phone..." oninput="filterClients()">
+                <div id="clientListContainer" class="client-list" style="margin-top:12px;"></div>
+            </div>
+
+            <div class="footer">Udhaar Manager App</div>
+        `;
+        renderClientsList(clients);
+    } else if (currentView === "ledger") {
+        const client = clients.find(c => c.id === activeClientId);
+        if (!client) { currentView = "home"; render(); return; }
+
+        container.innerHTML = `
+            <div class="header">
+                <div>
+                    <h1>${client.name}</h1>
+                    <p>Ph: ${client.phone}</p>
+                </div>
+                <button class="back-btn" onclick="currentView='home'; render();">⬅ Back</button>
+            </div>
+
+            <button class="toggle-form-btn" onclick="toggleLoanForm()">➕ Add New Loan / Udhaar</button>
+
+            <div class="card" id="loanFormCard" style="display:none; border: 2px dashed #3b82f6;">
+                <div class="section-title">➕ Give New Udhaar</div>
+                <div class="input-grid">
+                    <div class="field"><label>Principal Amount (₹)</label><div class="input-wrap"><input type="number" id="loanAmount" placeholder="10000"></div></div>
+                    <div class="field"><label>Monthly Interest Rate (%)</label><div class="input-wrap"><input type="number" id="loanRate" placeholder="3" step="0.1"></div></div>
+                    <div class="field"><label>Date Given</label><div class="input-wrap"><input type="date" id="loanDate"></div></div>
+                    <div class="field"><label>Note / Remarks</label><div class="input-wrap"><input type="text" id="loanNote" placeholder="e.g., Cash given"></div></div>
+                </div>
+                <div class="buttons">
+                    <button class="submit-btn" onclick="addLoan()">Save Loan</button>
+                    <button class="reset-btn" onclick="toggleLoanForm()">Cancel</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title">
+                    <span>📊 Active Loans</span>
+                    <button class="action-btn" style="background:#16a34a; padding:8px 12px; font-size:12px; grid-column:auto;" onclick="openPayModal()">+ Payment</button>
+                </div>
+                <div id="loanListContainer" class="loan-list"></div>
+            </div>
+
+            <div class="footer">Udhaar Manager App</div>
+        `;
+        document.getElementById("loanDate").valueAsDate = new Date();
+        renderLoansList();
+    }
+}
+
+function toggleLoanForm() {
+    const formCard = document.getElementById("loanFormCard");
+    formCard.style.display = formCard.style.display === "none" ? "block" : "none";
+}
+
+function saveClient() {
+    const name = document.getElementById("clientName").value.trim();
+    const phone = document.getElementById("clientPhone").value.trim();
+    const address = document.getElementById("clientAddress").value.trim();
+    const nomineeName = document.getElementById("nomineeName").value.trim();
+    const nomineePhone = document.getElementById("nomineePhone").value.trim();
+
+    if (!name || !phone) {
+        alert("Please enter Name and Phone Number.");
         return;
-      }
-      
-      if (Notification.permission === "granted") {
-        triggerSystemNotification("Test successful! APEXTASK reminders are working.");
-        playChimeSound();
-        showToast("Test Notification Sent", "Check your phone notification bar!");
-      } else {
-        Notification.requestPermission().then(permission => {
-          updateNotifBtnStatus();
-          if (permission === "granted") {
-            triggerSystemNotification("Permission granted! APEXTASK is ready.");
-            playChimeSound();
-            showToast("Success", "Notifications enabled and tested!");
-          } else {
-            alert("Notification permission was denied. Please allow it in your app settings.");
-          }
-        });
-      }
     }
 
-    function updateNotifBtnStatus() {
-      const btn = document.getElementById('notifBtn');
-      if ("Notification" in window && Notification.permission === "granted") {
-        btn.style.borderColor = "var(--success)";
-        btn.style.color = "var(--success)";
-      } else {
-        btn.style.borderColor = "var(--border)";
-        btn.style.color = "var(--text-main)";
-      }
+    clients.push({ id: Date.now(), name, phone, address: address || "N/A", nomineeName: nomineeName || "N/A", nomineePhone: nomineePhone || "N/A", loans: [] });
+    saveToStorage();
+    render();
+}
+
+function deleteClient(id) {
+    if (confirm("Delete this client and all records?")) {
+        clients = clients.filter(c => c.id !== id);
+        saveToStorage();
+        render();
+    }
+}
+
+function openLedger(id) {
+    activeClientId = id;
+    currentView = "ledger";
+    render();
+}
+
+function filterClients() {
+    const query = document.getElementById("searchQuery").value.toLowerCase();
+    const filtered = clients.filter(c => c.name.toLowerCase().includes(query) || c.phone.includes(query));
+    renderClientsList(filtered);
+}
+
+function renderClientsList(listToRender) {
+    const container = document.getElementById("clientListContainer");
+    if (listToRender.length === 0) {
+        container.innerHTML = `<div class="empty-message">No clients found.</div>`;
+        return;
+    }
+    let html = "";
+    listToRender.forEach(c => {
+        html += `
+            <div class="client-card">
+                <div class="client-info">
+                    <h4>${c.name}</h4>
+                    <p>📞 ${c.phone} | Loans: ${c.loans.length}</p>
+                </div>
+                <div class="client-actions">
+                    <button class="client-action-btn" style="background:#2563eb;" onclick="openLedger(${c.id})">Ledger</button>
+                    <button class="client-action-btn" style="background:#dc2626;" onclick="deleteClient(${c.id})">✕</button>
+                </div>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+}
+
+function addLoan() {
+    const amount = Number(document.getElementById("loanAmount").value);
+    const rate = Number(document.getElementById("loanRate").value);
+    const date = document.getElementById("loanDate").value;
+    const note = document.getElementById("loanNote").value.trim();
+
+    if (!amount || !rate || !date) {
+        alert("Please fill Amount, Rate, and Date.");
+        return;
     }
 
-    // Toast Messages
-    function checkAppOpenBehavior() {
-      const todayStr = new Date().toISOString().split('T')[0];
-      const store = JSON.parse(localStorage.getItem('study_checkpoints')) || {};
-      const todayTasks = store[todayStr] || [];
-      const pendingCount = todayTasks.filter(t => !t.completed).length;
-      const totalCount = todayTasks.length;
+    const client = clients.find(c => c.id === activeClientId);
+    client.loans.push({ id: Date.now(), amount, rate, date, note: note || "Loan", payments: [] });
+    saveToStorage();
+    render();
+}
 
-      let openData = JSON.parse(localStorage.getItem('app_open_tracker')) || { date: todayStr, count: 0 };
-      if (openData.date !== todayStr) openData = { date: todayStr, count: 0 };
-      openData.count++;
-      localStorage.setItem('app_open_tracker', JSON.stringify(openData));
+function deleteLoan(loanId) {
+    if (confirm("Delete this loan entry?")) {
+        const client = clients.find(c => c.id === activeClientId);
+        client.loans = client.loans.filter(l => l.id !== loanId);
+        saveToStorage();
+        render();
+    }
+}
 
-      const hour = new Date().getHours();
-      let title = "APEXTASK Daily";
-      let msg = "";
+function renderLoansList() {
+    const client = clients.find(c => c.id === activeClientId);
+    const container = document.getElementById("loanListContainer");
+    
+    if (client.loans.length === 0) {
+        container.innerHTML = `<div class="empty-message">No loans added yet.</div>`;
+        return;
+    }
 
-      if (totalCount > 0 && pendingCount === 0) {
-        title = "🎉 Amazing Job!";
-        msg = "You have crushed all your goals for today! Keep up the brilliant momentum.";
-      } else if (openData.count === 1 && hour < 12) {
-        title = "🌅 Good Morning!";
-        msg = `Here is your checklist for today. You have ${pendingCount} pending task(s). Consistency is key!`;
-      } else if (openData.count >= 5 || hour >= 18) {
-        if (pendingCount > 0) {
-          title = "⚠️ Pending Tasks Warning";
-          msg = `Your checklist still has ${pendingCount} task(s) pending. Let's finish them up before the day ends!`;
-        } else {
-          title = "🌟 Great Progress!";
-          msg = "All tasks are up to date. Stay focused and keep shining!";
+    let html = "";
+    const todayStr = new Date().toISOString().split('T')[0];
+
+    client.loans.forEach((loan, index) => {
+        let dur = getDuration(loan.date, todayStr);
+        let totalPaid = loan.payments.reduce((sum, p) => sum + p.amount, 0);
+        let paidBadge = totalPaid > 0 ? `<p style="color:#16a34a; font-weight:600;">Paid: ${formatINR(totalPaid)}</p>` : '';
+
+        html += `
+            <div class="loan-card">
+                <div class="loan-info">
+                    <h4>#${index + 1} - ${formatINR(loan.amount)} (${loan.rate}% M)</h4>
+                    <p>📅 ${formatDate(loan.date)}</p>
+                    <p>⏳ <b>${dur.text}</b></p>
+                    <p>📝 ${loan.note}</p>
+                    ${paidBadge}
+                </div>
+                <div class="loan-actions">
+                    <button class="action-btn calc-btn" onclick="openCalcModal(${loan.id})">Calculate</button>
+                    <button class="action-btn adjust-btn" onclick="openAdjustModal(${loan.id})">Adjust</button>
+                    <button class="action-btn edit-btn" onclick="openEditModal(${loan.id})">Edit</button>
+                    <button class="action-btn delete-btn" onclick="deleteLoan(${loan.id})">Delete</button>
+                </div>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+}
+
+// Simple direct payment modal (no calculation displayed here)
+function openPayModal() {
+    const client = clients.find(c => c.id === activeClientId);
+    if (client.loans.length === 0) { alert("No active loans!"); return; }
+    let selectHTML = "";
+    client.loans.forEach((loan, index) => {
+        selectHTML += `<option value="${loan.id}">Loan #${index + 1} - ${formatINR(loan.amount)}</option>`;
+    });
+    document.getElementById("payLoanSelect").innerHTML = selectHTML;
+    document.getElementById("payAmount").value = "";
+    document.getElementById("payDate").valueAsDate = new Date();
+    document.getElementById("payModal").style.display = "flex";
+}
+
+function savePayment() {
+    const loanId = Number(document.getElementById("payLoanSelect").value);
+    const amount = Number(document.getElementById("payAmount").value);
+    const date = document.getElementById("payDate").value;
+
+    if (!amount || !date) { alert("Enter amount & date."); return; }
+    const client = clients.find(c => c.id === activeClientId);
+    const loan = client.loans.find(l => l.id === loanId);
+    if (loan) {
+        loan.payments.push({ id: Date.now(), amount, date });
+        saveToStorage();
+        closeModal('payModal');
+        render();
+        alert("Payment saved successfully!");
+    }
+}
+
+function openEditModal(loanId) {
+    activeLoanId = loanId;
+    const client = clients.find(c => c.id === activeClientId);
+    const loan = client.loans.find(l => l.id === activeLoanId);
+    document.getElementById('editLoanAmount').value = loan.amount;
+    document.getElementById('editLoanRate').value = loan.rate;
+    document.getElementById('editLoanDate').value = loan.date;
+    document.getElementById('editLoanNote').value = loan.note;
+    document.getElementById('editModal').style.display = 'flex';
+}
+
+function saveEditedLoan() {
+    const amount = Number(document.getElementById('editLoanAmount').value);
+    const rate = Number(document.getElementById('editLoanRate').value);
+    const date = document.getElementById('editLoanDate').value;
+    const note = document.getElementById('editLoanNote').value.trim();
+
+    if (!amount || !rate || !date) { alert("Fill all fields."); return; }
+    const client = clients.find(c => c.id === activeClientId);
+    const loan = client.loans.find(l => l.id === activeLoanId);
+    if (loan) {
+        loan.amount = amount; loan.rate = rate; loan.date = date; loan.note = note || "Loan";
+        saveToStorage();
+        closeModal('editModal');
+        render();
+        alert("Updated successfully!");
+    }
+}
+
+// Adjustment Modal with calculation and remaining balance preview
+function openAdjustModal(loanId) {
+    activeLoanId = loanId;
+    document.getElementById('adjGivenAmount').value = "";
+    document.getElementById('adjFullSettle').checked = false;
+    document.getElementById('adjustModal').style.display = 'flex';
+    calculateAdjustmentSummary();
+}
+
+function calculateAdjustmentSummary() {
+    const client = clients.find(c => c.id === activeClientId);
+    const loan = client.loans.find(l => l.id === activeLoanId);
+    const type = document.getElementById('adjustType').value;
+    const todayStr = new Date().toISOString().split('T')[0];
+    let dur = getDuration(loan.date, todayStr);
+    let totalInterest = 0;
+
+    if (type === 'compound') {
+        let years = Math.floor(dur.months / 12);
+        let remMonths = dur.months % 12;
+        let currentP = loan.amount;
+        for (let i = 1; i <= years; i++) {
+            let yrInt = currentP * (loan.rate / 100) * 12;
+            totalInterest += yrInt;
+            currentP += yrInt;
         }
-      } else {
-        title = "🎯 APEXTASK Reminder";
-        msg = `You have ${pendingCount} pending task(s) scheduled for today. Stay locked in!`;
-      }
-
-      setTimeout(() => { showToast(title, msg); }, 600);
+        let cur1M = currentP * (loan.rate / 100);
+        totalInterest += (cur1M * remMonths) + ((cur1M / 30) * dur.days);
+    } else {
+        let m1Int = loan.amount * (loan.rate / 100);
+        totalInterest = (m1Int * dur.months) + ((m1Int / 30) * dur.days);
     }
 
-    function showToast(title, msg) {
-      document.getElementById('toastTitle').innerText = title;
-      document.getElementById('toastMessage').innerText = msg;
-      document.getElementById('toastBanner').style.display = 'block';
+    let totalDue = loan.amount + totalInterest;
+    let totalPaid = loan.payments.reduce((sum, p) => sum + p.amount, 0);
+    let netBalance = totalDue - totalPaid;
+
+    document.getElementById('adjTotalDue').innerText = formatINR(totalDue);
+    document.getElementById('adjAlreadyPaid').innerText = formatINR(totalPaid);
+    document.getElementById('adjNetBalance').innerText = formatINR(netBalance);
+}
+
+function saveAdjustment() {
+    const client = clients.find(c => c.id === activeClientId);
+    const loan = client.loans.find(l => l.id === activeLoanId);
+    const givenAmount = Number(document.getElementById('adjGivenAmount').value) || 0;
+    const isFullSettle = document.getElementById('adjFullSettle').checked;
+    const todayStr = new Date().toISOString().split('T')[0];
+
+    if (givenAmount > 0) {
+        loan.payments.push({ id: Date.now(), amount: givenAmount, date: todayStr });
     }
 
-    function closeToast() {
-      document.getElementById('toastBanner').style.display = 'none';
-    }
-
-    // Sound Alarm & Notifications
-    function playChimeSound() {
-      try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
-        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.3); // A5
-        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.5);
-      } catch (e) {
-        console.log("Audio not allowed yet");
-      }
-    }
-
-    function initNotificationChecker() {
-      setInterval(() => {
-        const todayStr = new Date().toISOString().split('T')[0];
-        const now = new Date();
-        const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-
-        let store = JSON.parse(localStorage.getItem('study_checkpoints')) || {};
-        if (store[todayStr]) {
-          store[todayStr].forEach(t => {
-            if (!t.completed && t.time === timeStr && !t.notified) {
-              triggerSystemNotification(t.text);
-              playChimeSound();
-              t.notified = true;
-              localStorage.setItem('study_checkpoints', JSON.stringify(store));
+    if (isFullSettle) {
+        const type = document.getElementById('adjustType').value;
+        let dur = getDuration(loan.date, todayStr);
+        let totalInterest = 0;
+        if (type === 'compound') {
+            let years = Math.floor(dur.months / 12);
+            let remMonths = dur.months % 12;
+            let currentP = loan.amount;
+            for (let i = 1; i <= years; i++) {
+                let yrInt = currentP * (loan.rate / 100) * 12;
+                totalInterest += yrInt;
+                currentP += yrInt;
             }
-          });
+            let cur1M = currentP * (loan.rate / 100);
+            totalInterest += (cur1M * remMonths) + ((cur1M / 30) * dur.days);
+        } else {
+            let m1Int = loan.amount * (loan.rate / 100);
+            totalInterest = (m1Int * dur.months) + ((m1Int / 30) * dur.days);
         }
-      }, 30000);
+        let totalDue = loan.amount + totalInterest;
+        let totalPaid = loan.payments.reduce((sum, p) => sum + p.amount, 0);
+        let diff = totalDue - totalPaid;
+
+        if (diff > 0) {
+            loan.payments.push({ id: Date.now() + 1, amount: diff, date: todayStr, note: "Settlement" });
+        }
+        alert("Loan fully settled and closed!");
+    } else {
+        alert("Adjustment saved successfully!");
     }
 
-    function triggerSystemNotification(taskText) {
-      if ("Notification" in window && Notification.permission === "granted") {
-        new Notification("APEXTASK Reminder", {
-          body: `Task scheduled: ${taskText}`,
-          icon: "https://cdn-icons-png.flaticon.com/512/3209/3209265.png"
-        });
-      }
+    saveToStorage();
+    closeModal('adjustModal');
+    render();
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = "none";
+}
+
+function switchCalcTab(tab) {
+    var cmpTab = document.getElementById('modalCompoundSection');
+    var simTab = document.getElementById('modalSimpleSection');
+    var cmpBtn = document.getElementById('tabCompoundBtn');
+    var simBtn = document.getElementById('tabSimpleBtn');
+
+    if (tab === 'compound') {
+        cmpTab.style.display = 'block';
+        simTab.style.display = 'none';
+        cmpBtn.classList.add('active');
+        simBtn.classList.remove('active');
+        calculateCompound();
+    } else {
+        cmpTab.style.display = 'none';
+        simTab.style.display = 'block';
+        cmpBtn.classList.remove('active');
+        simBtn.classList.add('active');
+        calculateSimple();
+    }
+}
+
+function openCalcModal(loanId) {
+    activeLoanId = loanId;
+    const client = clients.find(c => c.id === activeClientId);
+    const loan = client.loans.find(l => l.id === activeLoanId);
+    const todayStr = new Date().toISOString().split('T')[0];
+
+    document.getElementById('cmpPrincipal').value = loan.amount;
+    document.getElementById('cmpRate').value = loan.rate;
+    document.getElementById('cmpStartDate').value = loan.date;
+    document.getElementById('cmpEndDate').value = todayStr;
+
+    document.getElementById('simPrincipal').value = loan.amount;
+    document.getElementById('simRate').value = loan.rate;
+    document.getElementById('simStartDate').value = loan.date;
+    document.getElementById('simEndDate').value = todayStr;
+
+    document.getElementById("calcModal").style.display = "flex";
+    switchCalcTab('compound');
+}
+
+function calculateCompound() {
+    const client = clients.find(c => c.id === activeClientId);
+    const loan = client.loans.find(l => l.id === activeLoanId);
+
+    var origP = parseFloat(document.getElementById('cmpPrincipal').value);
+    var r = parseFloat(document.getElementById('cmpRate').value);
+    var startInput = document.getElementById('cmpStartDate').value;
+    var endInput = document.getElementById('cmpEndDate').value;
+
+    if (isNaN(origP) || isNaN(r) || !startInput || !endInput) return;
+
+    let dur = getDuration(startInput, endInput);
+    var years = Math.floor(dur.months / 12);
+    var remMonths = dur.months % 12;
+
+    var currentP = origP;
+    var totalInterest = 0;
+    var tableRows = "";
+
+    for (var i = 1; i <= years; i++) {
+        var yearInterest = currentP * (r / 100) * 12;
+        totalInterest += yearInterest;
+        var nextP = currentP + yearInterest;
+        tableRows += `<tr><td>Year ${i}</td><td>${formatINR(yearInterest)}</td><td>${formatINR(totalInterest)}</td><td><b>${formatINR(nextP)}</b></td></tr>`;
+        currentP = nextP;
     }
 
-    function formatDisplayDate(dateStr) {
-      const d = new Date(dateStr + 'T00:00:00');
-      return d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
-    }
+    var cur1MInterest = currentP * (r / 100);
+    totalInterest += (cur1MInterest * remMonths) + ((cur1MInterest / 30) * dur.days);
 
-    function escapeHtml(text) {
-      return text.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
+    var finalAmount = origP + totalInterest;
+    let totalPaid = loan.payments.reduce((sum, p) => sum + p.amount, 0);
+
+    document.getElementById('cmpResPrincipal').innerText = formatINR(origP);
+    document.getElementById('cmpRes1m').innerText = formatINR(origP * (r / 100));
+    document.getElementById('cmpResDuration').innerText = dur.text;
+    document.getElementById('cmpResInterest').innerText = formatINR(totalInterest);
+    document.getElementById('cmpResPaid').innerText = formatINR(totalPaid);
+    document.getElementById('cmpResFinal').innerText = formatINR(finalAmount - totalPaid);
+
+    var tableBox = document.getElementById('cmpTableBox');
+    if (years > 0) {
+        document.getElementById('cmpTableBody').innerHTML = tableRows;
+        tableBox.style.display = 'block';
+    } else {
+        tableBox.style.display = 'none';
     }
-  </script>
+}
+
+function calculateSimple() {
+    const client = clients.find(c => c.id === activeClientId);
+    const loan = client.loans.find(l => l.id === activeLoanId);
+
+    var p = parseFloat(document.getElementById('simPrincipal').value);
+    var r = parseFloat(document.getElementById('simRate').value);
+    var startInput = document.getElementById('simStartDate').value;
+    var endInput = document.getElementById('simEndDate').value;
+
+    if (isNaN(p) || isNaN(r) || !startInput || !endInput) return;
+
+    let dur = getDuration(startInput, endInput);
+    var m1Interest = p * (r / 100);
+    var totalInterest = (m1Interest * dur.months) + ((m1Interest / 30) * dur.days);
+    var finalAmount = p + totalInterest;
+    let totalPaid = loan.payments.reduce((sum, p) => sum + p.amount, 0);
+
+    document.getElementById('simResPrincipal').innerText = formatINR(p);
+    document.getElementById('simRes1m').innerText = formatINR(m1Interest);
+    document.getElementById('simResDuration').innerText = dur.text;
+    document.getElementById('simResInterest').innerText = formatINR(totalInterest);
+    document.getElementById('simResPaid').innerText = formatINR(totalPaid);
+    document.getElementById('simResFinal').innerText = formatINR(finalAmount - totalPaid);
+}
+
+render();
+</script>
+
 </body>
 </html>
