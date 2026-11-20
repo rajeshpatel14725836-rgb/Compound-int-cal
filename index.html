@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Udhaar & Interest Manager</title>
+<title>Udhaar & Interest Register</title>
 <meta name="theme-color" content="#1e3a8a">
 <style>
 * {
@@ -25,8 +25,9 @@ body {
     margin: 0 auto;
 }
 
+/* Header */
 .header {
-    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
     color: white;
     padding: 18px 16px;
     border-radius: 16px;
@@ -38,26 +39,28 @@ body {
 }
 
 .header h1 {
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 700;
 }
 
 .header p {
     font-size: 12px;
     opacity: 0.9;
+    margin-top: 2px;
 }
 
 .back-btn {
     background: rgba(255, 255, 255, 0.2);
     color: white;
     border: none;
-    padding: 6px 12px;
+    padding: 7px 12px;
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
     font-size: 12px;
 }
 
+/* Card */
 .card {
     background: white;
     border-radius: 16px;
@@ -68,7 +71,7 @@ body {
 }
 
 .section-title {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     color: #1e3a8a;
     margin-bottom: 12px;
@@ -77,9 +80,10 @@ body {
     align-items: center;
 }
 
+/* Search Box */
 .search-box {
     width: 100%;
-    padding: 12px 14px;
+    padding: 11px 14px;
     border: 1.5px solid #cbd5e1;
     border-radius: 12px;
     font-size: 14px;
@@ -88,28 +92,29 @@ body {
 }
 
 .search-box:focus {
-    border-color: #3b82f6;
+    border-color: #2563eb;
     background: white;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
+/* Form Fields */
 .input-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 10px;
 }
 
 .field label {
     display: block;
     font-size: 12px;
     font-weight: 600;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
     color: #64748b;
 }
 
 .input-wrap input, .input-wrap select {
     width: 100%;
-    padding: 11px 12px;
+    padding: 10px 12px;
     border: 1.5px solid #cbd5e1;
     border-radius: 10px;
     outline: none;
@@ -118,11 +123,11 @@ body {
 }
 
 .input-wrap input:focus, .input-wrap select:focus {
-    border-color: #3b82f6;
+    border-color: #2563eb;
     background: white;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
+/* Buttons */
 .buttons {
     display: flex;
     gap: 10px;
@@ -131,15 +136,15 @@ body {
 
 button {
     border: none;
-    padding: 11px 14px;
+    padding: 10px 14px;
     border-radius: 10px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
 }
 
 button:active {
-    opacity: 0.8;
+    opacity: 0.85;
 }
 
 .submit-btn {
@@ -156,11 +161,8 @@ button:active {
     font-size: 14px;
     border-radius: 12px;
     font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
     margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
 }
 
 .reset-btn {
@@ -168,41 +170,112 @@ button:active {
     color: #334155;
 }
 
+/* Client List */
 .client-list, .loan-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.client-card, .loan-card {
+.client-card {
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
-    padding: 14px;
+    padding: 13px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
 }
 
-.client-info h4, .loan-info h4 {
+.client-info h4 {
     font-size: 15px;
     color: #1e3a8a;
     font-weight: 700;
     margin-bottom: 3px;
 }
 
-.client-info p, .loan-info p {
+.client-info p {
     font-size: 12px;
     color: #64748b;
     margin-bottom: 2px;
 }
 
+.client-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.client-action-btn {
+    padding: 8px 11px;
+    font-size: 12px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+}
+
+/* Loan Card & Settled Styling */
+.loan-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 14px;
+    padding: 14px;
+    transition: all 0.2s;
+}
+
+.loan-card.settled-card {
+    background: #f1f5f9;
+    border: 1.5px solid #94a3b8;
+    opacity: 0.88;
+}
+
+.loan-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.loan-info h4 {
+    font-size: 15px;
+    color: #1e3a8a;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.loan-card.settled-card .loan-info h4,
+.loan-card.settled-card .loan-info .strike-text {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    text-decoration-color: #dc2626;
+    color: #64748b;
+}
+
+.settled-badge {
+    display: inline-block;
+    background: #fee2e2;
+    color: #dc2626;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 6px;
+    margin-left: 6px;
+    text-decoration: none !important;
+    vertical-align: middle;
+}
+
+.loan-info p {
+    font-size: 12px;
+    color: #475569;
+    margin-bottom: 3px;
+}
+
+/* Action Buttons Grid inside Loan Card */
 .loan-actions {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
-    width: 130px;
+    gap: 5px;
+    min-width: 125px;
 }
 
 .action-btn {
@@ -215,21 +288,49 @@ button:active {
 }
 
 .calc-btn { background: #0284c7; grid-column: span 2; }
-.adjust-btn { background: #d97706; }
+.adjust-btn { background: #d97706; grid-column: span 2; }
 .edit-btn { background: #4f46e5; }
-.delete-btn { background: #dc2626; grid-column: span 2; }
+.delete-btn { background: #dc2626; }
 
-.client-actions {
-    display: flex;
-    gap: 6px;
+/* Payment History Box inside Loan Card */
+.payment-history-box {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed #cbd5e1;
+    font-size: 12px;
 }
 
-.client-action-btn {
-    padding: 8px 10px;
+.payment-history-title {
+    font-weight: 700;
+    color: #166534;
+    margin-bottom: 5px;
+    font-size: 11px;
+}
+
+.payment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    padding: 5px 8px;
+    border-radius: 7px;
+    margin-bottom: 4px;
+    color: #14532d;
+}
+
+.payment-item.settlement-item {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #991b1b;
+}
+
+.del-pay-btn {
+    background: transparent;
+    color: #dc2626;
+    padding: 0 4px;
     font-size: 12px;
-    border-radius: 8px;
-    color: white;
-    font-weight: 600;
+    font-weight: bold;
 }
 
 .empty-message {
@@ -239,11 +340,12 @@ button:active {
     font-size: 13px;
 }
 
+/* Modal Popup Overlay */
 .modal-overlay {
     position: fixed;
     inset: 0;
     background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(3px);
     display: none;
     align-items: center;
     justify-content: center;
@@ -255,11 +357,11 @@ button:active {
 .modal {
     background: white;
     width: 100%;
-    max-width: 500px;
+    max-width: 480px;
     max-height: 90vh;
-    border-radius: 20px;
+    border-radius: 18px;
     padding: 18px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.18);
     overflow-y: auto;
 }
 
@@ -288,19 +390,20 @@ button:active {
     font-weight: bold;
 }
 
+/* Tab Switcher inside Modal */
 .tab-container {
     display: flex;
     background: #e2e8f0;
     padding: 4px;
     border-radius: 10px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     gap: 4px;
 }
 
 .tab-btn {
     flex: 1;
     padding: 8px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     border: none;
     border-radius: 8px;
@@ -325,13 +428,13 @@ button:active {
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     border-radius: 10px;
-    padding: 10px;
+    padding: 9px;
 }
 
 .summary-label {
     font-size: 11px;
     color: #64748b;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
 }
 
 .summary-value {
@@ -345,13 +448,13 @@ button:active {
     color: white;
     border-radius: 10px;
     padding: 12px;
-    margin-top: 8px;
+    margin-top: 6px;
     grid-column: span 2;
 }
 
 .final-box .summary-label {
     color: #cbd5e1;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .final-box .summary-value {
@@ -359,31 +462,9 @@ button:active {
     font-size: 20px;
 }
 
-.extra-days-box {
-    background: #eff6ff;
-    border-left: 4px solid #3b82f6;
-    border-radius: 8px;
-    padding: 10px;
-    margin-top: 10px;
-    font-size: 12px;
-    color: #1e293b;
-}
-
-.extra-days-title {
-    font-weight: 700;
-    color: #1d4ed8;
-    margin-bottom: 4px;
-}
-
-.extra-days-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 2px 0;
-}
-
 .table-box {
     overflow-x: auto;
-    margin-top: 12px;
+    margin-top: 10px;
     border-radius: 8px;
     border: 1px solid #e2e8f0;
 }
@@ -400,13 +481,11 @@ th {
     color: white;
     padding: 8px;
     text-align: left;
-    white-space: nowrap;
 }
 
 td {
     border-bottom: 1px solid #e2e8f0;
     padding: 8px;
-    white-space: nowrap;
 }
 
 .footer {
@@ -430,54 +509,12 @@ td {
         </div>
 
         <div class="tab-container">
-            <button class="tab-btn active" id="tabCompoundBtn" onclick="switchCalcTab('compound')">Compound Interest</button>
-            <button class="tab-btn" id="tabSimpleBtn" onclick="switchCalcTab('simple')">Simple Interest</button>
-        </div>
-
-        <!-- COMPOUND SECTION -->
-        <div id="modalCompoundSection">
-            <div class="input-grid">
-                <div class="field"><label>Principal Amount (₹)</label><div class="input-wrap"><input type="number" id="cmpPrincipal"></div></div>
-                <div class="field"><label>Monthly Rate (%)</label><div class="input-wrap"><input type="number" id="cmpRate" step="0.01"></div></div>
-                <div class="field"><label>Start Date</label><div class="input-wrap"><input type="date" id="cmpStartDate" onchange="calculateCompound()"></div></div>
-                <div class="field"><label>End Date</label><div class="input-wrap"><input type="date" id="cmpEndDate" onchange="calculateCompound()"></div></div>
-            </div>
-
-            <button class="submit-btn" style="margin-top:10px;" onclick="calculateCompound()">Re-Calculate</button>
-
-            <div id="resultsCompound" style="margin-top: 12px;">
-                <div class="summary-grid">
-                    <div class="summary-box"><div class="summary-label">Principal</div><div class="summary-value" id="cmpResPrincipal">₹ 0</div></div>
-                    <div class="summary-box"><div class="summary-label">1 Month Interest</div><div class="summary-value" id="cmpRes1m">₹ 0</div></div>
-                    <div class="summary-box"><div class="summary-label">Duration</div><div class="summary-value" id="cmpResDuration">-</div></div>
-                    <div class="summary-box"><div class="summary-label">Total Interest</div><div class="summary-value" id="cmpResInterest">₹ 0</div></div>
-                    <div class="summary-box" style="background:#f0fdf4;"><div class="summary-label">Already Paid</div><div class="summary-value" id="cmpResPaid" style="color:#16a34a;">₹ 0</div></div>
-                    <div class="final-box">
-                        <div class="summary-label">Net Payable Amount (Due)</div>
-                        <div class="summary-value" id="cmpResFinal">₹ 0</div>
-                    </div>
-                </div>
-
-                <div id="cmpExtraDaysBox" class="extra-days-box" style="display:none;">
-                    <div class="extra-days-title">Extra Days Calculation</div>
-                    <div class="extra-days-row"><span>1 Day Interest:</span> <b id="cmp1Day">₹ 0</b></div>
-                    <div class="extra-days-row"><span><span id="cmpDaysCount">0</span> Days Interest:</span> <b id="cmpDaysVal">₹ 0</b></div>
-                </div>
-
-                <div id="cmpTableBox" style="display:none; margin-top:12px;">
-                    <div class="section-title" style="font-size:13px;">📋 Yearly Breakdown</div>
-                    <div class="table-box">
-                        <table>
-                            <thead><tr><th>Period</th><th>Period Interest</th><th>Total Interest</th><th>New Principal</th></tr></thead>
-                            <tbody id="cmpTableBody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            <button class="tab-btn active" id="tabSimpleBtn" onclick="switchCalcTab('simple')">Simple (Monthly)</button>
+            <button class="tab-btn" id="tabCompoundBtn" onclick="switchCalcTab('compound')">Compound (Yearly)</button>
         </div>
 
         <!-- SIMPLE SECTION -->
-        <div id="modalSimpleSection" style="display:none;">
+        <div id="modalSimpleSection">
             <div class="input-grid">
                 <div class="field"><label>Principal Amount (₹)</label><div class="input-wrap"><input type="number" id="simPrincipal"></div></div>
                 <div class="field"><label>Monthly Rate (%)</label><div class="input-wrap"><input type="number" id="simRate" step="0.01"></div></div>
@@ -485,66 +522,96 @@ td {
                 <div class="field"><label>End Date</label><div class="input-wrap"><input type="date" id="simEndDate" onchange="calculateSimple()"></div></div>
             </div>
 
-            <button class="submit-btn" style="margin-top:10px;" onclick="calculateSimple()">Re-Calculate</button>
+            <button class="submit-btn" style="margin-top:10px;" onclick="calculateSimple()">Calculate</button>
 
-            <div id="resultsSimple" style="margin-top: 12px;">
-                <div class="summary-grid">
-                    <div class="summary-box"><div class="summary-label">Principal</div><div class="summary-value" id="simResPrincipal">₹ 0</div></div>
-                    <div class="summary-box"><div class="summary-label">1 Month Interest</div><div class="summary-value" id="simRes1m">₹ 0</div></div>
-                    <div class="summary-box"><div class="summary-label">Duration</div><div class="summary-value" id="simResDuration">-</div></div>
-                    <div class="summary-box"><div class="summary-label">Total Interest</div><div class="summary-value" id="simResInterest">₹ 0</div></div>
-                    <div class="summary-box" style="background:#f0fdf4;"><div class="summary-label">Already Paid</div><div class="summary-value" id="simResPaid" style="color:#16a34a;">₹ 0</div></div>
-                    <div class="final-box">
-                        <div class="summary-label">Net Payable Amount (Due)</div>
-                        <div class="summary-value" id="simResFinal">₹ 0</div>
-                    </div>
+            <div class="summary-grid" style="margin-top: 12px;">
+                <div class="summary-box"><div class="summary-label">Principal</div><div class="summary-value" id="simResPrincipal">₹ 0</div></div>
+                <div class="summary-box"><div class="summary-label">1 Month Interest</div><div class="summary-value" id="simRes1m">₹ 0</div></div>
+                <div class="summary-box"><div class="summary-label">Duration</div><div class="summary-value" id="simResDuration">-</div></div>
+                <div class="summary-box"><div class="summary-label">Total Interest</div><div class="summary-value" id="simResInterest">₹ 0</div></div>
+                <div class="summary-box" style="background:#f0fdf4;"><div class="summary-label">Already Paid</div><div class="summary-value" id="simResPaid" style="color:#16a34a;">₹ 0</div></div>
+                <div class="final-box">
+                    <div class="summary-label">Net Payable Amount (Due)</div>
+                    <div class="summary-value" id="simResFinal">₹ 0</div>
                 </div>
+            </div>
+        </div>
 
-                <div id="simExtraDaysBox" class="extra-days-box" style="display:none;">
-                    <div class="extra-days-title">Extra Days Calculation</div>
-                    <div class="extra-days-row"><span>1 Day Interest:</span> <b id="sim1Day">₹ 0</b></div>
-                    <div class="extra-days-row"><span><span id="simDaysCount">0</span> Days Interest:</span> <b id="simDaysVal">₹ 0</b></div>
+        <!-- COMPOUND SECTION -->
+        <div id="modalCompoundSection" style="display:none;">
+            <div class="input-grid">
+                <div class="field"><label>Principal Amount (₹)</label><div class="input-wrap"><input type="number" id="cmpPrincipal"></div></div>
+                <div class="field"><label>Monthly Rate (%)</label><div class="input-wrap"><input type="number" id="cmpRate" step="0.01"></div></div>
+                <div class="field"><label>Start Date</label><div class="input-wrap"><input type="date" id="cmpStartDate" onchange="calculateCompound()"></div></div>
+                <div class="field"><label>End Date</label><div class="input-wrap"><input type="date" id="cmpEndDate" onchange="calculateCompound()"></div></div>
+            </div>
+
+            <button class="submit-btn" style="margin-top:10px;" onclick="calculateCompound()">Calculate</button>
+
+            <div class="summary-grid" style="margin-top: 12px;">
+                <div class="summary-box"><div class="summary-label">Principal</div><div class="summary-value" id="cmpResPrincipal">₹ 0</div></div>
+                <div class="summary-box"><div class="summary-label">1 Month Interest</div><div class="summary-value" id="cmpRes1m">₹ 0</div></div>
+                <div class="summary-box"><div class="summary-label">Duration</div><div class="summary-value" id="cmpResDuration">-</div></div>
+                <div class="summary-box"><div class="summary-label">Total Interest</div><div class="summary-value" id="cmpResInterest">₹ 0</div></div>
+                <div class="summary-box" style="background:#f0fdf4;"><div class="summary-label">Already Paid</div><div class="summary-value" id="cmpResPaid" style="color:#16a34a;">₹ 0</div></div>
+                <div class="final-box">
+                    <div class="summary-label">Net Payable Amount (Due)</div>
+                    <div class="summary-value" id="cmpResFinal">₹ 0</div>
+                </div>
+            </div>
+
+            <div id="cmpTableBox" style="display:none; margin-top:12px;">
+                <div class="section-title" style="font-size:13px;">📋 Yearly Breakdown</div>
+                <div class="table-box">
+                    <table>
+                        <thead><tr><th>Year</th><th>Year Interest</th><th>Total Interest</th><th>New Principal</th></tr></thead>
+                        <tbody id="cmpTableBody"></tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Adjustment Modal -->
+<!-- Adjustment & Hisab Modal -->
 <div class="modal-overlay" id="adjustModal">
     <div class="modal">
         <div class="modal-header">
-            <h3>⚖️ Loan Adjustment & Settlement</h3>
+            <h3>⚖️ Hisab & Settlement</h3>
             <button class="close-modal-btn" onclick="closeModal('adjustModal')">✕</button>
         </div>
         <div class="field" style="margin-bottom:10px;">
-            <label>Interest Basis for Calculation</label>
+            <label>Hisab ka Rule Chunein (Interest Type)</label>
             <div class="input-wrap">
                 <select id="adjustType" onchange="calculateAdjustmentSummary()">
-                    <option value="compound">Compound Interest (चक्रवृद्धि)</option>
-                    <option value="simple">Simple Interest (साधा)</option>
+                    <option value="simple">Simple Interest (Monthly Rule)</option>
+                    <option value="compound">Compound Interest (Year-End Principal Rule)</option>
                 </select>
             </div>
         </div>
 
         <div class="summary-grid" style="margin-bottom: 10px;">
-            <div class="summary-box"><div class="summary-label">Total Due</div><div class="summary-value" id="adjTotalDue">₹ 0</div></div>
-            <div class="summary-box"><div class="summary-label">Already Paid</div><div class="summary-value" id="adjAlreadyPaid" style="color:#16a34a;">₹ 0</div></div>
-            <div class="final-box"><div class="summary-label">Remaining Net Balance</div><div class="summary-value" id="adjNetBalance">₹ 0</div></div>
+            <div class="summary-box"><div class="summary-label">Total Due (Mul + Byaj)</div><div class="summary-value" id="adjTotalDue">₹ 0</div></div>
+            <div class="summary-box"><div class="summary-label">Pehle se Jama</div><div class="summary-value" id="adjAlreadyPaid" style="color:#16a34a;">₹ 0</div></div>
+            <div class="final-box"><div class="summary-label">Remaining Balance (Bacha Hua)</div><div class="summary-value" id="adjNetBalance">₹ 0</div></div>
         </div>
 
         <div class="field" style="margin-bottom:10px;">
-            <label>Amount Given by Customer (₹)</label>
-            <div class="input-wrap"><input type="number" id="adjGivenAmount" placeholder="e.g. 5000"></div>
+            <label>Aaj Kitna Rupya Mila (₹)</label>
+            <div class="input-wrap"><input type="number" id="adjGivenAmount" placeholder="e.g. 3000"></div>
         </div>
         <div class="field" style="margin-bottom:10px;">
-            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                <input type="checkbox" id="adjFullSettle" style="width:16px; height:16px;"> 
-                <span style="font-size:12px;"><strong>Full Settlement / Account Close</strong> (Zero out remaining balance)</span>
+            <label>Date</label>
+            <div class="input-wrap"><input type="date" id="adjDate"></div>
+        </div>
+        <div class="field" style="margin-bottom:12px;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; background:#fef2f2; padding:10px; border-radius:8px; border:1px solid #fecaca;">
+                <input type="checkbox" id="adjFullSettle" style="width:18px; height:18px;"> 
+                <span style="font-size:12px; color:#991b1b;"><strong>Full Settlement / Hisab Close</strong><br>(Record delete nahi hoga, par entry par line khinch jayegi)</span>
             </label>
         </div>
 
-        <button class="submit-btn" style="background:#d97706;" onclick="saveAdjustment()">Confirm Adjustment</button>
+        <button class="submit-btn" style="background:#d97706;" onclick="saveAdjustment()">Save Hisab</button>
     </div>
 </div>
 
@@ -552,7 +619,7 @@ td {
 <div class="modal-overlay" id="editModal">
     <div class="modal">
         <div class="modal-header">
-            <h3>✏️ Edit Loan Details</h3>
+            <h3>✏️ Edit Udhaar Entry</h3>
             <button class="close-modal-btn" onclick="closeModal('editModal')">✕</button>
         </div>
         <div class="input-grid">
@@ -561,20 +628,29 @@ td {
             <div class="field"><label>Date Given</label><div class="input-wrap"><input type="date" id="editLoanDate"></div></div>
             <div class="field"><label>Note / Remarks</label><div class="input-wrap"><input type="text" id="editLoanNote"></div></div>
         </div>
-        <button class="submit-btn" style="margin-top:12px; background:#4f46e5;" onclick="saveEditedLoan()">Update Loan</button>
+        <button class="submit-btn" style="margin-top:12px; background:#4f46e5;" onclick="saveEditedLoan()">Update Entry</button>
     </div>
 </div>
 
-<!-- Payment Received Modal (Simple Direct Payment without calculation) -->
+<!-- Simple Receive Payment Modal (Bina Hisab ke Direct Jama) -->
 <div class="modal-overlay" id="payModal">
     <div class="modal">
         <div class="modal-header">
             <h3>💰 Receive Payment</h3>
             <button class="close-modal-btn" onclick="closeModal('payModal')">✕</button>
         </div>
-        <div class="field" style="margin-bottom:10px;"><label>Select Loan</label><div class="input-wrap"><select id="payLoanSelect"></select></div></div>
-        <div class="field" style="margin-bottom:10px;"><label>Received Amount (₹)</label><div class="input-wrap"><input type="number" id="payAmount" placeholder="5000"></div></div>
-        <div class="field" style="margin-bottom:12px;"><label>Date</label><div class="input-wrap"><input type="date" id="payDate"></div></div>
+        <div class="field" style="margin-bottom:10px;">
+            <label>Kis Udhaar Entry ke Against Jama Karna Hai?</label>
+            <div class="input-wrap"><select id="payLoanSelect"></select></div>
+        </div>
+        <div class="field" style="margin-bottom:10px;">
+            <label>Received Amount (₹)</label>
+            <div class="input-wrap"><input type="number" id="payAmount" placeholder="e.g. 3000"></div>
+        </div>
+        <div class="field" style="margin-bottom:12px;">
+            <label>Date</label>
+            <div class="input-wrap"><input type="date" id="payDate"></div>
+        </div>
         <button class="submit-btn" style="background:#16a34a;" onclick="savePayment()">Save Payment</button>
     </div>
 </div>
@@ -628,30 +704,34 @@ function render() {
         container.innerHTML = `
             <div class="header">
                 <div>
-                    <h1>Udhaar Manager</h1>
-                    <p>Track clients & calculate interest</p>
+                    <h1>📒 Udhaar Register</h1>
+                    <p>Clients & Date-wise Interest Ledger</p>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="section-title">👤 Add New Client</div>
+            <button class="toggle-form-btn" onclick="toggleClientForm()">➕ Add New Client (Naya Khata)</button>
+
+            <div class="card" id="clientFormCard" style="display:none; border: 2px dashed #2563eb;">
+                <div class="section-title">👤 Client Details</div>
                 <div class="input-grid">
-                    <div class="field"><label>Client Name</label><div class="input-wrap"><input type="text" id="clientName" placeholder="Full name"></div></div>
-                    <div class="field"><label>Phone Number</label><div class="input-wrap"><input type="tel" id="clientPhone" placeholder="Mobile number"></div></div>
-                    <div class="field"><label>Address</label><div class="input-wrap"><input type="text" id="clientAddress" placeholder="Address"></div></div>
-                    <div class="field"><label>Nominee Name</label><div class="input-wrap"><input type="text" id="nomineeName" placeholder="Nominee name"></div></div>
-                    <div class="field"><label>Nominee Phone</label><div class="input-wrap"><input type="tel" id="nomineePhone" placeholder="Nominee phone"></div></div>
+                    <div class="field"><label>Client Name *</label><div class="input-wrap"><input type="text" id="clientName" placeholder="Full name"></div></div>
+                    <div class="field"><label>Phone Number *</label><div class="input-wrap"><input type="tel" id="clientPhone" placeholder="Mobile number"></div></div>
+                    <div class="field"><label>Address</label><div class="input-wrap"><input type="text" id="clientAddress" placeholder="Village / City"></div></div>
+                    <div class="field"><label>Nominee / Guarantor</label><div class="input-wrap"><input type="text" id="nomineeName" placeholder="Optional"></div></div>
                 </div>
-                <button class="submit-btn" style="margin-top:12px;" onclick="saveClient()">Save Client</button>
+                <div class="buttons">
+                    <button class="submit-btn" onclick="saveClient()">Save Client</button>
+                    <button class="reset-btn" onclick="toggleClientForm()">Cancel</button>
+                </div>
             </div>
 
             <div class="card">
                 <div class="section-title">📋 Clients List</div>
-                <input type="text" id="searchQuery" class="search-box" placeholder="🔍 Search by Name or Phone..." oninput="filterClients()">
+                <input type="text" id="searchQuery" class="search-box" placeholder="🔍 Naam ya Phone number se search karein..." oninput="filterClients()">
                 <div id="clientListContainer" class="client-list" style="margin-top:12px;"></div>
             </div>
 
-            <div class="footer">Udhaar Manager App</div>
+            <div class="footer">Simple & Clean Udhaar Register</div>
         `;
         renderClientsList(clients);
     } else if (currentView === "ledger") {
@@ -662,40 +742,45 @@ function render() {
             <div class="header">
                 <div>
                     <h1>${client.name}</h1>
-                    <p>Ph: ${client.phone}</p>
+                    <p>📞 ${client.phone} | 📍 ${client.address}</p>
                 </div>
                 <button class="back-btn" onclick="currentView='home'; render();">⬅ Back</button>
             </div>
 
-            <button class="toggle-form-btn" onclick="toggleLoanForm()">➕ Add New Loan / Udhaar</button>
+            <button class="toggle-form-btn" onclick="toggleLoanForm()">➕ Give New Udhaar (Naya Rupya Dein)</button>
 
-            <div class="card" id="loanFormCard" style="display:none; border: 2px dashed #3b82f6;">
-                <div class="section-title">➕ Give New Udhaar</div>
+            <div class="card" id="loanFormCard" style="display:none; border: 2px dashed #2563eb;">
+                <div class="section-title">💸 Give New Udhaar</div>
                 <div class="input-grid">
-                    <div class="field"><label>Principal Amount (₹)</label><div class="input-wrap"><input type="number" id="loanAmount" placeholder="10000"></div></div>
-                    <div class="field"><label>Monthly Interest Rate (%)</label><div class="input-wrap"><input type="number" id="loanRate" placeholder="3" step="0.1"></div></div>
-                    <div class="field"><label>Date Given</label><div class="input-wrap"><input type="date" id="loanDate"></div></div>
-                    <div class="field"><label>Note / Remarks</label><div class="input-wrap"><input type="text" id="loanNote" placeholder="e.g., Cash given"></div></div>
+                    <div class="field"><label>Principal Amount (₹) *</label><div class="input-wrap"><input type="number" id="loanAmount" placeholder="e.g. 2000"></div></div>
+                    <div class="field"><label>Monthly Interest Rate (%) *</label><div class="input-wrap"><input type="number" id="loanRate" placeholder="e.g. 3" step="0.1"></div></div>
+                    <div class="field"><label>Date Given *</label><div class="input-wrap"><input type="date" id="loanDate"></div></div>
+                    <div class="field"><label>Note / Remarks</label><div class="input-wrap"><input type="text" id="loanNote" placeholder="e.g. Cash / Online"></div></div>
                 </div>
                 <div class="buttons">
-                    <button class="submit-btn" onclick="addLoan()">Save Loan</button>
+                    <button class="submit-btn" onclick="addLoan()">Save Entry</button>
                     <button class="reset-btn" onclick="toggleLoanForm()">Cancel</button>
                 </div>
             </div>
 
             <div class="card">
                 <div class="section-title">
-                    <span>📊 Active Loans</span>
-                    <button class="action-btn" style="background:#16a34a; padding:8px 12px; font-size:12px; grid-column:auto;" onclick="openPayModal()">+ Payment</button>
+                    <span>📑 Date-wise Udhaar Entries</span>
+                    <button class="action-btn" style="background:#16a34a; padding:8px 12px; font-size:12px;" onclick="openPayModal()">+ Payment</button>
                 </div>
                 <div id="loanListContainer" class="loan-list"></div>
             </div>
 
-            <div class="footer">Udhaar Manager App</div>
+            <div class="footer">Simple & Clean Udhaar Register</div>
         `;
         document.getElementById("loanDate").valueAsDate = new Date();
         renderLoansList();
     }
+}
+
+function toggleClientForm() {
+    const card = document.getElementById("clientFormCard");
+    card.style.display = card.style.display === "none" ? "block" : "none";
 }
 
 function toggleLoanForm() {
@@ -708,20 +793,26 @@ function saveClient() {
     const phone = document.getElementById("clientPhone").value.trim();
     const address = document.getElementById("clientAddress").value.trim();
     const nomineeName = document.getElementById("nomineeName").value.trim();
-    const nomineePhone = document.getElementById("nomineePhone").value.trim();
 
     if (!name || !phone) {
-        alert("Please enter Name and Phone Number.");
+        alert("Naam aur Phone number zaroori hai.");
         return;
     }
 
-    clients.push({ id: Date.now(), name, phone, address: address || "N/A", nomineeName: nomineeName || "N/A", nomineePhone: nomineePhone || "N/A", loans: [] });
+    clients.push({ 
+        id: Date.now(), 
+        name, 
+        phone, 
+        address: address || "N/A", 
+        nomineeName: nomineeName || "N/A", 
+        loans: [] 
+    });
     saveToStorage();
     render();
 }
 
 function deleteClient(id) {
-    if (confirm("Delete this client and all records?")) {
+    if (confirm("Kya aap is client ka poora khata delete karna chahte hain?")) {
         clients = clients.filter(c => c.id !== id);
         saveToStorage();
         render();
@@ -743,7 +834,7 @@ function filterClients() {
 function renderClientsList(listToRender) {
     const container = document.getElementById("clientListContainer");
     if (listToRender.length === 0) {
-        container.innerHTML = `<div class="empty-message">No clients found.</div>`;
+        container.innerHTML = `<div class="empty-message">Koi client nahi mila. Upar se naya client add karein.</div>`;
         return;
     }
     let html = "";
@@ -752,10 +843,11 @@ function renderClientsList(listToRender) {
             <div class="client-card">
                 <div class="client-info">
                     <h4>${c.name}</h4>
-                    <p>📞 ${c.phone} | Loans: ${c.loans.length}</p>
+                    <p>📞 ${c.phone} | 📍 ${c.address}</p>
+                    <p>Entries: ${c.loans.length}</p>
                 </div>
                 <div class="client-actions">
-                    <button class="client-action-btn" style="background:#2563eb;" onclick="openLedger(${c.id})">Ledger</button>
+                    <button class="client-action-btn" style="background:#2563eb;" onclick="openLedger(${c.id})">Open Khata</button>
                     <button class="client-action-btn" style="background:#dc2626;" onclick="deleteClient(${c.id})">✕</button>
                 </div>
             </div>
@@ -771,22 +863,42 @@ function addLoan() {
     const note = document.getElementById("loanNote").value.trim();
 
     if (!amount || !rate || !date) {
-        alert("Please fill Amount, Rate, and Date.");
+        alert("Amount, Rate aur Date zaroor bharein.");
         return;
     }
 
     const client = clients.find(c => c.id === activeClientId);
-    client.loans.push({ id: Date.now(), amount, rate, date, note: note || "Loan", payments: [] });
+    client.loans.push({ 
+        id: Date.now(), 
+        amount, 
+        rate, 
+        date, 
+        note: note || "Udhaar", 
+        isSettled: false,
+        payments: [] 
+    });
     saveToStorage();
     render();
 }
 
 function deleteLoan(loanId) {
-    if (confirm("Delete this loan entry?")) {
+    if (confirm("Kya aap is udhaar entry ko delete karna chahte hain?")) {
         const client = clients.find(c => c.id === activeClientId);
         client.loans = client.loans.filter(l => l.id !== loanId);
         saveToStorage();
         render();
+    }
+}
+
+function deletePayment(loanId, paymentId) {
+    if (confirm("Is payment entry ko hatayein?")) {
+        const client = clients.find(c => c.id === activeClientId);
+        const loan = client.loans.find(l => l.id === loanId);
+        if (loan) {
+            loan.payments = loan.payments.filter(p => p.id !== paymentId);
+            saveToStorage();
+            render();
+        }
     }
 }
 
@@ -795,7 +907,7 @@ function renderLoansList() {
     const container = document.getElementById("loanListContainer");
     
     if (client.loans.length === 0) {
-        container.innerHTML = `<div class="empty-message">No loans added yet.</div>`;
+        container.innerHTML = `<div class="empty-message">Abhi tak koi udhaar nahi diya gaya hai.</div>`;
         return;
     }
 
@@ -805,36 +917,62 @@ function renderLoansList() {
     client.loans.forEach((loan, index) => {
         let dur = getDuration(loan.date, todayStr);
         let totalPaid = loan.payments.reduce((sum, p) => sum + p.amount, 0);
-        let paidBadge = totalPaid > 0 ? `<p style="color:#16a34a; font-weight:600;">Paid: ${formatINR(totalPaid)}</p>` : '';
+        let settledClass = loan.isSettled ? "settled-card" : "";
+        let settledBadge = loan.isSettled ? `<span class="settled-badge">SETTLED / CLOSED</span>` : "";
+
+        // Build Date-wise Payment History HTML
+        let historyHTML = "";
+        if (loan.payments.length > 0) {
+            let itemsHTML = "";
+            loan.payments.forEach(p => {
+                let itemClass = p.isSettlement ? "payment-item settlement-item" : "payment-item";
+                let labelText = p.note ? ` (${p.note})` : "";
+                itemsHTML += `
+                    <div class="${itemClass}">
+                        <span>📅 <b>${formatDate(p.date)}</b> — Jama: <b>${formatINR(p.amount)}</b>${labelText}</span>
+                        <button class="del-pay-btn" onclick="deletePayment(${loan.id}, ${p.id})" title="Delete payment">✕</button>
+                    </div>
+                `;
+            });
+            historyHTML = `
+                <div class="payment-history-box">
+                    <div class="payment-history-title">✅ Payment History (Total Jama: ${formatINR(totalPaid)})</div>
+                    ${itemsHTML}
+                </div>
+            `;
+        }
 
         html += `
-            <div class="loan-card">
-                <div class="loan-info">
-                    <h4>#${index + 1} - ${formatINR(loan.amount)} (${loan.rate}% M)</h4>
-                    <p>📅 ${formatDate(loan.date)}</p>
-                    <p>⏳ <b>${dur.text}</b></p>
-                    <p>📝 ${loan.note}</p>
-                    ${paidBadge}
+            <div class="loan-card ${settledClass}">
+                <div class="loan-top">
+                    <div class="loan-info">
+                        <h4>#${index + 1} - ${formatINR(loan.amount)} (${loan.rate}% Monthly) ${settledBadge}</h4>
+                        <p class="strike-text">📅 Diya Gaya: <b>${formatDate(loan.date)}</b></p>
+                        <p class="strike-text">⏳ Time: <b>${dur.text}</b></p>
+                        <p class="strike-text">📝 Note: ${loan.note}</p>
+                    </div>
+                    <div class="loan-actions">
+                        <button class="action-btn calc-btn" onclick="openCalcModal(${loan.id})">📊 Calculate</button>
+                        <button class="action-btn adjust-btn" onclick="openAdjustModal(${loan.id})">⚖️ Hisab / Adjust</button>
+                        <button class="action-btn edit-btn" onclick="openEditModal(${loan.id})">✏️ Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteLoan(${loan.id})">🗑️ Delete</button>
+                    </div>
                 </div>
-                <div class="loan-actions">
-                    <button class="action-btn calc-btn" onclick="openCalcModal(${loan.id})">Calculate</button>
-                    <button class="action-btn adjust-btn" onclick="openAdjustModal(${loan.id})">Adjust</button>
-                    <button class="action-btn edit-btn" onclick="openEditModal(${loan.id})">Edit</button>
-                    <button class="action-btn delete-btn" onclick="deleteLoan(${loan.id})">Delete</button>
-                </div>
+                ${historyHTML}
             </div>
         `;
     });
     container.innerHTML = html;
 }
 
-// Simple direct payment modal (no calculation displayed here)
+// Simple Direct Payment Modal (No remaining/interest shown here)
 function openPayModal() {
     const client = clients.find(c => c.id === activeClientId);
-    if (client.loans.length === 0) { alert("No active loans!"); return; }
+    if (client.loans.length === 0) { alert("Koi udhaar entry nahi hai!"); return; }
     let selectHTML = "";
     client.loans.forEach((loan, index) => {
-        selectHTML += `<option value="${loan.id}">Loan #${index + 1} - ${formatINR(loan.amount)}</option>`;
+        let status = loan.isSettled ? " [SETTLED]" : "";
+        selectHTML += `<option value="${loan.id}">#${index + 1} - ${formatINR(loan.amount)} (Date: ${formatDate(loan.date)})${status}</option>`;
     });
     document.getElementById("payLoanSelect").innerHTML = selectHTML;
     document.getElementById("payAmount").value = "";
@@ -847,7 +985,7 @@ function savePayment() {
     const amount = Number(document.getElementById("payAmount").value);
     const date = document.getElementById("payDate").value;
 
-    if (!amount || !date) { alert("Enter amount & date."); return; }
+    if (!amount || !date) { alert("Amount aur Date bharein."); return; }
     const client = clients.find(c => c.id === activeClientId);
     const loan = client.loans.find(l => l.id === loanId);
     if (loan) {
@@ -855,10 +993,10 @@ function savePayment() {
         saveToStorage();
         closeModal('payModal');
         render();
-        alert("Payment saved successfully!");
     }
 }
 
+// Edit Loan Functions
 function openEditModal(loanId) {
     activeLoanId = loanId;
     const client = clients.find(c => c.id === activeClientId);
@@ -876,23 +1014,26 @@ function saveEditedLoan() {
     const date = document.getElementById('editLoanDate').value;
     const note = document.getElementById('editLoanNote').value.trim();
 
-    if (!amount || !rate || !date) { alert("Fill all fields."); return; }
+    if (!amount || !rate || !date) { alert("Saari details bharein."); return; }
     const client = clients.find(c => c.id === activeClientId);
     const loan = client.loans.find(l => l.id === activeLoanId);
     if (loan) {
-        loan.amount = amount; loan.rate = rate; loan.date = date; loan.note = note || "Loan";
+        loan.amount = amount; loan.rate = rate; loan.date = date; loan.note = note || "Udhaar";
         saveToStorage();
         closeModal('editModal');
         render();
-        alert("Updated successfully!");
     }
 }
 
-// Adjustment Modal with calculation and remaining balance preview
+// Hisab & Adjustment Modal Functions
 function openAdjustModal(loanId) {
     activeLoanId = loanId;
+    const client = clients.find(c => c.id === activeClientId);
+    const loan = client.loans.find(l => l.id === activeLoanId);
+
     document.getElementById('adjGivenAmount').value = "";
-    document.getElementById('adjFullSettle').checked = false;
+    document.getElementById('adjDate').valueAsDate = new Date();
+    document.getElementById('adjFullSettle').checked = loan.isSettled || false;
     document.getElementById('adjustModal').style.display = 'flex';
     calculateAdjustmentSummary();
 }
@@ -934,42 +1075,27 @@ function saveAdjustment() {
     const client = clients.find(c => c.id === activeClientId);
     const loan = client.loans.find(l => l.id === activeLoanId);
     const givenAmount = Number(document.getElementById('adjGivenAmount').value) || 0;
+    const adjDate = document.getElementById('adjDate').value || new Date().toISOString().split('T')[0];
     const isFullSettle = document.getElementById('adjFullSettle').checked;
-    const todayStr = new Date().toISOString().split('T')[0];
+    const ruleName = document.getElementById('adjustType').value === 'compound' ? 'Compound' : 'Simple';
 
     if (givenAmount > 0) {
-        loan.payments.push({ id: Date.now(), amount: givenAmount, date: todayStr });
+        loan.payments.push({ 
+            id: Date.now(), 
+            amount: givenAmount, 
+            date: adjDate,
+            note: `${ruleName} Hisab`
+        });
     }
 
     if (isFullSettle) {
-        const type = document.getElementById('adjustType').value;
-        let dur = getDuration(loan.date, todayStr);
-        let totalInterest = 0;
-        if (type === 'compound') {
-            let years = Math.floor(dur.months / 12);
-            let remMonths = dur.months % 12;
-            let currentP = loan.amount;
-            for (let i = 1; i <= years; i++) {
-                let yrInt = currentP * (loan.rate / 100) * 12;
-                totalInterest += yrInt;
-                currentP += yrInt;
-            }
-            let cur1M = currentP * (loan.rate / 100);
-            totalInterest += (cur1M * remMonths) + ((cur1M / 30) * dur.days);
-        } else {
-            let m1Int = loan.amount * (loan.rate / 100);
-            totalInterest = (m1Int * dur.months) + ((m1Int / 30) * dur.days);
+        loan.isSettled = true;
+        if (givenAmount > 0) {
+            loan.payments[loan.payments.length - 1].isSettlement = true;
+            loan.payments[loan.payments.length - 1].note = `Full Settlement (${ruleName})`;
         }
-        let totalDue = loan.amount + totalInterest;
-        let totalPaid = loan.payments.reduce((sum, p) => sum + p.amount, 0);
-        let diff = totalDue - totalPaid;
-
-        if (diff > 0) {
-            loan.payments.push({ id: Date.now() + 1, amount: diff, date: todayStr, note: "Settlement" });
-        }
-        alert("Loan fully settled and closed!");
     } else {
-        alert("Adjustment saved successfully!");
+        loan.isSettled = false;
     }
 
     saveToStorage();
@@ -981,24 +1107,25 @@ function closeModal(modalId) {
     document.getElementById(modalId).style.display = "none";
 }
 
+// Calculator Modal Functions
 function switchCalcTab(tab) {
     var cmpTab = document.getElementById('modalCompoundSection');
     var simTab = document.getElementById('modalSimpleSection');
     var cmpBtn = document.getElementById('tabCompoundBtn');
     var simBtn = document.getElementById('tabSimpleBtn');
 
-    if (tab === 'compound') {
-        cmpTab.style.display = 'block';
-        simTab.style.display = 'none';
-        cmpBtn.classList.add('active');
-        simBtn.classList.remove('active');
-        calculateCompound();
-    } else {
-        cmpTab.style.display = 'none';
+    if (tab === 'simple') {
         simTab.style.display = 'block';
-        cmpBtn.classList.remove('active');
+        cmpTab.style.display = 'none';
         simBtn.classList.add('active');
+        cmpBtn.classList.remove('active');
         calculateSimple();
+    } else {
+        simTab.style.display = 'none';
+        cmpTab.style.display = 'block';
+        simBtn.classList.remove('active');
+        cmpBtn.classList.add('active');
+        calculateCompound();
     }
 }
 
@@ -1008,18 +1135,43 @@ function openCalcModal(loanId) {
     const loan = client.loans.find(l => l.id === activeLoanId);
     const todayStr = new Date().toISOString().split('T')[0];
 
-    document.getElementById('cmpPrincipal').value = loan.amount;
-    document.getElementById('cmpRate').value = loan.rate;
-    document.getElementById('cmpStartDate').value = loan.date;
-    document.getElementById('cmpEndDate').value = todayStr;
-
     document.getElementById('simPrincipal').value = loan.amount;
     document.getElementById('simRate').value = loan.rate;
     document.getElementById('simStartDate').value = loan.date;
     document.getElementById('simEndDate').value = todayStr;
 
+    document.getElementById('cmpPrincipal').value = loan.amount;
+    document.getElementById('cmpRate').value = loan.rate;
+    document.getElementById('cmpStartDate').value = loan.date;
+    document.getElementById('cmpEndDate').value = todayStr;
+
     document.getElementById("calcModal").style.display = "flex";
-    switchCalcTab('compound');
+    switchCalcTab('simple');
+}
+
+function calculateSimple() {
+    const client = clients.find(c => c.id === activeClientId);
+    const loan = client.loans.find(l => l.id === activeLoanId);
+
+    var p = parseFloat(document.getElementById('simPrincipal').value);
+    var r = parseFloat(document.getElementById('simRate').value);
+    var startInput = document.getElementById('simStartDate').value;
+    var endInput = document.getElementById('simEndDate').value;
+
+    if (isNaN(p) || isNaN(r) || !startInput || !endInput) return;
+
+    let dur = getDuration(startInput, endInput);
+    var m1Interest = p * (r / 100);
+    var totalInterest = (m1Interest * dur.months) + ((m1Interest / 30) * dur.days);
+    var finalAmount = p + totalInterest;
+    let totalPaid = loan.payments.reduce((sum, p) => sum + p.amount, 0);
+
+    document.getElementById('simResPrincipal').innerText = formatINR(p);
+    document.getElementById('simRes1m').innerText = formatINR(m1Interest);
+    document.getElementById('simResDuration').innerText = dur.text;
+    document.getElementById('simResInterest').innerText = formatINR(totalInterest);
+    document.getElementById('simResPaid').innerText = formatINR(totalPaid);
+    document.getElementById('simResFinal').innerText = formatINR(finalAmount - totalPaid);
 }
 
 function calculateCompound() {
@@ -1069,31 +1221,6 @@ function calculateCompound() {
     } else {
         tableBox.style.display = 'none';
     }
-}
-
-function calculateSimple() {
-    const client = clients.find(c => c.id === activeClientId);
-    const loan = client.loans.find(l => l.id === activeLoanId);
-
-    var p = parseFloat(document.getElementById('simPrincipal').value);
-    var r = parseFloat(document.getElementById('simRate').value);
-    var startInput = document.getElementById('simStartDate').value;
-    var endInput = document.getElementById('simEndDate').value;
-
-    if (isNaN(p) || isNaN(r) || !startInput || !endInput) return;
-
-    let dur = getDuration(startInput, endInput);
-    var m1Interest = p * (r / 100);
-    var totalInterest = (m1Interest * dur.months) + ((m1Interest / 30) * dur.days);
-    var finalAmount = p + totalInterest;
-    let totalPaid = loan.payments.reduce((sum, p) => sum + p.amount, 0);
-
-    document.getElementById('simResPrincipal').innerText = formatINR(p);
-    document.getElementById('simRes1m').innerText = formatINR(m1Interest);
-    document.getElementById('simResDuration').innerText = dur.text;
-    document.getElementById('simResInterest').innerText = formatINR(totalInterest);
-    document.getElementById('simResPaid').innerText = formatINR(totalPaid);
-    document.getElementById('simResFinal').innerText = formatINR(finalAmount - totalPaid);
 }
 
 render();
